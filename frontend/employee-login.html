@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Employee login</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #eef1ff;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+</head>
+<body>
+
+<div class="employee-task-login-form">
+
+  <!-- LEFT SIDE (LOGO ADDED) -->
+  <div class="employee-task-left-login">
+    <img src="/image/Logo3470-health3-removebg-preview.png" alt="Logo">
+    <h1>Employee Task Management System</h1>
+    <p>Sign in to manage your tasks and track your progress</p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="employee-task-right-login">
+
+    <h2>Employee Login</h2>
+
+    <form id="emp-loginForm" class="emp-loginForm" >
+
+      <input type="text" id="empId" placeholder="Employee ID" required>
+      
+      <div class="emp-lg-password-box">
+       <input type="password" id="password" placeholder="Password" required>
+       <i class="fa-solid fa-eye" id="eyeIcon" onclick="togglePassword()"></i>
+      </div>
+
+      <button type="submit">Login</button>
+
+      <button type="button" class="emp-link-btn" onclick="forgotPassword()">
+        Forgot Password?
+      </button>
+
+      <!-- REGISTER BUTTON ADDED -->
+      <button type="button" class="emp-lg-register-btn" onclick="goToRegister()">
+        New User? Register
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+function forgotPassword() {
+  alert("Please contact admin to reset password");
+}
+
+function goToRegister() {
+  window.location.href = "/frontend/employee-register.html";
+}
+</script>
+
+<script>
+function togglePassword() {
+  const password = document.getElementById("password");
+  const icon = document.getElementById("eyeIcon");
+
+  if (password.type === "password") {
+    password.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    password.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
+</script>
+
+</body>
+</html>    

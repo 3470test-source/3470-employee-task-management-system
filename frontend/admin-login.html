@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Admin login</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e9a8e6, #75a6f0);
+    }
+
+    </style>
+
+</head>
+<body>
+    
+<div class="admin-login-container">
+
+  <!-- LEFT -->
+  <div class="admin-left-login">
+    <img src="/image/Logo3470-health3-removebg-preview.png">
+    <h1>Admin Dashboard</h1>
+    <p>Manage employees, assign tasks, and track progress</p>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="admin-right-login">
+
+    <h2>Admin Login</h2>
+    <p>Enter your credentials to continue</p>
+
+    <form id="admin-form-login" class="admin-form-login" onsubmit="return loginAdmin(event)">
+
+      <input type="text" id="adminUser" placeholder="Admin Username" required>
+
+      <div class="admin-login-password-wrapper">
+        <input type="password" id="adminPass" placeholder="Password" required>
+        <span class="admin-lg-toggle-password" onclick="togglePassword()">
+          <i id="eyeIcon" class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+
+      <button type="submit">Login</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- Java Scripts -->
+<script>
+function togglePassword() {
+  const pass = document.getElementById("adminPass");
+  const icon = document.getElementById("eyeIcon");
+
+  if (pass.type === "password") {
+    pass.type = "text";
+    icon.classList.replace("fa-eye", "fa-eye-slash");
+  } else {
+    pass.type = "password";
+    icon.classList.replace("fa-eye-slash", "fa-eye");
+  }
+}
+
+/*--- DEMO LOGIN (replace with backend API) ---*/
+function loginAdmin(e) {
+  e.preventDefault();
+
+  const user = document.getElementById("adminUser").value;
+  const pass = document.getElementById("adminPass").value;
+
+  if (user === "admin" && pass === "Admin@3470") {
+    alert("Login Successful ✅");
+    // window.location.href = "admin_dashboard.html";
+  } else {
+    alert("Invalid Credentials ❌");
+  }
+}
+</script>
+
+</body>
+</html>
+

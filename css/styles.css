@@ -1,0 +1,405 @@
+/* ------------------------------------------------
+              Employee register page 
+   ------------------------------------------------ */
+
+.employee-task-register-form {
+  display: flex;
+  width: 900px;
+  margin: 50px auto;
+  box-shadow: 0 10px 30px rgba(6, 35, 129, 0.637);
+  border-radius: 12px;
+  overflow: hidden;  
+}
+
+/*--- LEFT SIDE ---*/
+.employee-task-left-register {
+  flex: 1;
+  background: #a7c9ec;
+  color: white;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.employee-task-left-register img {
+  width: 200px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  height: auto;
+}
+
+.employee-task-left-register h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #157722;
+}
+
+.employee-task-left-register p {
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.9;
+  color: #075f49;
+}
+
+/*--- RIGHT SIDE ---*/
+.employee-task-right-register {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+.employee-task-right-register h2 {
+  margin-bottom: 15px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.employee-task-right-register p {
+  margin-bottom: 20px;
+  color: #666;
+  text-align: center;
+}
+
+/*--- INPUTS ---*/
+.employee-register-task-page input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.employee-register-task-page input:focus {
+  border: 1px solid #0aa06e;   
+  outline: none;               
+  box-shadow: 0 0 0 3px rgba(10, 160, 110, 0.15);
+}
+
+/*--- BUTTON ---*/
+.employee-register-task-page button {
+  width: 100%;
+  padding: 12px;
+  background: #2a7fe0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.employee-register-task-page button:hover {
+  background-color: #075f49;
+}
+
+/*--- LOGIN LINK ---*/
+.employee-login-link {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.employee-login-link a {
+  color: #146acc;
+  text-decoration: none;
+}
+
+.employee-register-password-wrapper {
+  position: relative;
+}
+
+.Emp-reg-toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
+
+.Emp-reg-toggle-password i {
+  font-size: 14px;
+}
+
+.Emp-reg-toggle-password:hover {
+  color: #2d89ef;
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -----------------------------------------
+              Admin Login page
+   ----------------------------------------- */
+
+/* ===== left PANEL ===== */
+.admin-login-container {
+  display: flex;
+  max-width: 800px;
+  width: 90%;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(13, 16, 170, 0.651);
+  overflow: hidden;
+}
+
+.admin-left-login {
+  flex: 1;
+  background: #a7ecd5;
+  color: white;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-left-login img {
+  width: 170px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+.admin-left-login h1 {
+  font-size: 26px;
+  margin-bottom: 15px;
+  color: #073e7e;
+}
+
+.admin-left-login p {
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.9;
+  color: #07235f;
+}
+
+/* ===== RIGHT PANEL ===== */
+.admin-right-login {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+.admin-right-login h2 {
+  margin-bottom: 15px;
+  font-size: 26px;
+  text-align: center;
+}
+
+.admin-right-login p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* ===== INPUTS ===== */
+.admin-form-login input {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.admin-form-login input:focus {
+  border-color: #2a7fe0;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(42,127,224,0.15);
+}
+
+/* ===== BUTTON ===== */
+.admin-form-login button {
+  width: 100%;
+  padding: 12px;
+  background: #2a7fe0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.admin-form-login button:hover {
+  background: #075f49;
+}
+
+/* ===== PASSWORD ===== */
+.admin-login-password-wrapper {
+  position: relative;
+}
+
+.admin-lg-toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 38%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
+
+.admin-lg-toggle-password i {
+  font-size: 12px;
+}
+
+.admin-lg-toggle-password:hover {
+  color: #2d89ef;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------------
+             Employee Login Page
+   ------------------------------------------- */
+
+/*--- CARD ---*/
+.employee-task-login-form {
+  width: 850px;
+  height: 450px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 10px 30px rgba(12, 2, 150, 0.719);
+  margin: 60px auto;
+  background: #fff;
+}
+
+/*--- LEFT SIDE ---*/
+.employee-task-left-login {
+  flex: 1;
+  background-color: rgb(152, 206, 179);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.employee-task-left-login img {
+  width: 170px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+.employee-task-left-login h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #073e7e;
+}
+
+.employee-task-left-login p {
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.9;
+  color: #07235f;
+}
+
+/*---- RIGHT SIDE ----*/
+.employee-task-right-login {
+  flex: 1;
+  background: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.employee-task-right-login h2 {
+  margin-bottom: 15px;
+  font-size: 26px;
+  text-align: center;
+}
+
+/*--- INPUT ---*/
+.emp-loginForm input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.emp-loginForm input:focus {
+  border-color: #2a7fe0;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(42,127,224,0.15);
+}
+
+/*--- LOGIN BUTTON ---*/
+.emp-loginForm button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background: #13722f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.emp-loginForm button[type="submit"]:hover {
+  background: #e05536;
+}
+
+/*--- LINK BUTTONS ---*/
+.emp-link-btn {
+  margin-top: 15px;
+  background: none;
+  border: none;
+  color: #3a3edc;
+  cursor: pointer;
+}
+
+/*--- REGISTER BUTTON ---*/
+.emp-lg-register-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #3a3edc;
+  background: transparent;
+  color: #3a3edc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.emp-lg-register-btn:hover {
+  background: #3a3edc;
+  color: white;
+}
+
+/*--- Password hide icon ---*/
+.emp-lg-password-box {
+  position: relative;
+}
+
+.emp-lg-password-box input {
+  width: 100%;
+  padding: 12px;
+  padding-right: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.emp-lg-password-box i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 12px;
+}
+
+.emp-lg-password-box i:hover {
+  color: #2d89ef;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------- */
