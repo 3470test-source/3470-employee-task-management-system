@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Employee Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<!-- Employee dashbaord HEADER -->
+<header class="employee-dashboard-header">
+
+  <!-- LEFT: logo + menu -->
+  <div class="left-header-emp">
+
+    <div class="logo-header-emp">
+      <img src="/image/Logo3470-health3-removebg-preview (1).png" alt="ETMS Logo">
+    </div>
+
+    <div class="left-header-emp-menu-btn">
+      <i class="fa fa-bars"></i>
+    </div>
+
+  </div>
+
+  <!-- CENTER TITLE -->
+  <div class="header-emp-dash-center">
+    EMPLOYEE TASK MANAGEMENT SYSTEM
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-header-emp">
+
+  <!-- Notification Icon -->
+  <div class="emp-da-icon-notification">
+    <i class="fa fa-bell"></i>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="right-header-emp-profile">
+    <div class="right-header-avatar-icon">
+      <i class="fa fa-user"></i>
+    </div>
+    <span>Vignesh</span>
+  </div>
+
+</div>
+
+</header>
+
+<!-- Dashboard Side Bar -->
+<div class="employee-side-bar-container">
+
+  <!-- SIDEBAR -->
+  <aside class="employee-dsh-sidebar">
+
+    <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+    <!-- TASK DROPDOWN -->
+    <div class="employee-sidebar-task-dropdown">
+
+      <div class="emp-side-bar-drop-btn">
+        <i class="fa fa-briefcase"></i> Task
+        <i class="fa fa-angle-down"></i>
+      </div>
+
+      <div class="emp-side-bar-drop-content">
+        <a href="#"><i class="fa fa-plus-circle"></i> New Task</a>
+        <a href="#"><i class="fa fa-spinner"></i> Inprogress Task</a>
+        <a href="#"><i class="fa fa-check-circle"></i> Completed Task</a>
+        <a href="#"><i class="fa fa-list"></i> All Task</a>
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- Main Dashboard card -->
+  <main class="emp-dash-main-content">
+
+  <h2>Dashboard</h2>
+
+  <div class="employee-dashboard-cards">
+
+    <div class="emp-card new">
+      <div class="card-top">
+        <i class="fa fa-plus-circle"></i>
+        <h3>New Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="emp-card progress">
+      <div class="card-top">
+        <i class="fa fa-spinner"></i>
+        <h3>In Progress</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="emp-card completed">
+      <div class="card-top">
+        <i class="fa fa-check-circle"></i>
+        <h3>Completed</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="emp-card all">
+      <div class="card-top">
+        <i class="fa fa-list"></i>
+        <h3>All Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+  </div>
+
+</main>
+
+</div>
+
+
+<!-- drop down filed JS -->
+<script>
+  const dropBtn = document.querySelector(".emp-side-bar-drop-btn");
+  const dropdown = document.querySelector(".employee-sidebar-task-dropdown");
+
+  dropBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("active");
+  });
+</script>
+
+</body>
+</html>

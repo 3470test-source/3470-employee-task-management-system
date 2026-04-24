@@ -1079,3 +1079,261 @@ footer {
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------
+      Employee Dashboard
+   ---------------------------- */
+
+/*--- Employee Dashboard ---*/
+.employee-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #037c40;
+  color: white;
+  padding: 20px 50px;
+}
+
+/*--- LEFT ---*/
+.left-header-emp {
+  display: flex;
+  align-items: center;
+  gap: 55px;
+}
+
+.logo-header-emp img {
+  width: 100px; 
+}
+
+.left-header-emp-menu-btn {
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+/*--- CENTER TITLE ---*/
+.header-emp-dash-center {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 23px;
+}
+
+/*--- Header right section ---*/
+.right-header-emp {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+/*--- Notification icon ---*/
+.emp-da-icon-notification {
+  position: relative;
+  font-size: 23px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.emp-da-icon-notification:hover {
+  color: #0b0ec7;
+}
+
+/*--- Profile section ---*/
+.right-header-emp-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/*---- Avatar icon (circle) ----*/
+.right-header-avatar-icon {
+  width: 40px;
+  height: 40px;
+  background: #4CAF50;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.right-header-avatar-icon i {
+  font-size: 16px;
+}
+
+/*--- Hover effect ---*/
+.right-header-emp-profile:hover .right-header-avatar-icon {
+  background: #007bff;
+}
+
+.right-header-emp-profile span {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+/*--- Employee dash MAIN LAYOUT ---*/
+.employee-side-bar-container {
+  display: flex;
+  height: 100vh;
+}
+
+/*--- SIDEBAR ---*/
+.employee-dsh-sidebar {
+  width: 230px;
+  background: #01351f;
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*--- Sidebar links ---*/
+.employee-dsh-sidebar a {
+  text-decoration: none;
+  color: white;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: 0.3s;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.employee-dsh-sidebar a:hover {
+  background: #347fe7;
+  color: #fff;
+}
+
+/*--- Icons ---*/
+.employee-dsh-sidebar i {
+  width: 20px;
+  text-align: center;
+}
+
+/*--- Dropdown ---*/
+.employee-sidebar-task-dropdown {
+  width: 100%;
+}
+
+/*--- Dropdown button ---*/
+.emp-side-bar-drop-btn {
+  text-decoration: none;
+  color: white;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: 0.3s;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.emp-side-bar-drop-btn .fa-angle-down {
+  margin-left: auto;
+}
+
+.emp-side-bar-drop-btn i {
+  width: 20px;
+  text-align: center;
+}
+
+.emp-side-bar-drop-btn:hover {
+  background: #347fe7;
+  color: #fff;
+}
+
+/*--- Dropdown content ---*/
+.emp-side-bar-drop-content {
+  display: none;
+  flex-direction: column;
+  background: #076b41;
+}
+
+.emp-side-bar-drop-content a {
+  padding-left: 40px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+/*--- Show dropdown ---*/
+.employee-sidebar-task-dropdown.active .emp-side-bar-drop-content {
+  display: flex;
+}
+
+/*--- Rotate arrow ---*/
+.employee-sidebar-task-dropdown.active .fa-angle-down {
+  transform: rotate(180deg);
+}
+
+
+/*--- Main Content area ---*/
+.emp-dash-main-content {
+  flex: 1;
+  padding: 50px;
+  background: #f1f5f9;
+}
+
+.emp-dash-main-content h2 {
+  font-size: 28px;
+}
+
+/*--- Grid layout ---*/
+.employee-dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/*--- Card style ---*/
+.emp-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.emp-card:hover {
+  transform: translateY(-5px);
+}
+
+/*--- Card titles ---*/
+.emp-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+/*--- Numbers ---*/
+.emp-card p {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.emp-card i {
+  font-size: 24px;
+  color: #078318;
+}
+
+/*--- Different colors ---*/
+.emp-card.new {
+  border-left: 5px solid #3b82f6;
+}
+
+.emp-card.progress {
+  border-left: 5px solid #f59e0b;
+}
+
+.emp-card.completed {
+  border-left: 5px solid #10b981;
+}
+
+.emp-card.all {
+  border-left: 5px solid #6366f1;
+}
