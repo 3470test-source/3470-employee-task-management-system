@@ -1230,6 +1230,7 @@ footer {
   transition: 0.3s;
   font-size: 20px;
   letter-spacing: 0.5px;
+  cursor: pointer;
 }
 
 .emp-side-bar-drop-btn .fa-angle-down {
@@ -1263,6 +1264,7 @@ footer {
 .employee-sidebar-task-dropdown.active .emp-side-bar-drop-content {
   display: flex;
 }
+
 
 /*--- Rotate arrow ---*/
 .employee-sidebar-task-dropdown.active .fa-angle-down {
@@ -1337,3 +1339,355 @@ footer {
 .emp-card.all {
   border-left: 5px solid #6366f1;
 }
+
+/* --------------------------------------------------------------------------------------------------------------------------------- */
+
+/* --------------------------------
+          Admin Dashboard 
+   -------------------------------- */
+
+/*--- Admin dash MAIN LAYOUT ---*/
+.Admin-side-bar-container {
+  display: flex;
+  height: 100vh;
+}
+
+/*--- SIDEBAR ---*/
+.admin-dsh-sidebar {
+  width: 270px;
+  background: #01351f;
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*--- Sidebar links ---*/
+.admin-dsh-sidebar a {
+  text-decoration: none;
+  color: white;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: 0.3s;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.admin-dsh-sidebar a:hover {
+  background: #347fe7;
+  color: #fff;
+}
+
+/*--- Icons ---*/
+.admin-dsh-sidebar i {
+  width: 20px;
+  text-align: center;
+  color: rgb(221, 224, 6);
+}
+
+.admin-side-bar-drop-btn .icon-color  {
+   color: white;
+}
+
+/*--- Dropdown ---*/
+.admin-sidebar-task-dropdown {
+  width: 100%;
+}
+
+/*--- Show dropdown ---*/
+.admin-sidebar-task-dropdown.active .admin-side-bar-drop-content {
+  display: flex;
+}
+
+/*--- Rotate arrow ---*/
+.admin-sidebar-task-dropdown.active .fa-angle-down {
+  transform: rotate(180deg);
+}
+
+.admin-sidebar-task-dropdown .admin-side-bar-drop-content {
+  display: none;
+}
+
+.admin-sidebar-task-dropdown.active .admin-side-bar-drop-content {
+  display: block;
+}
+
+/*--- Dropdown button ---*/
+.admin-side-bar-drop-btn {
+  text-decoration: none;
+  color: white;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: 0.3s;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.admin-side-bar-drop-btn .fa-angle-down {
+  margin-left: auto;
+}
+
+.admin-side-bar-drop-btn i {
+  width: 20px;
+  text-align: center;
+}
+
+.admin-side-bar-drop-btn:hover {
+  background: #347fe7;
+  color: #fff;
+}
+
+/*--- Dropdown content ---*/
+.admin-side-bar-drop-content {
+  display: none;
+  flex-direction: column;
+  background: #076b41;
+}
+
+.admin-side-bar-drop-content a {
+  padding-left: 40px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+
+/*--- Main Content area ---*/
+.admin-dash-main-content {
+  flex: 1;
+  padding: 50px;
+  background: #f1f5f9;
+}
+
+.admin-dash-main-content h2 {
+  font-size: 28px;
+}
+
+/*--- Grid layout ---*/
+.admin-dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/*--- Card style ---*/
+.admin-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+}
+
+/*--- Card titles ---*/
+.admin-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+/*--- Numbers ---*/
+.admin-card p {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.admin-card i {
+  font-size: 24px;
+  color: #078318;
+}
+
+/*--- Different colors ---*/
+.admin-card.Total-Department {
+  border-left: 5px solid #3b82f6;
+}
+
+.admin-card.Total-Employee {
+  border-left: 5px solid #f59e0b;
+}
+
+.admin-card.New-Tasks {
+  border-left: 5px solid #10b981;
+}
+
+.admin-card.Inprogress {
+  border-left: 5px solid #6366f1;
+}
+
+.admin-card.Completed {
+  border-left: 5px solid #d063f1;
+}
+
+.admin-card.All-Tasks {
+  border-left: 5px solid #f1636f;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -----------------------------
+      Profile dropdown filed
+   ----------------------------- */
+
+/*--- Admin profile dropdown ---*/
+.admin-profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/*--- Dropdown hidden ---*/
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  min-width: 160px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+}
+
+/*--- Show class ---*/
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu i {
+  margin-right: 8px;
+  color: rgb(6, 131, 48);
+}
+
+.dropdown-menu a:hover {
+  background: #f1f1f1;
+}
+
+/*---- Employee ----*/
+
+.emp-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+}
+
+/*--- Show class ---*/
+.emp-dropdown-menu.show {
+  display: block;
+}
+
+.emp-dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.emp-dropdown-menu i {
+  margin-right: 8px;
+  color: rgb(6, 131, 48);
+}
+
+.emp-dropdown-menu a:hover {
+  background: #f1f1f1;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------
+      Search Employee - Admin Side
+   ------------------------------------- */
+
+/*--- Card container ---*/
+.search-card-emp {
+  width: 80%;
+  margin: 30px auto;
+  background: #fff;
+  padding: 50px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  height: 50%;
+}
+
+/*--- Title ---*/
+.search-card-emp h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/*--- Inner box ---*/
+.search-box-emp {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/*--- Label ---*/
+.search-box-emp label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/*--- Input ---*/
+.search-box-emp input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.search-box-emp input:focus {
+  border: 1px solid #0a4ba0;   
+  outline: none;               
+  box-shadow: 0 0 0 3px rgba(10, 92, 160, 0.15);
+}
+
+/*--- Button ---*/
+.search-box-emp button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-box-emp button:hover {
+  background: #0056b3;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------
+       Task Reports - Admin Side 
+   -------------------------------    */
+
+   

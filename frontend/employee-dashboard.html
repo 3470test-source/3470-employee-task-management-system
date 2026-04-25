@@ -57,12 +57,23 @@
   </div>
 
   <!-- Profile Section -->
-  <div class="right-header-emp-profile">
+  <div class="admin-profile-dropdown">
+
+  <!-- Click Button -->
+  <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
     <div class="right-header-avatar-icon">
       <i class="fa fa-user"></i>
     </div>
     <span>Vignesh</span>
   </div>
+
+  <!-- Dropdown -->
+  <div class="emp-dropdown-menu" id="dropdownMenu">
+    <a href="#"><i class="fa fa-user"></i> My Profile</a>
+    <a href="#"><i class="fa-solid fa-key"></i> Change Password</a>
+    <a href="/frontend/employee-login.html"><i class="fa fa-sign-out"></i> Logout</a>
+  </div>
+</div>
 
 </div>
 
@@ -140,7 +151,6 @@
 
 </div>
 
-
 <!-- drop down filed JS -->
 <script>
   const dropBtn = document.querySelector(".emp-side-bar-drop-btn");
@@ -149,6 +159,22 @@
   dropBtn.addEventListener("click", () => {
     dropdown.classList.toggle("active");
   });
+</script>
+
+
+<!-- profile dropdown field JS -->
+<script>
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+// optional: close when click outside
+document.addEventListener("click", function(event) {
+  let dropdown = document.querySelector(".admin-profile-dropdown");
+  if (!dropdown.contains(event.target)) {
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+});
 </script>
 
 </body>
