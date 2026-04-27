@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin Dashboard</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Add Task</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -22,11 +22,15 @@
       box-sizing: border-box;
     }
 
+    body {
+      background: #dddfe7;
+    }
+    
     </style>
 
 </head>
 <body>
-
+    
 <!-- Employee dashbaord HEADER -->
 <header class="employee-dashboard-header">
 
@@ -166,65 +170,76 @@
 
   </aside>
 
-<!-- Main Dashboard card -->
-  <main class="admin-dash-main-content">
+<!-- Add Task - Admin Side -->
+<div class="add-task-card-admin">
+  <h2>Add Task</h2>
 
-  <h2>Dashboard</h2>
+  <form id="addTaskForm" enctype="multipart/form-data">
+    <div class="add-task-box">
 
-  <div class="admin-dashboard-cards">
-
-    <div class="admin-card Total-Department">
-      <div class="card-top">
-        <i class="fa fa-sitemap"></i>
-        <h3>Total Department</h3>
+      <!-- Department -->
+      <div class="add-task-form-group">
+        <label>Department Name:</label>
+        <select id="taskDept" required>
+          <option value="">Select Department</option>
+          <option>HR</option>
+          <option>IT</option>
+          <option>Finance</option>
+        </select>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Total-Employee">
-      <div class="card-top">
-        <i class="fa fa-users"></i>
-        <h3>Total Employee</h3>
+      <!-- Employee -->
+      <div class="add-task-form-group">
+        <label>Employee List:</label>
+        <select id="taskEmployee" required>
+          <option value="">Select Employee</option>
+          <option>John</option>
+          <option>David</option>
+        </select>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card New-Tasks">
-      <div class="card-top">
-        <i class="fa fa-plus-circle"></i>
-        <h3>New Tasks</h3>
+      <!-- Priority -->
+      <div class="add-task-form-group">
+        <label>Task Priority:</label>
+        <select id="taskPriority" required>
+        <option value="">Select Task Priority</option>
+          <option value="Normal">Normal</option>
+          <option value="Medium">Medium</option>
+          <option value="Urgent">Urgent</option>
+        </select>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Inprogress">
-      <div class="card-top">
-        <i class="fa fa-spinner"></i>
-        <h3>Inprogress Tasks</h3>
+      <!-- Title -->
+      <div class="add-task-form-group">
+        <label>Task Title:</label>
+        <input type="text" id="taskTitle" required>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Completed">
-      <div class="card-top">
-        <i class="fa fa-check-circle"></i>
-        <h3>Completed Tasks</h3>
+      <!-- Description -->
+      <div class="add-task-form-group">
+        <label>Task Description:</label>
+        <textarea id="taskDesc" rows="3" required></textarea>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card All-Tasks">
-      <div class="card-top">
-        <i class="fa fa-tasks"></i>
-        <h3>All Tasks</h3>
+      <!-- End Date -->
+      <div class="add-task-form-group">
+        <label>Task End Date:</label>
+        <input type="date" id="taskEndDate" required>
       </div>
-      <p>0</p>
+
+      <!-- File -->
+      <div class="add-task-form-group">
+        <label>Upload File:</label>
+        <input type="file" id="taskFile">
+      </div>
+
+      <!-- Button -->
+      <button type="submit" class="add-task-btn">
+        Add Task
+      </button>
+
     </div>
-
-  </div>
-
-</main>
-
+  </form>
 </div>
 
 <!-- drop down filed JS -->
@@ -265,4 +280,5 @@ document.addEventListener("click", function(event) {
 </script>
 
 </body>
-</html>
+</html> 
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin Dashboard</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Add Employee</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -22,11 +22,15 @@
       box-sizing: border-box;
     }
 
+    body {
+      background: #dddfe7;
+    }
+
     </style>
 
 </head>
 <body>
-
+    
 <!-- Employee dashbaord HEADER -->
 <header class="employee-dashboard-header">
 
@@ -166,65 +170,81 @@
 
   </aside>
 
-<!-- Main Dashboard card -->
-  <main class="admin-dash-main-content">
+  <!-- Add Employee - admin side -->
+  <div class="add-employee-card-admin">
+  <h2>Add Employee</h2>
 
-  <h2>Dashboard</h2>
+  <form id="addEmployeeForm" enctype="multipart/form-data">
+    <div class="add-employee-box">
 
-  <div class="admin-dashboard-cards">
-
-    <div class="admin-card Total-Department">
-      <div class="card-top">
-        <i class="fa fa-sitemap"></i>
-        <h3>Total Department</h3>
+      <div class="add-employee-form-group">
+        <label>Department Name:</label>
+        <select id="empDept" required>
+          <option value="">Select Department</option>
+        </select>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Total-Employee">
-      <div class="card-top">
-        <i class="fa fa-users"></i>
-        <h3>Total Employee</h3>
+      <div class="add-employee-form-group">
+        <label>Employee ID:</label>
+        <input type="text" id="empId" required>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card New-Tasks">
-      <div class="card-top">
-        <i class="fa fa-plus-circle"></i>
-        <h3>New Tasks</h3>
+      <div class="add-employee-form-group">
+        <label>Employee Name:</label>
+        <input type="text" id="empName" required>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Inprogress">
-      <div class="card-top">
-        <i class="fa fa-spinner"></i>
-        <h3>Inprogress Tasks</h3>
+      <div class="add-employee-form-group">
+        <label>Email:</label>
+        <input type="email" id="empEmail" required>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card Completed">
-      <div class="card-top">
-        <i class="fa fa-check-circle"></i>
-        <h3>Completed Tasks</h3>
+      <div class="add-employee-form-group">
+        <label>Contact Number:</label>
+        <input type="tel" id="empPhone" required>
       </div>
-      <p>0</p>
-    </div>
 
-    <div class="admin-card All-Tasks">
-      <div class="card-top">
-        <i class="fa fa-tasks"></i>
-        <h3>All Tasks</h3>
+      <div class="add-employee-form-group">
+        <label>Designation:</label>
+        <input type="text" id="empDesignation" required>
       </div>
-      <p>0</p>
+
+      <div class="add-employee-form-group">
+        <label>Date of Birth:</label>
+        <input type="date" id="empDOB" required>
+      </div>
+
+      <div class="add-employee-form-group">
+        <label>Address:</label>
+        <textarea id="empAddress" rows="3" required></textarea>
+      </div>
+
+      <div class="add-employee-form-group">
+        <label>Date of Joining:</label>
+        <input type="date" id="empDOJ" required>
+      </div>
+
+      <div class="add-employee-form-group">
+        <label>Description:</label>
+        <textarea id="empDesc" rows="2"></textarea>
+      </div>
+
+      <div class="add-employee-form-group">
+        <label>Password:</label>
+        <input type="password" id="empPassword" required>
+      </div>
+
+      <div class="add-employee-form-group">
+        <label>Employee Photo:</label>
+        <input type="file" id="empPhoto" accept="image/*">
+      </div>
+
+      <button type="submit" class="add-employee-btn-add">
+        Add Employee
+      </button>
+
     </div>
-
-  </div>
-
-</main>
-
+  </form>
 </div>
 
 <!-- drop down filed JS -->
@@ -264,5 +284,78 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    let departments = [
+  { id: 1, name: "HR" },
+  { id: 2, name: "Technical" },
+  { id: 3, name: "Accounts" }
+];
+
+let employees = [];
+
+// Load departments dropdown
+function loadDepartments() {
+  const select = document.getElementById("empDept");
+
+  departments.forEach(dept => {
+    const option = document.createElement("option");
+    option.value = dept.id;
+    option.textContent = dept.name;
+    select.appendChild(option);
+  });
+}
+loadDepartments();
+
+
+// Add Employee
+document.getElementById("addEmployeeForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const employee = {
+    deptId: document.getElementById("empDept").value,
+    empId: document.getElementById("empId").value,
+    name: document.getElementById("empName").value,
+    email: document.getElementById("empEmail").value,
+    phone: document.getElementById("empPhone").value,
+    designation: document.getElementById("empDesignation").value,
+    dob: document.getElementById("empDOB").value,
+    address: document.getElementById("empAddress").value,
+    doj: document.getElementById("empDOJ").value,
+    description: document.getElementById("empDesc").value,
+    password: document.getElementById("empPassword").value,
+    photo: document.getElementById("empPhoto").files[0]?.name || ""
+  };
+
+  // Basic validation
+  if (!employee.deptId || !employee.empId || !employee.name || !employee.email) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  employees.push(employee);
+
+  console.log("Employee Added:", employee);
+
+  alert("Employee added successfully!");
+
+  document.getElementById("addEmployeeForm").reset();
+});
+</script>
+
+
 </body>
-</html>
+</html> 

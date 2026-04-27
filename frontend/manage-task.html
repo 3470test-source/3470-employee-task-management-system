@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin Dashboard</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Task</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -22,11 +22,15 @@
       box-sizing: border-box;
     }
 
+    body {
+      background: #dddfe7;
+    }
+    
     </style>
 
 </head>
 <body>
-
+    
 <!-- Employee dashbaord HEADER -->
 <header class="employee-dashboard-header">
 
@@ -166,64 +170,45 @@
 
   </aside>
 
-<!-- Main Dashboard card -->
-  <main class="admin-dash-main-content">
+<!-- Manage Task - Admin side -->
+<div class="manage-task-container">
 
-  <h2>Dashboard</h2>
+  <h2>Manage Tasks</h2>
 
-  <div class="admin-dashboard-cards">
+  <!-- Filters -->
+  <div class="manage-task-filters">
+    <select id="filterDept">
+      <option value="">All Departments</option>
+      <option>HR</option>
+      <option>IT</option>
+    </select>
 
-    <div class="admin-card Total-Department">
-      <div class="card-top">
-        <i class="fa fa-sitemap"></i>
-        <h3>Total Department</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Total-Employee">
-      <div class="card-top">
-        <i class="fa fa-users"></i>
-        <h3>Total Employee</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card New-Tasks">
-      <div class="card-top">
-        <i class="fa fa-plus-circle"></i>
-        <h3>New Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Inprogress">
-      <div class="card-top">
-        <i class="fa fa-spinner"></i>
-        <h3>Inprogress Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Completed">
-      <div class="card-top">
-        <i class="fa fa-check-circle"></i>
-        <h3>Completed Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card All-Tasks">
-      <div class="card-top">
-        <i class="fa fa-tasks"></i>
-        <h3>All Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
+    <select id="filterStatus">
+      <option value="">All Status</option>
+      <option>New</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+    </select>
   </div>
 
-</main>
+  <!-- Table -->
+  <table class="manage-task-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Task Title</th>
+        <th>Employee</th>
+        <th>Priority</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody id="taskTableBody">
+      <!-- Dynamic rows -->
+    </tbody>
+  </table>
 
 </div>
 
@@ -264,5 +249,84 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let tasks = [
+  {
+    id: 1,
+    title: "Fix login bug",
+    employee: "John",
+    priority: "Urgent",
+    endDate: "2026-05-01",
+    status: "New"
+  }
+];
+
+function renderTasks() {
+  let tbody = document.getElementById("taskTableBody");
+  tbody.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.employee}</td>
+        <td>${task.priority}</td>
+        <td>${task.endDate}</td>
+        <td>${task.status}</td>
+        <td>
+          <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${index})">Edit</button>
+          <button class="manage-task-action-btn manage-tsk-delete-btn" onclick="deleteTask(${index})">Delete</button>
+          <button class="manage-task-action-btn manage-tsk-status-btn" onclick="changeStatus(${index})">Update</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+
+function changeStatus(index) {
+  let current = tasks[index].status;
+
+  if (current === "New") tasks[index].status = "In Progress";
+  else if (current === "In Progress") tasks[index].status = "Completed";
+  else tasks[index].status = "New";
+
+  renderTasks();
+}
+
+function editTask(index) {
+  let newTitle = prompt("Edit Task Title", tasks[index].title);
+  if (newTitle) {
+    tasks[index].title = newTitle;
+    renderTasks();
+  }
+}
+
+// IMPORTANT
+renderTasks();
+</script>
+
 </body>
-</html>
+</html>   

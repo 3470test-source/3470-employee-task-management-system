@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin Dashboard</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Department</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -20,6 +20,10 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    body {
+      background: #dddfe7;
     }
 
     </style>
@@ -166,65 +170,24 @@
 
   </aside>
 
-<!-- Main Dashboard card -->
-  <main class="admin-dash-main-content">
+<!-- Manage Department -->
+<div class="manage-dept-card">
+  <h2>Manage Department</h2>
 
-  <h2>Dashboard</h2>
+  <table class="manage-dept-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Department Name</th>
+        <th>Creation Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-  <div class="admin-dashboard-cards">
-
-    <div class="admin-card Total-Department">
-      <div class="card-top">
-        <i class="fa fa-sitemap"></i>
-        <h3>Total Department</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Total-Employee">
-      <div class="card-top">
-        <i class="fa fa-users"></i>
-        <h3>Total Employee</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card New-Tasks">
-      <div class="card-top">
-        <i class="fa fa-plus-circle"></i>
-        <h3>New Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Inprogress">
-      <div class="card-top">
-        <i class="fa fa-spinner"></i>
-        <h3>Inprogress Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card Completed">
-      <div class="card-top">
-        <i class="fa fa-check-circle"></i>
-        <h3>Completed Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="admin-card All-Tasks">
-      <div class="card-top">
-        <i class="fa fa-tasks"></i>
-        <h3>All Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-  </div>
-
-</main>
-
+    <tbody id="deptTableBody">
+      <!-- Data will come from JS -->
+    </tbody>
+  </table>
 </div>
 
 <!-- drop down filed JS -->
@@ -264,5 +227,71 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    let departments = [
+  { id: 1, name: "HR", date: "2024-03-10 12:29:06" },
+  { id: 2, name: "Logistics", date: "2024-03-10 12:29:06" },
+  { id: 3, name: "Technical", date: "2024-03-10 12:29:06" },
+  { id: 4, name: "Accounts", date: "2024-03-10 12:29:06" }
+];
+
+function renderTable() {
+  const tbody = document.getElementById("deptTableBody");
+  tbody.innerHTML = "";
+
+  departments.forEach((dept, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${dept.name}</td>
+        <td>${dept.date}</td>
+        <td>
+          <button class="manage-dept-btn-edit" onclick="editDept(${dept.id})">Edit</button>
+          <button class="manage-dept-btn-delete" onclick="deleteDept(${dept.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+renderTable();
+</script>
+
+<script>
+    function deleteDept(id) {
+  if (confirm("Are you sure to delete?")) {
+    departments = departments.filter(dept => dept.id !== id);
+    renderTable();
+  }
+}
+</script>
+
+<script>
+    function editDept(id) {
+  const dept = departments.find(d => d.id === id);
+  const newName = prompt("Edit Department Name:", dept.name);
+
+  if (newName) {
+    dept.name = newName;
+    renderTable();
+  }
+}
+</script>
+
+
 </body>
-</html>
+</html>   
