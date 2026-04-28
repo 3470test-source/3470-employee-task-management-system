@@ -25,6 +25,103 @@
     body {
       background: #dddfe7;
     }
+
+
+
+
+
+
+
+
+.new-task-adm-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.new-task-adm-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.newtask-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.newtask-table th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.newtask-table th {
+  background: #f1f2f6;
+}
+
+.newtask-ad-status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.newtask-ad-status.pending {
+  background: red;
+}
+
+.newtask-ad-status.updated {
+  background: green;
+}
+
+.newtask-table button {
+  padding: 6px 12px;
+  border: none;
+  background: #3498db;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.newtask-table button:hover {
+  background: #2980b9;
+}
+
+
+
+
+
+
+
+
+
+
     
     </style>
 
@@ -182,6 +279,31 @@
 
 
 
+<!-- New Task - Admin Side -->
+<div class="new-task-adm-container">
+  <h2>New Tasks</h2>
+
+  <table id="taskTable" class="newtask-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Task Title</th>
+        <th>Department</th>
+        <th>Assign To</th>
+        <th>Assign Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="taskBody">
+      <!-- Tasks will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+
+
 
 
 
@@ -233,6 +355,75 @@ document.addEventListener("click", function(event) {
     document.getElementById("dropdownMenu").classList.remove("show");
   }
 });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  const tasks = [
+  {
+    title: "Change in the XYZ Software",
+    department: "Technical",
+    assignedTo: "John Doe (1452666)",
+    assignDate: "2024-09-20 07:17:21",
+    endDate: "2024-09-25",
+    status: "Not Updated yet"
+  }
+];
+
+function loadTasks() {
+  const tbody = document.getElementById("taskBody");
+  tbody.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${task.title}</td>
+      <td>${task.department}</td>
+      <td>${task.assignedTo}</td>
+      <td>${task.assignDate}</td>
+      <td>${task.endDate}</td>
+      <td>
+        <span class="newtask-ad-status ${task.status === 'Not Updated yet' ? 'pending' : 'updated'}">
+          ${task.status}
+        </span>
+      </td>
+      <td>
+        <button onclick="viewTask(${index})">View</button>
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+function viewTask(index) {
+  const task = tasks[index];
+  alert(`Task: ${task.title}\nAssigned to: ${task.assignedTo}`);
+}
+
+// Load on page start
+loadTasks();
 </script>
 
 </body>
