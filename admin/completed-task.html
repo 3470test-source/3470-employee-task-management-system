@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin - Add Department</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Completed Task</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -142,9 +142,9 @@
 
       <div class="admin-side-bar-drop-content">
         <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
-        <a href="#"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
-        <a href="#"><i class="fa fa-check"></i> Completed Tasks</a>
-        <a href="#"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
       </div>
 
     </div>
@@ -170,25 +170,27 @@
 
   </aside>
 
-<!-- Add Department  -->
-<div class="add-department-admin">
-  <h2>Add Department</h2>
+<!-- Completed Task - Admin side -->
+<div class="completed-task-container">
+   <h2>View Completed Task</h2>
 
-  <form id="addDepartmentForm">
-    <div class="add-department-box">
+   <table id="completedtask-table" class="completedtask-table">
+      <thead>
+        <tr>
+           <th>S.No</th>
+           <th>Task Title</th>
+           <th>Department</th>
+           <th>Assign To</th>
+           <th>Assign Date</th>
+           <th>End Date</th>
+           <th>Status</th>
+           <th>Action</th>
+        </tr>
+      </thead>
 
-      <div class="add-department-form-group">
-        <label>Department Name:</label>
-        <input type="text" id="deptName" required>
-      </div>
-
-      <button type="submit" class="add-department-btn-add">
-        Add Department
-      </button>
-
-    </div>
-  </form>
-</div>  
+    <tbody id="completedTaskTable"></tbody>
+   </table>
+</div>
 
 <!-- drop down filed JS -->
 <script>
@@ -227,5 +229,84 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    const tasks = [
+{
+ title:"Change in XYZ Software",
+ department:"Technical",
+ assignedTo:"John Doe",
+ assignDate:"2024-09-20",
+ endDate:"2024-09-25",
+ status:"Completed"
+},
+{
+ title:"Website Update",
+ department:"IT",
+ assignedTo:"David",
+ assignDate:"2024-09-22",
+ endDate:"2024-09-30",
+ status:"In Progress / Process"
+}
+];
+
+</script>
+
+<script>
+function loadCompletedTasks() {
+
+    const tbody = document.getElementById("completedTaskTable");
+    tbody.innerHTML = "";
+
+    const completedTasks =
+        tasks.filter(task => task.status === "Completed");
+
+    completedTasks.forEach((task, index) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${task.title}</td>
+            <td>${task.department}</td>
+            <td>${task.assignedTo}</td>
+            <td>${task.assignDate}</td>
+            <td>${task.endDate}</td>
+
+            <td>
+                <span class="completedTask-status-badge completed">
+                    ${task.status}
+                </span>
+            </td>
+
+            <td>
+                <button onclick="viewTask(${index})">
+                    View
+                </button>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
+function viewTask(index){
+   alert("View Completed Task");
+}
+
+loadCompletedTasks();
+</script>
+
 </body>
-</html> 
+</html>  

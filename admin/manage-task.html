@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Task</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #dddfe7;
+    }
+    
+    </style>
+
+</head>
+<body>
+    
+<!-- Employee dashbaord HEADER -->
+<header class="employee-dashboard-header">
+
+  <!-- LEFT: logo + menu -->
+  <div class="left-header-emp">
+
+    <div class="logo-header-emp">
+      <img src="/image/Logo3470-health3-removebg-preview (1).png" alt="ETMS Logo">
+    </div>
+
+    <div class="left-header-emp-menu-btn">
+      <i class="fa fa-bars"></i>
+    </div>
+
+  </div>
+
+  <!-- CENTER TITLE -->
+  <div class="header-emp-dash-center">
+    EMPLOYEE TASK MANAGEMENT SYSTEM
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-header-emp">
+
+<!-- Profile Section -->
+<div class="admin-profile-dropdown">
+
+  <!-- Click Button -->
+  <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
+    <div class="right-header-avatar-icon">
+      <i class="fa fa-user"></i>
+    </div>
+    <span>Admin</span>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="dropdown-menu" id="dropdownMenu">
+    <a href="#"><i class="fa fa-user"></i> My Profile</a>
+    <a href="#"><i class="fa fa-cog"></i> Settings</a>
+    <a href="/frontend/admin-login.html"><i class="fa fa-sign-out"></i> Logout</a>
+  </div>
+
+</div>
+
+</div>
+
+</header>    
+
+<!-- Dashboard Side Bar -->
+<div class="Admin-side-bar-container">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-dsh-sidebar">
+
+    <a href="/frontend/admin-dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+    <!-- TASK DROPDOWN / Department -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fas fa-sitemap"></i> Department
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/add-department.html"><i class="fa fa-plus"></i> Add</a>
+        <a href="/frontend/manage-department.html"><i class="fa fa-cogs"></i> Manage</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Department -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-users"></i> Employee
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/add-employee.html"><i class="fa fa-user-plus"></i> Add Employee</a>
+        <a href="/frontend/manage-employee.html"><i class="fa fa-users"></i> Manage Employee</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Task -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-tasks"></i> Task
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/addtask-admin.html"><i class="fa fa-plus-circle"></i> Add Task</a>
+        <a href="/frontend/manage-task.html"><i class="fa fa-tasks"></i> Manage Task</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Task status -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-chart-line"></i> Task Status
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Pages -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-globe"></i> Pages
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/about.html"><i class="fa fa-building"></i> About Us</a>
+        <a href="/frontend/contact.html"><i class="fa fa-envelope"></i> Contact Us</a>
+      </div>
+
+    </div>
+
+    <a href="/frontend/search-employee.html"><i class="fa fa-search"></i> Search Employee</a>
+
+    <a href="/frontend/task-reports.html"><i class="fa fa-file-alt"></i> Task Reports</a>
+
+  </aside>
+
+<!-- Manage Task - Admin side -->
+<div class="manage-task-container">
+
+  <h2>Manage Tasks</h2>
+
+  <!-- Filters -->
+  <div class="manage-task-filters">
+    <select id="filterDept">
+      <option value="">All Departments</option>
+      <option>HR</option>
+      <option>IT</option>
+    </select>
+
+    <select id="filterStatus">
+      <option value="">All Status</option>
+      <option>New</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <table class="manage-task-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Task Title</th>
+        <th>Employee</th>
+        <th>Priority</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody id="taskTableBody">
+      <!-- Dynamic rows -->
+    </tbody>
+  </table>
+
+</div>
+
+<!-- drop down filed JS -->
+<script>
+  const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
+
+  dropBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+
+      const dropdown = this.parentElement;
+
+      // Close other dropdowns (optional but better UX)
+      document.querySelectorAll(".admin-sidebar-task-dropdown").forEach(item => {
+        if (item !== dropdown) {
+          item.classList.remove("active");
+        }
+      });
+
+      // Toggle current dropdown
+      dropdown.classList.toggle("active");
+    });
+  });
+</script>
+
+<!-- profile dropdown field JS -->
+<script>
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+// optional: close when click outside
+document.addEventListener("click", function(event) {
+  let dropdown = document.querySelector(".admin-profile-dropdown");
+  if (!dropdown.contains(event.target)) {
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let tasks = [
+  {
+    id: 1,
+    title: "Fix login bug",
+    employee: "John",
+    priority: "Urgent",
+    endDate: "2026-05-01",
+    status: "New"
+  }
+];
+
+function renderTasks() {
+  let tbody = document.getElementById("taskTableBody");
+  tbody.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.employee}</td>
+        <td>${task.priority}</td>
+        <td>${task.endDate}</td>
+        <td>${task.status}</td>
+        <td>
+          <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${index})">Edit</button>
+          <button class="manage-task-action-btn manage-tsk-delete-btn" onclick="deleteTask(${index})">Delete</button>
+          <button class="manage-task-action-btn manage-tsk-status-btn" onclick="changeStatus(${index})">Update</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+
+function changeStatus(index) {
+  let current = tasks[index].status;
+
+  if (current === "New") tasks[index].status = "In Progress";
+  else if (current === "In Progress") tasks[index].status = "Completed";
+  else tasks[index].status = "New";
+
+  renderTasks();
+}
+
+function editTask(index) {
+  let newTitle = prompt("Edit Task Title", tasks[index].title);
+  if (newTitle) {
+    tasks[index].title = newTitle;
+    renderTasks();
+  }
+}
+
+// IMPORTANT
+renderTasks();
+</script>
+
+</body>
+</html>   

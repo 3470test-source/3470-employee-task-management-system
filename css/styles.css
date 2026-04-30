@@ -2246,3 +2246,244 @@ footer {
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------ */
+
+/* -------------------------------
+       New Task - Admin Side 
+   ------------------------------- */
+
+.new-task-adm-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.new-task-adm-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.newtask-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.newtask-table th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.newtask-table th {
+  background: #2d6cdf;
+  color: white;
+}
+
+.newtask-ad-status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.newtask-ad-status.pending {
+  background: red;
+}
+
+.newtask-ad-status.updated {
+  background: green;
+}
+
+.newtask-table button {
+  padding: 6px 12px;
+  border: none;
+  background: #3498db;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.newtask-table button:hover {
+  background: #2980b9;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------ */
+
+/* -------------------------------
+       Inprogress Task - Admin Side 
+   ------------------------------- */
+
+.inprogress-task-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.inprogress-task-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.inprogresstask-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.inprogresstask-table th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.inprogresstask-table th {
+  background: #2d6cdf;
+  color: white;
+}
+
+.inprogresstask-status-badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.inprogresstask-status-badge {
+  background:#ffc107;
+  color:#000;
+}
+
+.inprogresstask-table button {
+  background:#0d6efd;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.inprogresstask-table button:hover {
+  background: #2980b9;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------
+       Completed Task - Admin Side 
+   ------------------------------- */
+
+.completed-task-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.completed-task-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.completedtask-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.completedtask-table th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.completedtask-table th {
+  background: #2d6cdf;
+  color: white;
+}
+
+.completedTask-status-badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.completedTask-status-badge {
+  background: #28a745;
+  color: white;
+}
+
+
+.completedtask-table button {
+  background:#0d6efd;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.completedtask-table button:hover {
+  background: #2980b9;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------
+      Emp Wise Task - Admin Side 
+   ------------------------------- */
+
+.emp-wise-report-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.emp-wise-report-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.emp-wise-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.emp-wise-report-table th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.emp-wise-report-table th {
+  background: #2d6cdf;
+  color: white;
+}
+
+.emp-wise-total-row {
+  background:#535252;
+  color:#fff;
+  font-weight:bold;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */

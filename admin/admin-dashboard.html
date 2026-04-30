@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Employee</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin Dashboard</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -22,15 +22,11 @@
       box-sizing: border-box;
     }
 
-    body {
-      background: #dddfe7;
-    }
-
     </style>
 
 </head>
 <body>
-    
+
 <!-- Employee dashbaord HEADER -->
 <header class="employee-dashboard-header">
 
@@ -142,9 +138,9 @@
 
       <div class="admin-side-bar-drop-content">
         <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
-        <a href="#"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
-        <a href="#"><i class="fa fa-check"></i> Completed Tasks</a>
-        <a href="#"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
       </div>
 
     </div>
@@ -170,27 +166,65 @@
 
   </aside>
 
-<!-- Manage Employee -->
-<div class="manage-emp-card">
-  <h2>Manage Employee</h2>
+<!-- Main Dashboard card -->
+  <main class="admin-dash-main-content">
 
-  <table class="manage-emp-table">
-    <thead>
-      <tr>
-        <th>S.No</th>
-        <th>Department</th>
-        <th>Employee Name</th>
-        <th>Email</th>
-        <th>Contact</th>
-        <th>Date of Joining</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+  <h2>Dashboard</h2>
 
-    <tbody id="empTableBody">
-      <!-- Dynamic Data -->
-    </tbody>
-  </table>
+  <div class="admin-dashboard-cards">
+
+    <div class="admin-card Total-Department">
+      <div class="card-top">
+        <i class="fa fa-sitemap"></i>
+        <h3>Total Department</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="admin-card Total-Employee">
+      <div class="card-top">
+        <i class="fa fa-users"></i>
+        <h3>Total Employee</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="admin-card New-Tasks">
+      <div class="card-top">
+        <i class="fa fa-plus-circle"></i>
+        <h3>New Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="admin-card Inprogress">
+      <div class="card-top">
+        <i class="fa fa-spinner"></i>
+        <h3>Inprogress Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="admin-card Completed">
+      <div class="card-top">
+        <i class="fa fa-check-circle"></i>
+        <h3>Completed Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+    <div class="admin-card All-Tasks">
+      <div class="card-top">
+        <i class="fa fa-tasks"></i>
+        <h3>All Tasks</h3>
+      </div>
+      <p>0</p>
+    </div>
+
+  </div>
+
+</main>
+
 </div>
 
 <!-- drop down filed JS -->
@@ -230,93 +264,5 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-  let employees = [
-  {
-    id: 1,
-    department: "HR",
-    name: "Rahul Singh",
-    email: "rahul12@gmail.com",
-    phone: "1234567890",
-    doj: "2024-08-10"
-  },
-  {
-    id: 2,
-    department: "Technical",
-    name: "John Doe",
-    email: "johndoe1@t.com",
-    phone: "3213213210",
-    doj: "2024-09-01"
-  }
-];
-
-function renderEmployees() {
-  const tbody = document.getElementById("empTableBody");
-  tbody.innerHTML = "";
-
-  employees.forEach((emp, index) => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${emp.department}</td>
-        <td>${emp.name}</td>
-        <td>${emp.email}</td>
-        <td>${emp.phone}</td>
-        <td>${emp.doj}</td>
-        <td>
-          <button class="manage-emp-btn-edit" onclick="editEmployee(${emp.id})">Edit</button>
-          <button class="manage-emp-btn-delete" onclick="deleteEmployee(${emp.id})">Delete</button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-renderEmployees();
-</script>
-
-<script>
-  function deleteEmployee(id) {
-  if (confirm("Are you sure?")) {
-    employees = employees.filter(emp => emp.id !== id);
-    renderEmployees();
-  }
-}
-</script>
-
-<script>
-  function editEmployee(id) {
-  const emp = employees.find(e => e.id === id);
-
-  const newName = prompt("Edit Name:", emp.name);
-  const newEmail = prompt("Edit Email:", emp.email);
-
-  if (newName && newEmail) {
-    emp.name = newName;
-    emp.email = newEmail;
-    renderEmployees();
-  }
-}
-</script>
-
 </body>
-</html> 
+</html>

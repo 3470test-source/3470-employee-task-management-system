@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Employee wise Task</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #dddfe7;
+    }
+
+    </style>
+
+</head>
+<body>
+    
+<!-- Employee dashbaord HEADER -->
+<header class="employee-dashboard-header">
+
+  <!-- LEFT: logo + menu -->
+  <div class="left-header-emp">
+
+    <div class="logo-header-emp">
+      <img src="/image/Logo3470-health3-removebg-preview (1).png" alt="ETMS Logo">
+    </div>
+
+    <div class="left-header-emp-menu-btn">
+      <i class="fa fa-bars"></i>
+    </div>
+
+  </div>
+
+  <!-- CENTER TITLE -->
+  <div class="header-emp-dash-center">
+    EMPLOYEE TASK MANAGEMENT SYSTEM
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-header-emp">
+
+<!-- Profile Section -->
+<div class="admin-profile-dropdown">
+
+  <!-- Click Button -->
+  <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
+    <div class="right-header-avatar-icon">
+      <i class="fa fa-user"></i>
+    </div>
+    <span>Admin</span>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="dropdown-menu" id="dropdownMenu">
+    <a href="#"><i class="fa fa-user"></i> My Profile</a>
+    <a href="#"><i class="fa fa-cog"></i> Settings</a>
+    <a href="/frontend/admin-login.html"><i class="fa fa-sign-out"></i> Logout</a>
+  </div>
+
+</div>
+
+</div>
+
+</header>    
+
+<!-- Dashboard Side Bar -->
+<div class="Admin-side-bar-container">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-dsh-sidebar">
+
+    <a href="/frontend/admin-dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+    <!-- TASK DROPDOWN / Department -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fas fa-sitemap"></i> Department
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/add-department.html"><i class="fa fa-plus"></i> Add</a>
+        <a href="/frontend/manage-department.html"><i class="fa fa-cogs"></i> Manage</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Department -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-users"></i> Employee
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/add-employee.html"><i class="fa fa-user-plus"></i> Add Employee</a>
+        <a href="/frontend/manage-employee.html"><i class="fa fa-users"></i> Manage Employee</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Task -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-tasks"></i> Task
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/addtask-admin.html"><i class="fa fa-plus-circle"></i> Add Task</a>
+        <a href="/frontend/manage-task.html"><i class="fa fa-tasks"></i> Manage Task</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Task status -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-chart-line"></i> Task Status
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+      </div>
+
+    </div>
+
+    <!-- TASK DROPDOWN / Pages -->
+    <div class="admin-sidebar-task-dropdown">
+
+      <div class="admin-side-bar-drop-btn">
+        <i class="fa fa-globe"></i> Pages
+        <i class="fa fa-angle-down icon-color"></i>
+      </div>
+
+      <div class="admin-side-bar-drop-content">
+        <a href="/frontend/about.html"><i class="fa fa-building"></i> About Us</a>
+        <a href="/frontend/contact.html"><i class="fa fa-envelope"></i> Contact Us</a>
+      </div>
+
+    </div>
+
+    <a href="/frontend/search-employee.html"><i class="fa fa-search"></i> Search Employee</a>
+
+    <a href="/frontend/task-reports.html"><i class="fa fa-file-alt"></i> Task Reports</a>
+
+  </aside>
+
+<!-- Employee Wise Task - Admin Side  -->
+<div class="emp-wise-report-container">
+
+    <h2>Employee Tasks Report</h2>
+
+       <table id="emp-wise-report-table" class="emp-wise-report-table">
+          <thead>
+                <tr>
+                   <th>S.No</th>
+                   <th>Emp. Name</th>
+                   <th>Assigned Tasks</th>
+                   <th>Completed Tasks</th>
+                   <th>In Process Tasks</th>
+                   <th>Not Processed Yet</th>
+                </tr>
+          </thead>
+
+       <tbody id="reportBody"></tbody>
+
+       <tfoot>
+           <tr class="emp-wise-total-row">
+              <td colspan="2">Total</td>
+              <td id="totalAssigned">0</td>
+              <td id="totalCompleted">0</td>
+              <td id="totalProgress">0</td>
+              <td id="totalPending">0</td>
+           </tr>
+       </tfoot>
+
+       </table>
+</div>
+
+<!-- drop down filed JS -->
+<script>
+  const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
+
+  dropBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+
+      const dropdown = this.parentElement;
+
+      // Close other dropdowns (optional but better UX)
+      document.querySelectorAll(".admin-sidebar-task-dropdown").forEach(item => {
+        if (item !== dropdown) {
+          item.classList.remove("active");
+        }
+      });
+
+      // Toggle current dropdown
+      dropdown.classList.toggle("active");
+    });
+  });
+</script>
+
+<!-- profile dropdown field JS -->
+<script>
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+// optional: close when click outside
+document.addEventListener("click", function(event) {
+  let dropdown = document.querySelector(".admin-profile-dropdown");
+  if (!dropdown.contains(event.target)) {
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+const tasks = [
+{ employee:"John Doe", status:"Completed" },
+{ employee:"John Doe", status:"Assigned" },
+
+{ employee:"Rahul Singh", status:"Completed" },
+{ employee:"Rahul Singh", status:"Assigned" }
+];
+
+function loadReport(){
+
+    const report = {};
+
+    tasks.forEach(task => {
+
+        if(!report[task.employee]){
+            report[task.employee] = {
+                assigned:0,
+                completed:0,
+                progress:0,
+                pending:0
+            };
+        }
+
+        report[task.employee].assigned++;
+
+        if(task.status === "Completed"){
+            report[task.employee].completed++;
+        }
+        else if(task.status === "In Progress"){
+            report[task.employee].progress++;
+        }
+        else{
+            report[task.employee].pending++;
+        }
+
+    });
+
+    const tbody = document.getElementById("reportBody");
+    tbody.innerHTML = "";
+
+    let i = 1;
+
+    let totalAssigned = 0;
+    let totalCompleted = 0;
+    let totalProgress = 0;
+    let totalPending = 0;
+
+    for(let emp in report){
+
+        let r = report[emp];
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${i++}</td>
+            <td>${emp}</td>
+            <td>${r.assigned}</td>
+            <td>${r.completed}</td>
+            <td>${r.progress}</td>
+            <td>${r.pending}</td>
+        </tr>
+        `;
+
+        totalAssigned += r.assigned;
+        totalCompleted += r.completed;
+        totalProgress += r.progress;
+        totalPending += r.pending;
+    }
+
+    document.getElementById("totalAssigned").innerText = totalAssigned;
+    document.getElementById("totalCompleted").innerText = totalCompleted;
+    document.getElementById("totalProgress").innerText = totalProgress;
+    document.getElementById("totalPending").innerText = totalPending;
+}
+
+loadReport();
+</script>
+
+</body>
+</html>  

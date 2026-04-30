@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Task</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Inprogress Task</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -25,7 +25,7 @@
     body {
       background: #dddfe7;
     }
-    
+
     </style>
 
 </head>
@@ -142,9 +142,9 @@
 
       <div class="admin-side-bar-drop-content">
         <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
-        <a href="#"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
-        <a href="#"><i class="fa fa-check"></i> Completed Tasks</a>
-        <a href="#"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
       </div>
 
     </div>
@@ -170,46 +170,26 @@
 
   </aside>
 
-<!-- Manage Task - Admin side -->
-<div class="manage-task-container">
+<!-- Inprogress Task -->
+<div class="inprogress-task-container">
+    <h2>View Inprogress Task</h2>
 
-  <h2>Manage Tasks</h2>
+    <table id="inprogresstask" class="inprogresstask-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Task Title</th>
+                <th>Department</th>
+                <th>Assign To</th>
+                <th>Assign Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-  <!-- Filters -->
-  <div class="manage-task-filters">
-    <select id="filterDept">
-      <option value="">All Departments</option>
-      <option>HR</option>
-      <option>IT</option>
-    </select>
-
-    <select id="filterStatus">
-      <option value="">All Status</option>
-      <option>New</option>
-      <option>In Progress</option>
-      <option>Completed</option>
-    </select>
-  </div>
-
-  <!-- Table -->
-  <table class="manage-task-table">
-    <thead>
-      <tr>
-        <th>S.No</th>
-        <th>Task Title</th>
-        <th>Employee</th>
-        <th>Priority</th>
-        <th>End Date</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody id="taskTableBody">
-      <!-- Dynamic rows -->
-    </tbody>
-  </table>
-
+        <tbody id="inprogressTask"></tbody>
+    </table>
 </div>
 
 <!-- drop down filed JS -->
@@ -266,67 +246,70 @@ document.addEventListener("click", function(event) {
 
 
 
+
+
+
+
+
+
+
 <script>
-let tasks = [
-  {
-    id: 1,
-    title: "Fix login bug",
-    employee: "John",
-    priority: "Urgent",
-    endDate: "2026-05-01",
-    status: "New"
-  }
+const tasks = [
+{
+    title: "Change in the XYZ Software",
+    department: "Technical",
+    assignedTo: "John Doe (1452666)",
+    assignDate: "2024-09-20 07:17:21",
+    endDate: "2024-09-25",
+    status: "In Progress / Process"
+}
 ];
 
-function renderTasks() {
-  let tbody = document.getElementById("taskTableBody");
-  tbody.innerHTML = "";
+function loadTasks() {
 
-  tasks.forEach((task, index) => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${task.title}</td>
-        <td>${task.employee}</td>
-        <td>${task.priority}</td>
-        <td>${task.endDate}</td>
-        <td>${task.status}</td>
-        <td>
-          <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${index})">Edit</button>
-          <button class="manage-task-action-btn manage-tsk-delete-btn" onclick="deleteTask(${index})">Delete</button>
-          <button class="manage-task-action-btn manage-tsk-status-btn" onclick="changeStatus(${index})">Update</button>
-        </td>
-      </tr>
-    `;
-  });
+    const tbody = document.getElementById("inprogressTask");
+    tbody.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${task.title}</td>
+            <td>${task.department}</td>
+            <td>${task.assignedTo}</td>
+            <td>${task.assignDate}</td>
+            <td>${task.endDate}</td>
+            <td>
+                <span class="inprogresstask-status-badge inprogress">
+                    ${task.status}
+                </span>
+            </td>
+            <td>
+                <button onclick="viewTask(${index})">View</button>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  renderTasks();
+function viewTask(index) {
+
+    const task = tasks[index];
+
+    alert(
+`Task Title: ${task.title}
+Department: ${task.department}
+Assigned To: ${task.assignedTo}
+Status: ${task.status}`
+    );
 }
 
-function changeStatus(index) {
-  let current = tasks[index].status;
-
-  if (current === "New") tasks[index].status = "In Progress";
-  else if (current === "In Progress") tasks[index].status = "Completed";
-  else tasks[index].status = "New";
-
-  renderTasks();
-}
-
-function editTask(index) {
-  let newTitle = prompt("Edit Task Title", tasks[index].title);
-  if (newTitle) {
-    tasks[index].title = newTitle;
-    renderTasks();
-  }
-}
-
-// IMPORTANT
-renderTasks();
+loadTasks();
 </script>
 
 </body>
-</html>   
+</html>  
+

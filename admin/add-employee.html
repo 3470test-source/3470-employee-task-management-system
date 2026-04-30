@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin - New Task</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Add Employee</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -26,103 +26,6 @@
       background: #dddfe7;
     }
 
-
-
-
-
-
-
-
-.new-task-adm-container {
-  flex: 1;
-  margin: 30px;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.new-task-adm-container h2 {
-  margin-bottom: 15px;
-  font-size: 28px;
-  font-weight: 600;
-}
-
-.newtask-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-.newtask-table th, td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-.newtask-table th {
-  background: #f1f2f6;
-}
-
-.newtask-ad-status {
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  color: white;
-}
-
-.newtask-ad-status.pending {
-  background: red;
-}
-
-.newtask-ad-status.updated {
-  background: green;
-}
-
-.newtask-table button {
-  padding: 6px 12px;
-  border: none;
-  background: #3498db;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.newtask-table button:hover {
-  background: #2980b9;
-}
-
-
-
-
-
-
-
-
-
-
-    
     </style>
 
 </head>
@@ -239,9 +142,9 @@
 
       <div class="admin-side-bar-drop-content">
         <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
-        <a href="#"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
-        <a href="#"><i class="fa fa-check"></i> Completed Tasks</a>
-        <a href="#"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
       </div>
 
     </div>
@@ -267,58 +170,82 @@
 
   </aside>
 
+  <!-- Add Employee - admin side -->
+  <div class="add-employee-card-admin">
+  <h2>Add Employee</h2>
 
+  <form id="addEmployeeForm" enctype="multipart/form-data">
+    <div class="add-employee-box">
 
+      <div class="add-employee-form-group">
+        <label>Department Name:</label>
+        <select id="empDept" required>
+          <option value="">Select Department</option>
+        </select>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Employee ID:</label>
+        <input type="text" id="empId" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Employee Name:</label>
+        <input type="text" id="empName" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Email:</label>
+        <input type="email" id="empEmail" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Contact Number:</label>
+        <input type="tel" id="empPhone" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Designation:</label>
+        <input type="text" id="empDesignation" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Date of Birth:</label>
+        <input type="date" id="empDOB" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Address:</label>
+        <textarea id="empAddress" rows="3" required></textarea>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Date of Joining:</label>
+        <input type="date" id="empDOJ" required>
+      </div>
 
+      <div class="add-employee-form-group">
+        <label>Description:</label>
+        <textarea id="empDesc" rows="2"></textarea>
+      </div>
 
-<!-- New Task - Admin Side -->
-<div class="new-task-adm-container">
-  <h2>New Tasks</h2>
+      <div class="add-employee-form-group">
+        <label>Password:</label>
+        <input type="password" id="empPassword" required>
+      </div>
 
-  <table id="taskTable" class="newtask-table">
-    <thead>
-      <tr>
-        <th>S.No</th>
-        <th>Task Title</th>
-        <th>Department</th>
-        <th>Assign To</th>
-        <th>Assign Date</th>
-        <th>End Date</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="taskBody">
-      <!-- Tasks will be inserted here -->
-    </tbody>
-  </table>
+      <div class="add-employee-form-group">
+        <label>Employee Photo:</label>
+        <input type="file" id="empPhoto" accept="image/*">
+      </div>
+
+      <button type="submit" class="add-employee-btn-add">
+        Add Employee
+      </button>
+
+    </div>
+  </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- drop down filed JS -->
 <script>
@@ -371,62 +298,64 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
 <script>
-  const tasks = [
-  {
-    title: "Change in the XYZ Software",
-    department: "Technical",
-    assignedTo: "John Doe (1452666)",
-    assignDate: "2024-09-20 07:17:21",
-    endDate: "2024-09-25",
-    status: "Not Updated yet"
-  }
+    let departments = [
+  { id: 1, name: "HR" },
+  { id: 2, name: "Technical" },
+  { id: 3, name: "Accounts" }
 ];
 
-function loadTasks() {
-  const tbody = document.getElementById("taskBody");
-  tbody.innerHTML = "";
+let employees = [];
 
-  tasks.forEach((task, index) => {
-    const row = document.createElement("tr");
+// Load departments dropdown
+function loadDepartments() {
+  const select = document.getElementById("empDept");
 
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${task.title}</td>
-      <td>${task.department}</td>
-      <td>${task.assignedTo}</td>
-      <td>${task.assignDate}</td>
-      <td>${task.endDate}</td>
-      <td>
-        <span class="newtask-ad-status ${task.status === 'Not Updated yet' ? 'pending' : 'updated'}">
-          ${task.status}
-        </span>
-      </td>
-      <td>
-        <button onclick="viewTask(${index})">View</button>
-      </td>
-    `;
-
-    tbody.appendChild(row);
+  departments.forEach(dept => {
+    const option = document.createElement("option");
+    option.value = dept.id;
+    option.textContent = dept.name;
+    select.appendChild(option);
   });
 }
+loadDepartments();
 
-function viewTask(index) {
-  const task = tasks[index];
-  alert(`Task: ${task.title}\nAssigned to: ${task.assignedTo}`);
-}
 
-// Load on page start
-loadTasks();
+// Add Employee
+document.getElementById("addEmployeeForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const employee = {
+    deptId: document.getElementById("empDept").value,
+    empId: document.getElementById("empId").value,
+    name: document.getElementById("empName").value,
+    email: document.getElementById("empEmail").value,
+    phone: document.getElementById("empPhone").value,
+    designation: document.getElementById("empDesignation").value,
+    dob: document.getElementById("empDOB").value,
+    address: document.getElementById("empAddress").value,
+    doj: document.getElementById("empDOJ").value,
+    description: document.getElementById("empDesc").value,
+    password: document.getElementById("empPassword").value,
+    photo: document.getElementById("empPhoto").files[0]?.name || ""
+  };
+
+  // Basic validation
+  if (!employee.deptId || !employee.empId || !employee.name || !employee.email) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  employees.push(employee);
+
+  console.log("Employee Added:", employee);
+
+  alert("Employee added successfully!");
+
+  document.getElementById("addEmployeeForm").reset();
+});
 </script>
 
+
 </body>
-</html>   
-
-
+</html> 

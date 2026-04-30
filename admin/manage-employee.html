@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Admin - Add Task</title>
+    <title>3470 Healthcare & Employee Task Management-System - Admin - Manage Employee</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -25,7 +25,7 @@
     body {
       background: #dddfe7;
     }
-    
+
     </style>
 
 </head>
@@ -142,9 +142,9 @@
 
       <div class="admin-side-bar-drop-content">
         <a href="/frontend/new-task.html"><i class="fa fa-plus-square"></i> New Tasks</a>
-        <a href="#"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
-        <a href="#"><i class="fa fa-check"></i> Completed Tasks</a>
-        <a href="#"><i class="fa fa-user"></i> Emp.wise Tasks</a>
+        <a href="/frontend/inprogress-task.html"><i class="fa fa-hourglass-half"></i> Inprogress Tasks</a>
+        <a href="/frontend/completed-task.html"><i class="fa fa-check"></i> Completed Tasks</a>
+        <a href="/frontend/emp-wise-task.html"><i class="fa fa-user"></i> Emp.wise Tasks</a>
       </div>
 
     </div>
@@ -170,76 +170,27 @@
 
   </aside>
 
-<!-- Add Task - Admin Side -->
-<div class="add-task-card-admin">
-  <h2>Add Task</h2>
+<!-- Manage Employee -->
+<div class="manage-emp-card">
+  <h2>Manage Employee</h2>
 
-  <form id="addTaskForm" enctype="multipart/form-data">
-    <div class="add-task-box">
+  <table class="manage-emp-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Department</th>
+        <th>Employee Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Date of Joining</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-      <!-- Department -->
-      <div class="add-task-form-group">
-        <label>Department Name:</label>
-        <select id="taskDept" required>
-          <option value="">Select Department</option>
-          <option>HR</option>
-          <option>IT</option>
-          <option>Finance</option>
-        </select>
-      </div>
-
-      <!-- Employee -->
-      <div class="add-task-form-group">
-        <label>Employee List:</label>
-        <select id="taskEmployee" required>
-          <option value="">Select Employee</option>
-          <option>John</option>
-          <option>David</option>
-        </select>
-      </div>
-
-      <!-- Priority -->
-      <div class="add-task-form-group">
-        <label>Task Priority:</label>
-        <select id="taskPriority" required>
-        <option value="">Select Task Priority</option>
-          <option value="Normal">Normal</option>
-          <option value="Medium">Medium</option>
-          <option value="Urgent">Urgent</option>
-        </select>
-      </div>
-
-      <!-- Title -->
-      <div class="add-task-form-group">
-        <label>Task Title:</label>
-        <input type="text" id="taskTitle" required>
-      </div>
-
-      <!-- Description -->
-      <div class="add-task-form-group">
-        <label>Task Description:</label>
-        <textarea id="taskDesc" rows="3" required></textarea>
-      </div>
-
-      <!-- End Date -->
-      <div class="add-task-form-group">
-        <label>Task End Date:</label>
-        <input type="date" id="taskEndDate" required>
-      </div>
-
-      <!-- File -->
-      <div class="add-task-form-group">
-        <label>Upload File:</label>
-        <input type="file" id="taskFile">
-      </div>
-
-      <!-- Button -->
-      <button type="submit" class="add-task-btn">
-        Add Task
-      </button>
-
-    </div>
-  </form>
+    <tbody id="empTableBody">
+      <!-- Dynamic Data -->
+    </tbody>
+  </table>
 </div>
 
 <!-- drop down filed JS -->
@@ -279,6 +230,93 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  let employees = [
+  {
+    id: 1,
+    department: "HR",
+    name: "Rahul Singh",
+    email: "rahul12@gmail.com",
+    phone: "1234567890",
+    doj: "2024-08-10"
+  },
+  {
+    id: 2,
+    department: "Technical",
+    name: "John Doe",
+    email: "johndoe1@t.com",
+    phone: "3213213210",
+    doj: "2024-09-01"
+  }
+];
+
+function renderEmployees() {
+  const tbody = document.getElementById("empTableBody");
+  tbody.innerHTML = "";
+
+  employees.forEach((emp, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${emp.department}</td>
+        <td>${emp.name}</td>
+        <td>${emp.email}</td>
+        <td>${emp.phone}</td>
+        <td>${emp.doj}</td>
+        <td>
+          <button class="manage-emp-btn-edit" onclick="editEmployee(${emp.id})">Edit</button>
+          <button class="manage-emp-btn-delete" onclick="deleteEmployee(${emp.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+renderEmployees();
+</script>
+
+<script>
+  function deleteEmployee(id) {
+  if (confirm("Are you sure?")) {
+    employees = employees.filter(emp => emp.id !== id);
+    renderEmployees();
+  }
+}
+</script>
+
+<script>
+  function editEmployee(id) {
+  const emp = employees.find(e => e.id === id);
+
+  const newName = prompt("Edit Name:", emp.name);
+  const newEmail = prompt("Edit Email:", emp.email);
+
+  if (newName && newEmail) {
+    emp.name = newName;
+    emp.email = newEmail;
+    renderEmployees();
+  }
+}
+</script>
+
 </body>
 </html> 
-
