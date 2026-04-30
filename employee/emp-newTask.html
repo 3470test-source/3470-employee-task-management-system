@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3470 Healthcare & Employee Task Management-System - Employee Dashboard</title>
+    <title>3470 Healthcare & Employee Task Management-System - Employee - New Task</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
@@ -20,6 +20,10 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    body {
+      background: #dddfe7;
     }
 
     </style>
@@ -106,51 +110,32 @@
 
   </aside>
 
-  <!-- Main Dashboard card -->
-  <main class="emp-dash-main-content">
+<!-- Employee View New Task -->
+<div class="emp-new-task-container">
 
-  <h2>Dashboard</h2>
+    <h2>View New Task</h2>
 
-  <div class="employee-dashboard-cards">
+      <table class="emp-new-task-table">
 
-    <div class="emp-card new">
-      <div class="card-top">
-        <i class="fa fa-plus-circle"></i>
-        <h3>New Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
+        <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Task Title</th>
+              <th>Department</th>
+              <th>Assign To</th>
+              <th>Assign Date</th>
+              <th>End Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+        </thead>
 
-    <div class="emp-card progress">
-      <div class="card-top">
-        <i class="fa fa-spinner"></i>
-        <h3>In Progress</h3>
-      </div>
-      <p>0</p>
-    </div>
+       <tbody id="newTaskBody"></tbody>
 
-    <div class="emp-card completed">
-      <div class="card-top">
-        <i class="fa fa-check-circle"></i>
-        <h3>Completed</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-    <div class="emp-card all">
-      <div class="card-top">
-        <i class="fa fa-list"></i>
-        <h3>All Tasks</h3>
-      </div>
-      <p>0</p>
-    </div>
-
-  </div>
-
-</main>
+      </table>
 
 </div>
-
+ 
 <!-- drop down filed JS -->
 <script>
   const dropBtn = document.querySelector(".emp-side-bar-drop-btn");
@@ -177,5 +162,99 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+const tasks = [
+{
+ title:"Change in XYZ Software",
+ department:"Technical",
+ assignedTo:"John Doe",
+ assignDate:"2024-09-20",
+ endDate:"2024-09-25",
+ status:"Completed"
+}
+];
+
+function loadNewTasks(){
+
+    const tbody = document.getElementById("newTaskBody");
+    tbody.innerHTML = "";
+
+    const newTasks = tasks.filter(task =>
+        task.status === "New" ||
+        task.status === "Not Updated Yet"
+    );
+
+    if(newTasks.length === 0){
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="8" class="emp-newtask-no-record">
+                No Record found
+            </td>
+        </tr>
+        `;
+
+        return;
+    }
+
+    newTasks.forEach((task,index)=>{
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${index+1}</td>
+            <td>${task.title}</td>
+            <td>${task.department}</td>
+            <td>${task.assignedTo}</td>
+            <td>${task.assignDate}</td>
+            <td>${task.endDate}</td>
+
+            <td>
+                <span class="emp-newTask-badge">
+                    ${task.status}
+                </span>
+            </td>
+
+            <td>
+                <button onclick="viewTask(${index})">
+                    View
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+
+}
+
+function viewTask(index){
+   alert("View Task");
+}
+
+loadNewTasks();
+</script>
+
 </body>
-</html>
+</html>  
