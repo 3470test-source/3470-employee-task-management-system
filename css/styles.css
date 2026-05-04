@@ -2657,4 +2657,130 @@ footer {
   background: #2980b9;
 }
 
-/* -------------------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+/* -----------------------------------------------------
+       Employee dashboard side - view all task 
+   ----------------------------------------------------- */
+
+.emp-alltask-container {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.emp-alltask-container h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.emp-allTask-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.emp-allTask-table th,
+.emp-allTask-table td{
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.emp-allTask-table th{
+  background: #2d6cdf;
+  color: white;
+}
+
+.emp-allTask-table button{
+  background:#0d6efd;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.emp-allTask-table button:hover {
+  background: #2980b9;
+}
+
+.Emp-allTaskstatus-badge {
+  padding:5px 10px;
+  border-radius:4px;
+  font-size:12px;
+  color:#fff;
+}
+
+.emp-allTask-no-record {
+  color:red;
+  font-weight:bold;
+}
+
+.emp-allTask-inprogress {
+  background:#0dcaf0;
+}
+
+.emp-allTask-new {
+  background:#ffc107;
+  color:#000;
+}
+
+.emp-allTask-completed {
+  background:#28a745;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -----------------------------------------------------
+       Employee dashboard side - Change Password 
+   ----------------------------------------------------- */
+
+.emp-change-password-box {
+  flex: 1;
+  margin: 30px;
+  padding: 30px;
+  background:#a9c2d8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.emp-change-password-box h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.emp-change-password-box input {
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+.emp-change-password-box label {
+  font-size: 16px;
+}
+
+.emp-change-password-box button {
+  background:#28a745;
+  color:#fff;
+  padding:10px 30px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  margin-top: 10px;
+}
+
+.emp-change-password-box button:hover {
+  background:#076e21;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------- */
