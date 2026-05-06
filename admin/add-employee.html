@@ -26,6 +26,29 @@
       background: #dddfe7;
     }
 
+    .add-emp-password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .add-emp-password-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+    }
+
+    .addEmp-toggle-password {
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .addEmp-toggle-password:hover {
+      color: #2d89ef;
+    }
+
     </style>
 
 </head>
@@ -231,7 +254,10 @@
 
       <div class="add-employee-form-group">
         <label>Password:</label>
-        <input type="password" id="empPassword" required>
+          <div class="add-emp-password-wrapper">
+            <input type="password" id="empPassword" required>
+            <i class="fa fa-eye addEmp-toggle-password" onclick="togglePassword(this)"></i>
+          </div>
       </div>
 
       <div class="add-employee-form-group">
@@ -246,6 +272,8 @@
     </div>
   </form>
 </div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -269,6 +297,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -286,6 +316,25 @@ document.addEventListener("click", function(event) {
 
 
 
+<!-- Password icon hide / unhide -->
+<script>
+  function togglePassword(icon) {
+  const input = document.getElementById("empPassword");
+
+  if (input.type === "password") {
+    input.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    input.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
+</script>
+
+
+
 
 
 
@@ -299,30 +348,26 @@ document.addEventListener("click", function(event) {
 
 
 <script>
-    let departments = [
-  { id: 1, name: "HR" },
-  { id: 2, name: "Technical" },
-  { id: 3, name: "Accounts" }
-];
+async function loadDepartments() {
+  const res = await fetch("http://localhost:3000/departments");
+  const data = await res.json();
 
-let employees = [];
-
-// Load departments dropdown
-function loadDepartments() {
   const select = document.getElementById("empDept");
+  select.innerHTML = `<option value="">-- Select Department --</option>`;
 
-  departments.forEach(dept => {
+  data.forEach(dept => {
     const option = document.createElement("option");
     option.value = dept.id;
     option.textContent = dept.name;
     select.appendChild(option);
   });
 }
+
 loadDepartments();
 
 
 // Add Employee
-document.getElementById("addEmployeeForm").addEventListener("submit", function(e) {
+document.getElementById("addEmployeeForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const employee = {
@@ -340,19 +385,17 @@ document.getElementById("addEmployeeForm").addEventListener("submit", function(e
     photo: document.getElementById("empPhoto").files[0]?.name || ""
   };
 
-  // Basic validation
-  if (!employee.deptId || !employee.empId || !employee.name || !employee.email) {
-    alert("Please fill all required fields");
-    return;
-  }
+  await fetch("http://localhost:3000/add-employees", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(employee)
+  });
 
-  employees.push(employee);
+  alert("Employee created successfully. ✅");
 
-  console.log("Employee Added:", employee);
-
-  alert("Employee added successfully!");
-
-  document.getElementById("addEmployeeForm").reset();
+  window.location.href = "/admin/manage-employee.html";
 });
 </script>
 

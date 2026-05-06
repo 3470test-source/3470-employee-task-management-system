@@ -190,6 +190,8 @@
   </form>
 </div>  
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -212,6 +214,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -229,17 +233,7 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+<!-- Add Department - Front End - JS -->
 <script>
 document.getElementById("addDepartmentForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -254,7 +248,7 @@ document.getElementById("addDepartmentForm").addEventListener("submit", async fu
     body: JSON.stringify({ name })
   });
 
-  alert("Department Added!");
+  alert("Department created successfully. ✅");
 
   // redirect to manage page
   window.location.href = "/admin/manage-department.html";

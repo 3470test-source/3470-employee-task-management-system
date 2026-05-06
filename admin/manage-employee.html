@@ -193,6 +193,8 @@
   </table>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -214,6 +216,8 @@
     });
   });
 </script>
+
+
 
 <!-- profile dropdown field JS -->
 <script>
@@ -249,7 +253,7 @@ document.addEventListener("click", function(event) {
 
 
 
-<script>
+<!-- <script>
   let employees = [
   {
     id: 1,
@@ -314,6 +318,68 @@ renderEmployees();
     emp.name = newName;
     emp.email = newEmail;
     renderEmployees();
+  }
+}
+</script> -->
+
+
+
+
+
+
+<script>
+  async function loadEmployees() {
+  const res = await fetch("http://localhost:3000/employees");
+  const data = await res.json();
+
+  const tbody = document.getElementById("empTableBody");
+  tbody.innerHTML = "";
+
+  data.forEach((emp, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${emp.department}</td>
+        <td>${emp.name}</td>
+        <td>${emp.email}</td>
+        <td>${emp.phone}</td>
+        <td>${emp.doj}</td>
+        <td>
+          <button onclick="editEmployee(${emp.id})">Edit</button>
+          <button onclick="deleteEmployee(${emp.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+loadEmployees();
+
+async function deleteEmployee(id) {
+  if (confirm("⚠️ Delete this employee?")) {
+    await fetch(`http://localhost:3000/employees/${id}`, {
+      method: "DELETE"
+    });
+
+    loadEmployees();
+  }
+}
+
+
+async function editEmployee(id) {
+  const newName = prompt("Enter new name: ✏️");
+  const newEmail = prompt("Enter new email:");
+
+  if (newName && newEmail) {
+    await fetch(`http://localhost:3000/employees/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name: newName, email: newEmail })
+    });
+
+    loadEmployees();
   }
 }
 </script>
