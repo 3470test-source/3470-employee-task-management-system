@@ -241,7 +241,7 @@ document.addEventListener("click", function(event) {
 
 
 
-<script>
+<!-- <script>
     let departments = [
   { id: 1, name: "HR", date: "2024-03-10 12:29:06" },
   { id: 2, name: "Logistics", date: "2024-03-10 12:29:06" },
@@ -288,6 +288,79 @@ renderTable();
   if (newName) {
     dept.name = newName;
     renderTable();
+  }
+}
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+async function loadDepartments() {
+  const res = await fetch("http://localhost:3000/departments");
+  const data = await res.json();
+
+  const tbody = document.getElementById("deptTableBody");
+  tbody.innerHTML = "";
+
+  data.forEach((dept, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${dept.name}</td>
+        <td>${dept.date}</td>
+        <td>
+          <button onclick="editDept(${dept.id})">Edit</button>
+          <button onclick="deleteDept(${dept.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+loadDepartments();
+</script>
+
+<script>
+async function deleteDept(id) {
+  if (confirm("Delete?")) {
+    await fetch(`http://localhost:3000/department/${id}`, {
+      method: "DELETE"
+    });
+
+    loadDepartments();
+  }
+}
+</script>
+
+<script>
+async function editDept(id) {
+  const newName = prompt("Enter new name:");
+
+  if (newName) {
+    await fetch(`http://localhost:3000/department/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name: newName })
+    });
+
+    loadDepartments();
   }
 }
 </script>

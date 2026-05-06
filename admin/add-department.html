@@ -227,5 +227,39 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.getElementById("addDepartmentForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("deptName").value;
+
+  await fetch("http://localhost:3000/add-department", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name })
+  });
+
+  alert("Department Added!");
+
+  // redirect to manage page
+  window.location.href = "/admin/manage-department.html";
+});
+</script>
+
 </body>
 </html> 
