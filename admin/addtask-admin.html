@@ -182,9 +182,6 @@
         <label>Department Name:</label>
         <select id="taskDept" required>
           <option value="">Select Department</option>
-          <option>HR</option>
-          <option>IT</option>
-          <option>Finance</option>
         </select>
       </div>
 
@@ -193,8 +190,6 @@
         <label>Employee List:</label>
         <select id="taskEmployee" required>
           <option value="">Select Employee</option>
-          <option>John</option>
-          <option>David</option>
         </select>
       </div>
 
@@ -242,6 +237,8 @@
   </form>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -264,6 +261,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -278,6 +277,118 @@ document.addEventListener("click", function(event) {
   }
 });
 </script>
+
+
+
+<!-- Add Task Frontend - JS -->
+<script>
+
+// ================= LOAD DEPARTMENTS =================
+
+async function loadDepartments() {
+
+  const res =
+    await fetch("http://localhost:3000/departments");
+
+  const data = await res.json();
+
+  const select =
+    document.getElementById("taskDept");
+
+  select.innerHTML =
+    `<option value="">-- Select Department --</option>`;
+
+  data.forEach(dept => {
+
+    select.innerHTML += `
+      <option value="${dept.id}">
+        ${dept.name}
+      </option>
+    `;
+
+  });
+
+}
+
+loadDepartments();
+
+
+// ================= LOAD EMPLOYEES =================
+
+async function loadEmployees() {
+
+  const res =
+    await fetch("http://localhost:3000/employees");
+
+  const data = await res.json();
+
+  const select =
+    document.getElementById("taskEmployee");
+
+  select.innerHTML =
+    `<option value="">-- Select Employee --</option>`;
+
+  data.forEach(emp => {
+
+    select.innerHTML += `
+      <option value="${emp.id}">
+        ${emp.name}
+      </option>
+    `;
+
+  });
+
+}
+
+loadEmployees();
+
+
+// ================= ADD TASK =================
+
+document.getElementById("addTaskForm")
+.addEventListener("submit", async function (e) {
+
+  e.preventDefault();
+
+  const task = {
+
+    deptId:document.getElementById("taskDept").value,
+
+    employeeId:document.getElementById("taskEmployee").value,
+
+    priority:document.getElementById("taskPriority").value,
+
+    title:document.getElementById("taskTitle").value,
+
+    description:document.getElementById("taskDesc").value,
+
+    endDate:document.getElementById("taskEndDate").value,
+
+    file:document.getElementById("taskFile").files[0]?.name || ""
+
+  };
+
+  await fetch("http://localhost:3000/add-task", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify(task)
+
+  });
+
+  alert("✅ Task added successfully.");
+
+  window.location.href =
+    "/admin/manage-task.html";
+
+});
+
+</script>
+
 
 </body>
 </html> 

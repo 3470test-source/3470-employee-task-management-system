@@ -26,6 +26,35 @@
       background: #dddfe7;
     }
 
+    .search-result-title{
+      margin-top: 20px;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .search-message{
+      margin-top: 15px;
+      padding: 12px;
+      background: #fff3cd;
+      color: #856404;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .no-record-message{
+      margin-top: 20px;
+      padding: 14px;
+      background: #fdeaea;
+      color: #c62828;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
     </style>
 
 </head>
@@ -177,11 +206,17 @@
   <div class="search-box-emp">
     <label>Search Employee by Employee ID/Name/Department</label>
 
-    <input type="text" placeholder="Enter Employee ID/Name/Department">
+    <input type="text" id="searchInput" placeholder="Enter Employee ID/Name/Department">
 
-    <button>Search</button>
+    <button onclick="searchEmployee()">Search</button>
   </div>
+
+  <!-- Result -->
+  <div id="searchResult"></div>
+
 </div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -205,6 +240,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -219,6 +256,190 @@ document.addEventListener("click", function(event) {
   }
 });
 </script>
+
+
+
+<!-- Seaech Employee Frontend - JS  -->
+<script>
+async function searchEmployee() {
+
+  const keyword =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const resultBox =
+    document.getElementById("searchResult");
+
+  // Empty search
+  if (keyword === "") {
+
+    resultBox.innerHTML = `
+      
+      <p class="search-message">⚠️ Please enter a search keyword.</p>
+    `;
+
+    return;
+  }
+
+  // Get Employees
+  const res =
+    await fetch("http://localhost:3000/employees");
+
+  const employees =
+    await res.json();
+
+  // Filter Data
+  const filteredEmployees = employees.filter(emp => {
+
+    const empName =
+      emp.name?.toLowerCase() || "";
+
+    const empId =
+      String(emp.emp_id || "").toLowerCase();
+
+    const department =
+      emp.department?.toLowerCase() || "";
+
+    return (
+      empName.includes(keyword) ||
+      empId.includes(keyword) ||
+      department.includes(keyword)
+    );
+
+});
+
+  // No Record
+  if (filteredEmployees.length === 0) {
+
+    resultBox.innerHTML = `
+      <h3 class="no-record-message">❌ No record found</h3>
+    `;
+
+    return;
+  }
+
+  // Show Table
+  let table = `
+
+    <h3 class="search-result-title">
+      Search Result for "${keyword}"
+    </h3>
+
+    <table class="manage-task-table">
+
+      <thead>
+        <tr>
+
+          <th>S.No</th>
+          <th>Department Name</th>
+          <th>Employee Name</th>
+          <th>Employee ID</th>
+          <th>Employee Email</th>
+          <th>Employee Phone No</th>
+          <th>Date of Joining</th>
+          <th>Action</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+  `;
+
+  filteredEmployees.forEach((emp, index) => {
+
+    table += `
+
+      <tr>
+
+        <td>${index + 1}</td>
+        <td>${emp.department}</td>
+        <td>${emp.name}</td>
+        <td>${emp.emp_id}</td>
+        <td>${emp.email}</td>
+        <td>${emp.phone}</td>
+        <td>
+          ${new Date(emp.doj)
+            .toLocaleDateString("en-CA")}
+        </td>
+
+        <td>
+          <button class="manage-emp-btn-edit" onclick="viewEmployee(${emp.id})" class="view-btn">View</button>
+          <button class="manage-emp-btn-delete" onclick="deleteEmployee(${emp.id})" class="delete-btn">Delete</button>
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+  table += `
+    </tbody>
+    </table>
+  `;
+
+  resultBox.innerHTML = table;
+
+}
+</script>
+
+
+
+<script>
+/*--- View Employee ---*/
+async function viewEmployee(id) {
+
+  const res =
+    await fetch("http://localhost:3000/employees");
+
+  const employees =
+    await res.json();
+
+  const emp =
+    employees.find(e => e.id == id);
+
+  alert(
+
+`Employee Name: ${emp.name}
+
+Employee ID: ${emp.emp_id}
+
+Department: ${emp.department}
+
+Email: ${emp.email}
+
+Phone: ${emp.phone}`
+
+  );
+
+}
+
+/*--- Delete Employee ---*/
+async function deleteEmployee(id) {
+
+  const confirmDelete =
+    confirm("🗑️ Delete this employee?");
+
+  if (!confirmDelete) return;
+
+  await fetch(
+    `http://localhost:3000/employees/${id}`,
+    {
+      method: "DELETE"
+    }
+  );
+
+  alert("✅ Employee deleted successfully.");
+
+  searchEmployee();
+
+}
+</script>
+
+
 
 </body>
 </html>  

@@ -22,15 +22,11 @@
       box-sizing: border-box;
     }
 
-
-
-
-
-  .card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
 
     </style>
 
@@ -183,21 +179,30 @@
 
   <div class="admin-dashboard-cards">
 
+  <!-- Department   -->
+  <a href="/admin/manage-department.html" class="card-link"> 
     <div class="admin-card Total-Department">
       <div class="card-top">
         <i class="fa fa-sitemap"></i>
         <h3>Total Department</h3>
       </div>
-      <p>0</p>
+      <p id="departmentCount">0</p>
     </div>
+  </a>  
 
+  <!-- Employee -->
+  <a href="/admin/manage-employee.html" class="card-link"> 
     <div class="admin-card Total-Employee">
       <div class="card-top">
         <i class="fa fa-users"></i>
         <h3>Total Employee</h3>
       </div>
-      <p>0</p>
+      <p id="employeeCount">0</p>
     </div>
+  </a>  
+
+
+
 
   <a href="/admin/new-task.html" class="card-link"> 
     <div class="admin-card New-Tasks">
@@ -239,6 +244,8 @@
 
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -261,6 +268,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -274,6 +283,46 @@ document.addEventListener("click", function(event) {
     document.getElementById("dropdownMenu").classList.remove("show");
   }
 });
+</script>
+
+
+
+<!-- Total Department Count show - JS -->
+<script>
+async function loadDepartmentCount() {
+
+  const res =
+    await fetch("http://localhost:3000/departments");
+
+  const departments =
+    await res.json();
+
+  document.getElementById("departmentCount")
+    .textContent = departments.length;
+
+}
+
+loadDepartmentCount();
+</script>
+
+
+
+<!-- Total Employee Count show - JS -->
+<script>
+async function loadEmployeeCount() {
+
+  const res =
+    await fetch("http://localhost:3000/employees");
+
+  const employees =
+    await res.json();
+
+  document.getElementById("employeeCount")
+    .textContent = employees.length;
+
+}
+
+loadEmployeeCount();
 </script>
 
 </body>

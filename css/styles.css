@@ -2235,14 +2235,26 @@ footer {
   color: white;
 }
 
+.manage-tsk-edit-btn:hover {
+  background: #a56f0b;
+}
+
 .manage-tsk-delete-btn {
   background: #e74c3c;
   color: white;
 }
 
+.manage-tsk-delete-btn:hover {
+  background: #aa2f21;
+}
+
 .manage-tsk-status-btn {
-  background: #2ecc71;
+  background: #138b45;
   color: white;
+}
+
+.manage-tsk-status-btn:hover {
+  background: #044e23;
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------ */

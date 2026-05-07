@@ -10,6 +10,8 @@ app.use(express.json());
 let departments = []; // temporary DB
 
 
+/* ================== DEPARTMENT ================== */
+
 // ➤ Add Department
 app.post("/add-department", (req, res) => {
   const { name } = req.body;
@@ -45,7 +47,6 @@ app.delete("/department/:id", (req, res) => {
 });
 
 
-
 // ➤ Edit Department
 app.put("/department/:id", (req, res) => {
   const id = req.params.id;
@@ -63,25 +64,9 @@ app.put("/department/:id", (req, res) => {
 });
 
 
+/* ================== EMPLOYEE ================== */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ➤ Add Employee
 app.post("/add-employees", (req, res) => {
   const {
     deptId, empId, name, email, phone,
@@ -106,9 +91,7 @@ app.post("/add-employees", (req, res) => {
 });
 
 
-
-
-
+// ➤ Get Employees (JOIN)
 app.get("/employees", (req, res) => {
   const sql = `
     SELECT e.*, d.name AS department 
@@ -123,6 +106,7 @@ app.get("/employees", (req, res) => {
 });
 
 
+// ➤ Delete Employee
 app.delete("/employees/:id", (req, res) => {
   db.query("DELETE FROM employees WHERE id=?", [req.params.id], (err) => {
     if (err) return res.json(err);
@@ -131,6 +115,7 @@ app.delete("/employees/:id", (req, res) => {
 });
 
 
+// ➤ Edit Employee
 app.put("/employees/:id", (req, res) => {
   const { name, email } = req.body;
 
@@ -142,6 +127,134 @@ app.put("/employees/:id", (req, res) => {
       res.json({ message: "Updated" });
     }
   );
+});
+
+
+/* ================== Task ================== */
+
+// ➤ Add Task
+app.post("/add-task", (req, res) => {
+
+  const {
+    deptId, employeeId, priority, title,
+    description, endDate, file
+  } = req.body;
+
+  const sql = `
+    INSERT INTO tasks
+    (dept_id, employee_id, priority, title, description, end_date, file)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(
+    sql,
+    [
+      deptId, employeeId, priority, title,
+      description, endDate, file
+    ],
+    (err, result) => {
+
+      if (err) return res.json(err);
+
+      res.json({
+        message: "Task Added Successfully"
+      });
+
+    }
+  );
+
+});
+
+
+// ➤ Get Tasks
+app.get("/tasks", (req, res) => {
+
+  const sql = `
+    SELECT 
+      t.*, d.name AS department,
+      e.name AS employee
+
+    FROM tasks t
+
+    JOIN departments d
+    ON t.dept_id = d.id
+
+    JOIN employees e
+    ON t.employee_id = e.id
+  `;
+
+  db.query(sql, (err, result) => {
+
+    if (err) return res.json(err);
+
+    res.json(result);
+
+  });
+
+});
+
+
+// ➤ Delete Task
+app.delete("/tasks/:id", (req, res) => {
+
+  db.query(
+    "DELETE FROM tasks WHERE id=?",
+    [req.params.id],
+    (err) => {
+
+      if (err) return res.json(err);
+
+      res.json({
+        message: "Task Deleted"
+      });
+
+    }
+  );
+
+});
+
+
+// ➤ Update Task Status
+app.put("/tasks/status/:id", (req, res) => {
+
+  const { status } = req.body;
+
+  db.query(
+    "UPDATE tasks SET status=? WHERE id=?",
+    [status, req.params.id],
+    (err) => {
+
+      if (err) return res.json(err);
+
+      res.json({
+        message: "Status Updated"
+      });
+
+    }
+  );
+
+});
+
+
+// ➤ Edit Task
+app.put("/tasks/:id", (req, res) => {
+
+  const { title } = req.body;
+
+  db.query(
+    "UPDATE tasks SET title=? WHERE id=?",
+    [title, req.params.id],
+    (err) => {
+
+      if (err) return res.json(err);
+
+      res.json({
+        message: "Task Updated"
+      });
+
+    }
+  );
+
 });
 
 

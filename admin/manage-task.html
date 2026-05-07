@@ -179,8 +179,6 @@
   <div class="manage-task-filters">
     <select id="filterDept">
       <option value="">All Departments</option>
-      <option>HR</option>
-      <option>IT</option>
     </select>
 
     <select id="filterStatus">
@@ -212,6 +210,8 @@
 
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -234,6 +234,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -251,81 +253,161 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Manage Task Frontend - JS -->
 <script>
-let tasks = [
-  {
-    id: 1,
-    title: "Fix login bug",
-    employee: "John",
-    priority: "Urgent",
-    endDate: "2026-05-01",
-    status: "New"
-  }
-];
 
-function renderTasks() {
-  let tbody = document.getElementById("taskTableBody");
+// Load Department Filter
+async function loadDepartmentFilter() {
+
+  const res =
+    await fetch("http://localhost:3000/departments");
+
+  const departments =
+    await res.json();
+
+  const filterDept =
+    document.getElementById("filterDept");
+
+  filterDept.innerHTML =
+    `<option value="">All Departments</option>`;
+
+  departments.forEach(dept => {
+
+    filterDept.innerHTML += `
+      <option value="${dept.name}">
+        ${dept.name}
+      </option>
+    `;
+
+  });
+
+}
+
+loadDepartmentFilter();
+
+
+async function loadTasks() {
+
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks = await res.json();
+
+  const tbody =
+    document.getElementById("taskTableBody");
+
   tbody.innerHTML = "";
 
   tasks.forEach((task, index) => {
+
     tbody.innerHTML += `
+
       <tr>
         <td>${index + 1}</td>
         <td>${task.title}</td>
         <td>${task.employee}</td>
         <td>${task.priority}</td>
-        <td>${task.endDate}</td>
+        <td>${new Date(task.end_date).toLocaleDateString("en-CA")}</td>
         <td>${task.status}</td>
+
         <td>
-          <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${index})">Edit</button>
-          <button class="manage-task-action-btn manage-tsk-delete-btn" onclick="deleteTask(${index})">Delete</button>
-          <button class="manage-task-action-btn manage-tsk-status-btn" onclick="changeStatus(${index})">Update</button>
+           <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${task.id})">Edit</button>
+          <button class="manage-task-action-btn manage-tsk-status-btn" onclick="updateStatus(${task.id}, '${task.status}')">Update</button>
+          <button class="manage-task-action-btn manage-tsk-delete-btn" onclick="deleteTask(${task.id})">Delete</button>
         </td>
       </tr>
+
     `;
+
   });
+
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  renderTasks();
-}
+loadTasks();
 
-function changeStatus(index) {
-  let current = tasks[index].status;
 
-  if (current === "New") tasks[index].status = "In Progress";
-  else if (current === "In Progress") tasks[index].status = "Completed";
-  else tasks[index].status = "New";
+/*--- Delete Task ---*/
+async function deleteTask(id) {
 
-  renderTasks();
-}
+  if (confirm("❌ Delete this task?")) {
 
-function editTask(index) {
-  let newTitle = prompt("Edit Task Title", tasks[index].title);
-  if (newTitle) {
-    tasks[index].title = newTitle;
-    renderTasks();
+    await fetch(
+      `http://localhost:3000/tasks/${id}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+    loadTasks();
+
   }
+
 }
 
-// IMPORTANT
-renderTasks();
+
+/*---  Task Update Status ---*/
+async function updateStatus(id, currentStatus) {
+
+  let newStatus = "New";
+
+  if (currentStatus === "New") {
+    newStatus = "In Progress";
+  }
+
+  else if (currentStatus === "In Progress") {
+    newStatus = "Completed";
+  }
+
+  await fetch(
+    `http://localhost:3000/tasks/status/${id}`,
+    {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        status: newStatus
+      })
+
+    }
+  );
+
+  loadTasks();
+
+}
+
+
+/*---  Edit Task ---*/
+async function editTask(id) {
+
+  const newTitle = prompt("✏️ Update Task Title:");
+
+  if (!newTitle || newTitle.trim() === "") return;
+
+  await fetch(
+    `http://localhost:3000/tasks/${id}`,
+    {
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        title: newTitle
+      })
+    }
+  );
+
+  alert("✅ Task updated successfully.");
+
+  loadTasks();
+
+}
+
 </script>
 
 </body>
