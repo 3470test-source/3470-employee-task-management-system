@@ -193,6 +193,8 @@
   </table>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -215,6 +217,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -232,70 +236,101 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- New Task - JS -->
 <script>
-  const tasks = [
-  {
-    title: "Change in the XYZ Software",
-    department: "Technical",
-    assignedTo: "John Doe (1452666)",
-    assignDate: "2024-09-20 07:17:21",
-    endDate: "2024-09-25",
-    status: "Not Updated yet"
-  }
-];
+/*--- Load New Tasks ---*/
+async function loadTasks() {
 
-function loadTasks() {
-  const tbody = document.getElementById("taskBody");
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  const tbody =
+    document.getElementById("taskBody");
+
   tbody.innerHTML = "";
 
-  tasks.forEach((task, index) => {
-    const row = document.createElement("tr");
+  // Show only NEW tasks
+  const newTasks =
+    tasks.filter(task => task.status === "New");
 
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${task.title}</td>
-      <td>${task.department}</td>
-      <td>${task.assignedTo}</td>
-      <td>${task.assignDate}</td>
-      <td>${task.endDate}</td>
-      <td>
-        <span class="newtask-ad-status ${task.status === 'Not Updated yet' ? 'pending' : 'updated'}">
-          ${task.status}
-        </span>
-      </td>
-      <td>
-        <button onclick="viewTask(${index})">View</button>
-      </td>
+  // No tasks
+  if (newTasks.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8">
+          ❌ No new tasks found
+        </td>
+      </tr>
     `;
 
-    tbody.appendChild(row);
+    return;
+  }
+
+  newTasks.forEach((task, index) => {
+
+    tbody.innerHTML += `
+
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.department}</td>
+        <td>
+          ${task.employee}
+        </td>
+        <td>
+          ${new Date(task.created_at)
+            .toLocaleDateString("en-CA")}
+        </td>
+        <td>
+          ${new Date(task.end_date)
+            .toLocaleDateString("en-CA")}
+        </td>
+        <td>
+          <span class="newtask-ad-status pending">
+            ${task.status}
+          </span>
+        </td>
+        <td>
+          <button onclick="viewTask(${task.id})">
+            View
+          </button>
+        </td>
+      </tr>
+    `;
   });
+
 }
 
-function viewTask(index) {
-  const task = tasks[index];
-  alert(`Task: ${task.title}\nAssigned to: ${task.assignedTo}`);
+
+/*--- View Task ---*/
+async function viewTask(id) {
+
+  const res = await fetch("http://localhost:3000/tasks");
+
+  const tasks = await res.json();
+
+  const task = tasks.find(t => t.id == id);
+
+  alert(
+
+    `📌 Task Title: ${task.title}
+    👨 Employee: ${task.employee}
+    🏢 Department: ${task.department}
+    ⚡ Priority: ${task.priority}
+    📅 End Date:
+          ${new Date(task.end_date)
+          .toLocaleDateString("en-CA")}
+    📄 Description:
+          ${task.description}`
+  );
+
 }
 
-// Load on page start
+/*-- Load Page --*/
 loadTasks();
 </script>
 

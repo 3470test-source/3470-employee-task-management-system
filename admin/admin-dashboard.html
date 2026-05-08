@@ -201,47 +201,58 @@
     </div>
   </a>  
 
-
-
-
+  <!-- New Task -->
   <a href="/admin/new-task.html" class="card-link"> 
     <div class="admin-card New-Tasks">
       <div class="card-top">
         <i class="fa fa-plus-circle"></i>
         <h3>New Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="newTaskCount">0</p>
     </div>
   </a> 
 
+  <!-- Inprogress Task -->
+  <a href="/admin/inprogress-task.html" class="card-link"> 
     <div class="admin-card Inprogress">
       <div class="card-top">
         <i class="fa fa-spinner"></i>
         <h3>Inprogress Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="inprogressTaskCount">0</p>
     </div>
-
+  </a>
+     
+  <!-- Completed Task -->
+  <a href="/admin/completed-task.html" class="card-link"> 
     <div class="admin-card Completed">
       <div class="card-top">
         <i class="fa fa-check-circle"></i>
         <h3>Completed Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="completedTaskCount">0</p>
     </div>
+  </a>
 
+
+
+
+
+  <a href="/admin/emp-wise-task.html" class="card-link"> 
     <div class="admin-card All-Tasks">
       <div class="card-top">
         <i class="fa fa-tasks"></i>
         <h3>All Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="allTaskCount">0</p>
     </div>
+  </a>  
+
+
+
 
   </div>
-
-</main>
-
+ </main>
 </div>
 
 
@@ -324,6 +335,115 @@ async function loadEmployeeCount() {
 
 loadEmployeeCount();
 </script>
+
+
+
+<!-- Total New Task Count show - JS -->
+<script>
+async function loadNewTaskCount() {
+
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  // Filter only NEW tasks
+  const newTasks =
+    tasks.filter(task => task.status === "New");
+
+  // Show count
+  document.getElementById("newTaskCount")
+    .innerText = newTasks.length;
+
+}
+
+loadNewTaskCount();
+</script>
+
+
+
+<!-- Total Inprogress Task Count show - JS -->
+<script>
+async function loadInprogressTaskCount() {
+
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  // Filter In Progress tasks
+  const inprogressTasks =
+    tasks.filter(task => task.status === "In Progress");
+
+  // Show count
+  document.getElementById("inprogressTaskCount")
+    .innerText = inprogressTasks.length;
+
+}
+
+loadInprogressTaskCount();
+</script>
+
+
+
+<!-- Total Completed Task Count show - JS -->
+<script>
+async function loadCompletedTaskCount() {
+
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  // Filter Completed Tasks
+  const completedTasks =
+    tasks.filter(task =>
+      task.status === "Completed"
+    );
+
+  // Show Count
+  document.getElementById("completedTaskCount")
+    .innerText = completedTasks.length;
+
+}
+
+loadCompletedTaskCount();
+</script>
+
+
+
+<!-- Total All Task Count show - JS -->
+<script>
+async function loadAllTaskCount() {
+
+    try {
+
+        const res =
+            await fetch("http://localhost:3000/tasks");
+
+        const tasks =
+            await res.json();
+
+        // Total task count
+        document.getElementById("allTaskCount").innerText =
+            tasks.length;
+
+    }
+
+    catch (error) {
+
+        console.log("Error loading task count:", error);
+
+    }
+
+}
+
+loadAllTaskCount();
+</script>
+
 
 </body>
 </html>

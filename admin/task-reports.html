@@ -26,6 +26,36 @@
       background: #dddfe7;
     }
 
+    .task-report-result {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .task-report-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .task-report-table th {
+      background: #0b7a39;
+      color: white;
+      padding: 12px;
+    }
+
+    .task-report-table td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .task-report-result h3 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #1d2d50;
+    }
+
     </style>
 
 </head>
@@ -170,11 +200,12 @@
 
   </aside>
 
+
 <!-- Task Report - Admin Side -->
 <div class="task-report-card-emp">
   <h2>Between Dates Task Reports</h2>
 
-  <form action="#" method="POST">
+  <form action="#" method="POST" id="reportForm">
     <div class="task-report-box">
       
       <div class="task-rep-form-group">
@@ -193,7 +224,34 @@
 
     </div>
   </form>
+
+
+<!-- REPORT RESULT SECTION -->
+<div class="task-report-result"
+    id="reportSection">
+
+      <h3 id="reportTitle"></h3>
+        <table class="task-report-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Task Title</th>
+                    <th>Department</th>
+                    <th>Assign To</th>
+                    <th>Assign Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody">
+
+          </tbody>
+
+        </table>
+    </div>
 </div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -217,6 +275,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -232,17 +292,122 @@ document.addEventListener("click", function(event) {
 });
 </script>
 
-<!-- Task report JS -->
-<script>
-document.querySelector("form").addEventListener("submit", function(e) {
-  let from = document.getElementById("fromDate").value;
-  let to = document.getElementById("toDate").value;
 
-  if (from > to) {
-    alert("From Date should be less than To Date");
+
+<!-- Task Report result - JS -->
+<script>
+document.querySelector("form")
+  .addEventListener("submit", async function(e) {
+
     e.preventDefault();
-  }
+
+    // ================= GET DATES =================
+
+    const fromDate = document.getElementById("fromDate").value;
+
+    const toDate = document.getElementById("toDate").value;
+
+    // ================= VALIDATION =================
+
+    if (fromDate > toDate) {
+        alert("From Date should be less than To Date");
+        return;
+    }
+
+    try {
+
+    // ================= FETCH TASKS =================
+
+    const res = await fetch("http://localhost:3000/tasks");
+
+    const tasks = await res.json();
+
+    // ================= FILTER TASKS =================
+
+    const filteredTasks =  tasks.filter(task => {
+
+        if (!task.assignDate) return false;
+
+        const assignDate =
+            new Date(task.assignDate)
+            .toISOString()
+            .split("T")[0];
+
+            // task.assignDate.split("T")[0];
+
+        return (
+            assignDate >= fromDate &&
+            assignDate <= toDate
+        );
+
+    });
+
+    // ================= SHOW REPORT SECTION =================
+
+    document.getElementById("reportSection")
+      .style.display = "block";
+
+    // ================= REPORT TITLE =================
+
+    document.getElementById("reportTitle")
+      .innerText = `REPORT FROM ${fromDate} TO ${toDate}`;
+
+    // ================= TABLE BODY =================
+
+    const tbody = document.getElementById("reportTableBody");
+
+      tbody.innerHTML = "";
+
+    // ================= NO DATA =================
+
+        if (filteredTasks.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        No Tasks Found
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+    // ================= SHOW DATA =================
+
+        filteredTasks.forEach((task, index) => {
+
+            tbody.innerHTML += `
+
+            <tr>
+                <td>${index + 1}</td>
+                <td>${task.title}</td>
+                <td>${task.department}</td>
+                <td>${task.employeeName}</td>
+                <td>
+                    ${
+                      new Date(task.assignDate)
+                      .toLocaleDateString()
+                    }
+                </td>
+                <td>${task.endDate}</td>
+                <td>${task.status}</td>
+            </tr>
+            `;
+        });
+      }
+
+    catch (error) {
+
+        console.log(error);
+
+        alert("Error loading report");
+
+    }
+
 });
+
 </script>
 
 </body>

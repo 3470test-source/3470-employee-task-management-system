@@ -192,6 +192,8 @@
    </table>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -214,6 +216,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -231,82 +235,114 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
+<!-- Completed Task -- JS  -->
 <script>
+/*--- Load Completed Tasks ---*/
+async function loadCompletedTasks() {
 
-    const tasks = [
-{
- title:"Change in XYZ Software",
- department:"Technical",
- assignedTo:"John Doe",
- assignDate:"2024-09-20",
- endDate:"2024-09-25",
- status:"Completed"
-},
-{
- title:"Website Update",
- department:"IT",
- assignedTo:"David",
- assignDate:"2024-09-22",
- endDate:"2024-09-30",
- status:"In Progress / Process"
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  const tbody =
+    document.getElementById("completedTaskTable");
+
+  tbody.innerHTML = "";
+
+  /*--- Filter Completed Tasks ---*/
+  const completedTasks =
+    tasks.filter(task => task.status === "Completed");
+
+  /*--- No Records ---*/
+  if (completedTasks.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8">
+          ❌ No completed tasks found
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  completedTasks.forEach((task, index) => {
+
+    tbody.innerHTML += `
+
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.department}</td>
+        <td>${task.employee}</td>
+        <td>
+          ${task.created_at
+            ? new Date(task.created_at)
+              .toLocaleDateString("en-CA")
+            : "-"}
+        </td>
+        <td>
+          ${new Date(task.end_date)
+            .toLocaleDateString("en-CA")}
+        </td>
+        <td>
+          <span class="completedTask-status-badge completed">
+            ${task.status}
+          </span>
+        </td>
+        <td>
+          <button onclick="viewTask(${task.id})">
+            View
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+
 }
-];
 
-</script>
 
-<script>
-function loadCompletedTasks() {
 
-    const tbody = document.getElementById("completedTaskTable");
-    tbody.innerHTML = "";
+/*--- View Task ---*/
+async function viewTask(id) {
 
-    const completedTasks =
-        tasks.filter(task => task.status === "Completed");
+  const res =
+    await fetch("http://localhost:3000/tasks");
 
-    completedTasks.forEach((task, index) => {
+  const tasks =
+    await res.json();
 
-        const row = document.createElement("tr");
+  const task =
+    tasks.find(t => t.id == id);
 
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${task.title}</td>
-            <td>${task.department}</td>
-            <td>${task.assignedTo}</td>
-            <td>${task.assignDate}</td>
-            <td>${task.endDate}</td>
+  alert(
+    `✅ Task Title: ${task.title}
 
-            <td>
-                <span class="completedTask-status-badge completed">
-                    ${task.status}
-                </span>
-            </td>
+👨 Employee: ${task.employee}
 
-            <td>
-                <button onclick="viewTask(${index})">
-                    View
-                </button>
-            </td>
-        `;
+🏢 Department: ${task.department}
 
-        tbody.appendChild(row);
-    });
+⚡ Priority: ${task.priority}
+
+📅 End Date:
+          ${new Date(task.end_date)
+          .toLocaleDateString("en-CA")}
+
+📄 Description:
+          ${task.description}`
+
+  );
 }
 
-function viewTask(index){
-   alert("View Completed Task");
-}
 
+/*-- Load Page --*/
 loadCompletedTasks();
+
 </script>
+
 
 </body>
 </html>  

@@ -32,7 +32,6 @@
 
     </style>
 
-
 </head>
 <body>
 
@@ -76,16 +75,21 @@
 
 </div>
 
+
+
 <script>
 function forgotPassword() {
   alert("Please contact admin to reset password");
 }
 
 function goToRegister() {
-  window.location.href = "/employee/employee-register.html";
+  window.location.href = "#";
 }
 </script>
 
+
+
+<!-- Password icon Hide / Unhide -->
 <script>
 function togglePassword() {
   const password = document.getElementById("password");
@@ -102,6 +106,80 @@ function togglePassword() {
   }
 }
 </script>
+
+
+
+<!-- ================= EMPLOYEE LOGIN =================  -->
+<script>
+document.getElementById("emp-loginForm")
+  .addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+  // ================= GET INPUT VALUES =================
+
+    const empId = document.getElementById("empId").value;
+
+    const password = document.getElementById("password").value;
+
+    try {
+
+  // ================= SEND LOGIN REQUEST =================
+
+        const res = await fetch(
+            "http://localhost:3000/employee-login",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    empId,
+                    password
+                })
+            }
+        );
+
+        const data = await res.json();
+
+  // ================= LOGIN SUCCESS =================
+
+        if (data.success) {
+
+            alert("✅ Login Successful ! Redirecting to Employee Dashboard...");
+
+            // Optional: save employee data
+            localStorage.setItem(
+                "employee",
+                JSON.stringify(data.employee)
+            );
+
+            // Redirect
+            window.location.href = "/employee/employee-dashboard.html";
+
+        }
+
+  // ================= LOGIN FAILED =================
+
+        else {
+            alert("❌ Invalid Employee ID or Password");
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        alert("❌ Server Error");
+
+    }
+
+});
+</script>
+
 
 </body>
 </html>    

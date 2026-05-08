@@ -22,6 +22,12 @@
       box-sizing: border-box;
     }
 
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
     </style>
 
 </head>
@@ -64,7 +70,10 @@
     <div class="right-header-avatar-icon">
       <i class="fa fa-user"></i>
     </div>
-    <span>Vignesh</span>
+    <div>
+      <h4 id="empName"></h4>
+      <small id="empId"></small>
+    </div>
   </div>
 
   <!-- Dropdown -->
@@ -113,6 +122,9 @@
 
   <div class="employee-dashboard-cards">
 
+
+  <!-- New Task -->
+  <a href="/employee/emp-newTask.html" class="card-link"> 
     <div class="emp-card new">
       <div class="card-top">
         <i class="fa fa-plus-circle"></i>
@@ -120,7 +132,11 @@
       </div>
       <p>0</p>
     </div>
+  </a>  
 
+
+  <!-- In Progress -->
+  <a href="/employee/emp-inprogressTask.html" class="card-link">
     <div class="emp-card progress">
       <div class="card-top">
         <i class="fa fa-spinner"></i>
@@ -128,7 +144,11 @@
       </div>
       <p>0</p>
     </div>
+  </a>
 
+
+  <!-- Completed Task -->
+  <a href="/employee/emp-completedTask.html" class="card-link"> 
     <div class="emp-card completed">
       <div class="card-top">
         <i class="fa fa-check-circle"></i>
@@ -136,7 +156,11 @@
       </div>
       <p>0</p>
     </div>
+  </a>
 
+
+  <!-- All Task -->
+  <a href="/employee/emp-allTask.html" class="card-link"> 
     <div class="emp-card all">
       <div class="card-top">
         <i class="fa fa-list"></i>
@@ -144,12 +168,13 @@
       </div>
       <p>0</p>
     </div>
+  </a>
 
   </div>
-
 </main>
-
 </div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -160,6 +185,7 @@
     dropdown.classList.toggle("active");
   });
 </script>
+
 
 
 <!-- profile dropdown field JS -->
@@ -176,6 +202,33 @@ document.addEventListener("click", function(event) {
   }
 });
 </script>
+
+
+
+<!-- Employee dashboard Emp Name & Emp ID -->
+<script>
+const employee = JSON.parse(localStorage.getItem("employee"));
+
+// ================= CHECK LOGIN =================
+
+if (!employee) {
+
+    window.location.href =
+    "/employee/employee-login.html";
+}
+
+// ================= SHOW NAME =================
+
+document.getElementById("empName")
+.innerText = employee.name;
+
+// ================= SHOW EMPLOYEE ID =================
+
+document.getElementById("empId")
+.innerText = employee.emp_id;
+
+</script>
+
 
 </body>
 </html>

@@ -202,6 +202,8 @@
        </table>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -224,6 +226,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -241,106 +245,142 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Employee All task - JS -->
 <script>
-const tasks = [
-{ employee:"John Doe", status:"Completed" },
-{ employee:"John Doe", status:"Assigned" },
+async function loadReport() {
 
-{ employee:"Rahul Singh", status:"Completed" },
-{ employee:"Rahul Singh", status:"Assigned" }
-];
+    try {
 
-function loadReport(){
+        // ================= GET ALL TASKS =================
 
-    const report = {};
+        const res = await fetch("http://localhost:3000/tasks");
 
-    tasks.forEach(task => {
+        const tasks = await res.json();
 
-        if(!report[task.employee]){
-            report[task.employee] = {
-                assigned:0,
-                completed:0,
-                progress:0,
-                pending:0
-            };
+        // ================= REPORT OBJECT =================
+
+        const report = {};
+
+        // ================= BUILD REPORT =================
+
+        tasks.forEach(task => {
+
+            // Employee name
+           const emp = task.employee;
+
+            // Create employee object if not exists
+            if (!report[emp]) {
+
+                report[emp] = {
+
+                    assigned: 0,
+                    completed: 0,
+                    progress: 0,
+                    pending: 0
+
+                };
+
+            }
+
+            // Total assigned tasks
+            report[emp].assigned++;
+
+            // Status counts
+            if (task.status === "Completed") {
+
+                report[emp].completed++;
+
+            }
+
+            else if (
+                task.status === "In Progress" ||
+                task.status === "In Progress / Process"
+            ) {
+
+                report[emp].progress++;
+
+            }
+
+            else if (task.status === "New") {
+
+                report[emp].pending++;
+
+            }
+
+        });
+
+        // ================= TABLE BODY =================
+
+        const tbody = document.getElementById("reportBody");
+
+        tbody.innerHTML = "";
+
+        // ================= TOTAL VARIABLES =================
+
+        let i = 1;
+
+        let totalAssigned = 0;
+        let totalCompleted = 0;
+        let totalProgress = 0;
+        let totalPending = 0;
+
+        // ================= SHOW REPORT =================
+
+        for (let emp in report) {
+
+            const r = report[emp];
+
+            tbody.innerHTML += `
+
+            <tr>
+                <td>${i++}</td>
+                <td>${emp}</td>
+                <td>${r.assigned}</td>
+                <td>${r.completed}</td>
+                <td>${r.progress}</td>
+                <td>${r.pending}</td>
+            </tr>
+
+            `;
+
+            // Totals
+            totalAssigned += r.assigned;
+            totalCompleted += r.completed;
+            totalProgress += r.progress;
+            totalPending += r.pending;
+
         }
 
-        report[task.employee].assigned++;
+        // ================= FOOTER TOTALS =================
 
-        if(task.status === "Completed"){
-            report[task.employee].completed++;
-        }
-        else if(task.status === "In Progress"){
-            report[task.employee].progress++;
-        }
-        else{
-            report[task.employee].pending++;
-        }
+        document.getElementById("totalAssigned").innerText =
+            totalAssigned;
 
-    });
+        document.getElementById("totalCompleted").innerText =
+            totalCompleted;
 
-    const tbody = document.getElementById("reportBody");
-    tbody.innerHTML = "";
+        document.getElementById("totalProgress").innerText =
+            totalProgress;
 
-    let i = 1;
+        document.getElementById("totalPending").innerText =
+            totalPending;
 
-    let totalAssigned = 0;
-    let totalCompleted = 0;
-    let totalProgress = 0;
-    let totalPending = 0;
-
-    for(let emp in report){
-
-        let r = report[emp];
-
-        tbody.innerHTML += `
-        <tr>
-            <td>${i++}</td>
-            <td>${emp}</td>
-            <td>${r.assigned}</td>
-            <td>${r.completed}</td>
-            <td>${r.progress}</td>
-            <td>${r.pending}</td>
-        </tr>
-        `;
-
-        totalAssigned += r.assigned;
-        totalCompleted += r.completed;
-        totalProgress += r.progress;
-        totalPending += r.pending;
     }
 
-    document.getElementById("totalAssigned").innerText = totalAssigned;
-    document.getElementById("totalCompleted").innerText = totalCompleted;
-    document.getElementById("totalProgress").innerText = totalProgress;
-    document.getElementById("totalPending").innerText = totalPending;
+    catch (error) {
+
+        console.error("Error loading report:", error);
+
+    }
+
 }
 
+// ================= LOAD REPORT =================
+
 loadReport();
+
 </script>
+
 
 </body>
 </html>  

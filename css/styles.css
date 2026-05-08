@@ -1156,6 +1156,7 @@ footer {
   align-items: center;
   justify-content: center;
   transition: 0.3s;
+  /* margin-top: 5px; */
 }
 
 .right-header-avatar-icon i {
@@ -1171,6 +1172,23 @@ footer {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+/*--- Header profile Emp name & Id ---*/
+.right-header-emp-profile h4 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+  line-height: 2.0;
+}
+
+.right-header-emp-profile small{
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #dff707;
+  margin-top: 3px;
 }
 
 
@@ -1587,7 +1605,7 @@ footer {
   display: none;
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 60px;
   background: white;
   min-width: 180px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -2705,12 +2723,12 @@ footer {
   text-align: left;
 }
 
-.emp-allTask-table th{
+.emp-allTask-table th {
   background: #2d6cdf;
   color: white;
 }
 
-.emp-allTask-table button{
+.emp-allTask-table button {
   background:#0d6efd;
   color:white;
   border:none;

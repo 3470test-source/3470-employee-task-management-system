@@ -192,6 +192,8 @@
     </table>
 </div>
 
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtns = document.querySelectorAll(".admin-side-bar-drop-btn");
@@ -214,6 +216,8 @@
   });
 </script>
 
+
+
 <!-- profile dropdown field JS -->
 <script>
 function toggleDropdown() {
@@ -231,82 +235,104 @@ document.addEventListener("click", function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- In-Progress Task -- JS -->
 <script>
-const tasks = [
-{
-    title: "Change in the XYZ Software",
-    department: "Technical",
-    assignedTo: "John Doe (1452666)",
-    assignDate: "2024-09-20 07:17:21",
-    endDate: "2024-09-25",
-    status: "In Progress / Process"
+/*--- Load In Progress Tasks ---*/
+async function loadTasks() {
+
+  const res =
+    await fetch("http://localhost:3000/tasks");
+
+  const tasks =
+    await res.json();
+
+  const tbody =
+    document.getElementById("inprogressTask");
+
+  tbody.innerHTML = "";
+
+  /*--- Filter only In Progress tasks ---*/
+  const progressTasks =
+    tasks.filter(task =>
+      task.status === "In Progress"
+    );
+
+  /*--- No Records ---*/
+  if (progressTasks.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8">
+          ❌ No in progress tasks found
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  progressTasks.forEach((task, index) => {
+
+    tbody.innerHTML += `
+
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.department}</td>
+        <td>${task.employee}</td>
+        <td>
+          ${task.created_at
+            ? new Date(task.created_at)
+              .toLocaleDateString("en-CA")
+            : "-"}
+        </td>
+        <td>
+          ${new Date(task.end_date)
+            .toLocaleDateString("en-CA")}
+        </td>
+        <td>
+          <span class="inprogresstask-status-badge inprogress">
+            ${task.status}
+          </span>
+        </td>
+        <td>
+          <button onclick="viewTask(${task.id})">
+            View
+          </button>
+        </td>
+      </tr>
+    `;
+  });
 }
-];
 
-function loadTasks() {
 
-    const tbody = document.getElementById("inprogressTask");
-    tbody.innerHTML = "";
 
-    tasks.forEach((task, index) => {
+/*--- View Task ---*/
+async function viewTask(id) {
 
-        const row = document.createElement("tr");
+  const res =
+    await fetch("http://localhost:3000/tasks");
 
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${task.title}</td>
-            <td>${task.department}</td>
-            <td>${task.assignedTo}</td>
-            <td>${task.assignDate}</td>
-            <td>${task.endDate}</td>
-            <td>
-                <span class="inprogresstask-status-badge inprogress">
-                    ${task.status}
-                </span>
-            </td>
-            <td>
-                <button onclick="viewTask(${index})">View</button>
-            </td>
-        `;
+  const tasks =
+    await res.json();
 
-        tbody.appendChild(row);
-    });
-}
+  const task =
+    tasks.find(t => t.id == id);
 
-function viewTask(index) {
-
-    const task = tasks[index];
-
-    alert(
-`Task Title: ${task.title}
-Department: ${task.department}
-Assigned To: ${task.assignedTo}
-Status: ${task.status}`
+  alert(
+    `📌 Task Title: ${task.title}
+    👨 Employee: ${task.employee}
+    🏢 Department: ${task.department}
+    ⚡ Priority: ${task.priority}
+    📅 End Date:
+          ${new Date(task.end_date)
+          .toLocaleDateString("en-CA")}
+    📄 Description:
+          ${task.description}`
     );
 }
 
+/*-- Load Page --*/
 loadTasks();
 </script>
 

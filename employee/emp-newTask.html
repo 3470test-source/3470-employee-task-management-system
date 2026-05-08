@@ -68,7 +68,10 @@
     <div class="right-header-avatar-icon">
       <i class="fa fa-user"></i>
     </div>
-    <span>Vignesh</span>
+    <div>
+      <h4 id="empName"></h4>
+      <small id="empId"></small>
+    </div>
   </div>
 
   <!-- Dropdown -->
@@ -136,6 +139,8 @@
 
 </div>
  
+
+
 <!-- drop down filed JS -->
 <script>
   const dropBtn = document.querySelector(".emp-side-bar-drop-btn");
@@ -145,6 +150,7 @@
     dropdown.classList.toggle("active");
   });
 </script>
+
 
 
 <!-- profile dropdown field JS -->
@@ -160,6 +166,32 @@ document.addEventListener("click", function(event) {
     document.getElementById("dropdownMenu").classList.remove("show");
   }
 });
+</script>
+
+
+
+<!-- Employee dashboard Emp Name & Emp ID -->
+<script>
+const employee = JSON.parse(localStorage.getItem("employee"));
+
+// ================= CHECK LOGIN =================
+
+if (!employee) {
+
+    window.location.href =
+    "/employee/employee-login.html";
+}
+
+// ================= SHOW NAME =================
+
+document.getElementById("empName")
+.innerText = employee.name;
+
+// ================= SHOW EMPLOYEE ID =================
+
+document.getElementById("empId")
+.innerText = employee.emp_id;
+
 </script>
 
 

@@ -10,7 +10,7 @@ app.use(express.json());
 let departments = []; // temporary DB
 
 
-/* ================== DEPARTMENT ================== */
+/* ================== Admin Side -----  DEPARTMENT ================== */
 
 // ➤ Add Department
 app.post("/add-department", (req, res) => {
@@ -256,6 +256,92 @@ app.put("/tasks/:id", (req, res) => {
   );
 
 });
+
+
+
+// ================= GET Employee ALL TASKS =================
+
+app.get("/tasks", (req, res) => {
+
+    const sql =
+        "SELECT * FROM tasks";
+
+    db.query(sql, (err, result) => {
+
+        if (err) {
+
+            console.log(err);
+
+            return res.status(500).json({
+                error: "Database error"
+            });
+
+        }
+
+        res.json(result);
+
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+// ================= Employsee side ----- EMPLOYEE LOGIN =================
+
+app.post("/employee-login", (req, res) => {
+
+    const { empId, password } = req.body;
+
+    const sql =
+        "SELECT * FROM employees WHERE emp_id = ? AND password = ?";
+
+    db.query(sql, [empId, password], (err, result) => {
+
+        if (err) {
+
+            console.log(err);
+
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
+
+        }
+
+// ================= LOGIN SUCCESS =================
+
+        if (result.length > 0) {
+
+            res.json({
+                success: true,
+                message: "Login successful",
+                employee: result[0]
+            });
+
+        }
+
+// ================= LOGIN FAILED =================
+
+        else {
+
+            res.json({
+                success: false,
+                message: "Invalid Employee ID or Password"
+            });
+
+        }
+
+    });
+
+});
+
 
 
 
