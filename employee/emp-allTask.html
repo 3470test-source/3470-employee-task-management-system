@@ -140,6 +140,134 @@
 </div>
 
 
+<!-- ================= VIEW TASK MODAL ================= -->
+
+<div id="taskModal"
+  class="task-modal">
+
+  <div class="task-modal-content">
+
+    <span class="close-btn"
+      onclick="closeTaskModal()">
+      &times;
+    </span>
+
+    <h2>View Task Details</h2>
+
+    <table class="view-task-table">
+
+      <tr>
+        <th>Task Title</th>
+        <td id="viewTitle"></td>
+      </tr>
+
+      <tr>
+        <th>Description</th>
+        <td id="viewDescription"></td>
+      </tr>
+
+      <tr>
+        <th>Priority</th>
+        <td id="viewPriority"></td>
+      </tr>
+
+      <tr>
+        <th>Assign Date</th>
+        <td id="viewAssignDate"></td>
+      </tr>
+
+      <tr>
+        <th>End Date</th>
+        <td id="viewEndDate"></td>
+      </tr>
+
+      <tr>
+        <th>Status</th>
+        <td id="viewStatus"></td>
+      </tr>
+
+    </table>
+
+<!-- ================= TASK HISTORY ================= -->
+
+    <h3 class="task-history-title">Task History</h3>
+
+        <table class="task-history-table">
+
+          <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Remark</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Date & Time</th>
+              </tr>
+          </thead>
+
+        <tbody id="historyBody"></tbody>
+
+      </table>
+
+      <button class="take-action-btn"
+        onclick="openActionModal()">
+        Take Action
+      </button>
+
+    </div>
+
+</div>
+
+<!-- ================= ACTION MODAL ================= -->
+
+<div id="actionModal" class="task-modal">
+
+  <div class="task-modal-content">
+
+    <span class="close-btn"
+      onclick="closeActionModal()">
+      &times;
+    </span>
+
+    <h2>Take Action</h2>
+
+    <textarea
+      id="remark"
+      rows="5"
+      placeholder="Enter Remark"></textarea>
+
+    <br><br>
+
+    <input
+      type="number"
+      id="progress"
+      placeholder="Work Completion %">
+
+    <br><br>
+
+    <select id="taskStatus">
+
+      <option value="Inprogress">
+        Inprogress
+      </option>
+
+      <option value="Completed">
+        Completed
+      </option>
+
+    </select>
+
+    <br><br>
+
+    <button class="update-btn"
+      onclick="updateTaskStatus()">
+      Update
+    </button>
+
+  </div>
+
+</div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -196,115 +324,323 @@ document.getElementById("empId")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+<!-- All task  ----- JS -->
 <script>
-const tasks = [
-{
- title:"Change in XYZ Software",
- department:"Technical",
- assignedTo:"John Doe (1452666)",
- assignDate:"2024-09-20 07:17:21",
- endDate:"2024-09-25",
- status:"Completed"
-},
-{
- title:"Website Update",
- department:"IT",
- assignedTo:"Rahul",
- assignDate:"2024-09-22",
- endDate:"2024-09-30",
- status:"In Progress"
-},
-{
- title:"App Testing",
- department:"QA",
- assignedTo:"David",
- assignDate:"2024-09-23",
- endDate:"2024-09-28",
- status:"New"
-}
-];
 
-function loadAllTasks(){
+/* ================= GLOBAL TASK ID ================= */
 
-    const tbody =
-        document.getElementById("allTaskBody");
+let currentTaskId = null;
+
+/* ================= LOAD ALL TASKS ================= */
+
+async function loadAllTasks(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employee-tasks/${employee.id}`
+    );
+
+    const tasks = await res.json();
+
+    const tbody = document.getElementById("allTaskBody");
 
     tbody.innerHTML = "";
 
     if(tasks.length === 0){
 
-        tbody.innerHTML = `
-        <tr>
-          <td colspan="8" class="emp-allTask-no-record">
-            No Record found
-          </td>
-        </tr>
-        `;
-        return;
+      tbody.innerHTML = `
+      <tr>
+        <td colspan="8">
+          No Record Found
+        </td>
+      </tr>
+      `;
+      return;
     }
 
     tasks.forEach((task,index)=>{
 
-        let statusClass = "";
+      let statusClass = "";
 
-        if(task.status === "Completed"){
-            statusClass = "emp-allTask-completed";
-        }
-        else if(task.status === "In Progress"){
-            statusClass = "emp-allTask-inprogress";
-        }
-        else{
-            statusClass = "emp-allTask-new";
-        }
+      if(task.status === "New"){
 
-        tbody.innerHTML += `
-        <tr>
-            <td>${index+1}</td>
-            <td>${task.title}</td>
-            <td>${task.department}</td>
-            <td>${task.assignedTo}</td>
-            <td>${task.assignDate}</td>
-            <td>${task.endDate}</td>
+        statusClass = "emp-allTask-new";
 
-            <td>
-                <span class="Emp-allTaskstatus-badge ${statusClass}">
-                    ${task.status}
-                </span>
-            </td>
+      }
 
-            <td>
-                <button onclick="viewTask(${index})">
-                    View
-                </button>
-            </td>
-        </tr>
-        `;
+      else if(task.status === "Inprogress"){
+
+        statusClass = "emp-allTask-inprogress";
+
+      }
+
+      else if(task.status === "Completed"){
+
+        statusClass = "emp-allTask-completed";
+
+      }
+
+      tbody.innerHTML += `
+
+      <tr>
+        <td>${index+1}</td>
+        <td>${task.title}</td>
+        <td>${task.department_name}</td>
+        <td>${task.employee_name}</td>
+        <td>
+          ${
+            new Date(task.created_at)
+            .toLocaleDateString()
+          }
+        </td>
+        <td>
+          ${
+            new Date(task.end_date)
+            .toLocaleDateString()
+          }
+        </td>
+        <td>
+          <span class="Emp-allTaskstatus-badge ${statusClass}">
+            ${task.status}
+          </span>
+        </td>
+        <td>
+          <button 
+            onclick="viewTask(${task.id})">
+            View
+          </button>
+        </td>
+      </tr>
+
+      `;
+
     });
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert("Error loading tasks");
+
+  }
+
 }
 
-function viewTask(index){
 
-    const task = tasks[index];
+/* ================= VIEW TASK ================= */
 
-    alert(
-`Task Title: ${task.title}
-Assigned To: ${task.assignedTo}
-Status: ${task.status}`
+async function viewTask(taskId){
+
+  currentTaskId = taskId;
+
+  try{
+
+    /* TASK DETAILS */
+
+    const res = await fetch(
+      `http://localhost:3000/task/${taskId}`
     );
+
+    const task = await res.json();
+
+    document.getElementById("viewTitle")
+    .innerText = task.title;
+
+    document.getElementById("viewDescription")
+    .innerText = task.description;
+
+    document.getElementById("viewPriority")
+    .innerText = task.priority;
+
+    document.getElementById("viewAssignDate")
+    .innerText =
+    new Date(task.created_at)
+    .toLocaleDateString();
+
+    document.getElementById("viewEndDate")
+    .innerText =
+    new Date(task.end_date)
+    .toLocaleDateString();
+
+    document.getElementById("viewStatus")
+    .innerText = task.status;
+
+
+/* ================= TASK HISTORY ================= */
+
+const historyRes = await fetch(
+  `http://localhost:3000/task-history/${taskId}`
+);
+
+const history = await historyRes.json();
+
+const historyBody = document.getElementById("historyBody");
+
+historyBody.innerHTML = "";
+
+if(history.length === 0){
+
+  historyBody.innerHTML = `
+  <tr>
+    <td colspan="5">
+      No History Found
+    </td>
+  </tr>
+  `;
+
 }
+
+else{
+
+  history.forEach((item,index)=>{
+
+    historyBody.innerHTML += `
+
+    <tr>
+      <td>${index+1}</td>
+      <td>
+        ${item.remark || "-"}
+      </td>
+      <td>
+        ${item.status}
+      </td>
+      <td>
+        ${item.progress}%
+      </td>
+      <td>
+        ${
+          new Date(item.created_at)
+          .toLocaleString()
+        }
+      </td>
+    </tr>
+    `;
+
+  });
+
+}
+
+
+/* ================= SHOW MODAL ================= */
+
+// SHOW / HIDE TAKE ACTION BUTTON
+
+if(task.status === "Completed"){
+
+  document.querySelector(".take-action-btn")
+  .style.display = "none";
+
+}
+else{
+
+  document.querySelector(".take-action-btn")
+  .style.display = "inline-block";
+
+}
+
+  document.getElementById("taskModal")
+  .style.display = "block";
+
+}
+
+  catch(error){
+
+    console.log(error);
+
+    alert("Error loading task");
+
+  }
+
+}
+
+
+/* ================= CLOSE MODAL ================= */
+
+function closeTaskModal(){
+
+  document.getElementById("taskModal")
+  .style.display = "none";
+
+}
+
+function closeActionModal(){
+
+  document.getElementById("actionModal")
+  .style.display = "none";
+
+}
+
+/* ================= OPEN ACTION MODAL ================= */
+
+function openActionModal(){
+
+  document.getElementById("actionModal")
+  .style.display = "block";
+
+}
+
+
+/* ================= UPDATE TASK ================= */
+
+async function updateTaskStatus(){
+
+  const data = {
+
+    remark:
+    document.getElementById("remark").value,
+
+    progress:
+    document.getElementById("progress").value,
+
+    status:
+    document.getElementById("taskStatus").value
+
+  };
+
+  try{
+
+    await fetch(
+      `http://localhost:3000/update-task/${currentTaskId}`,
+      {
+
+        method:"PUT",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(data)
+
+      }
+    );
+
+    alert("Task Updated Successfully");
+
+    closeActionModal();
+
+    closeTaskModal();
+
+    loadAllTasks();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert("Error updating task");
+
+  }
+
+}
+
+/* ================= INITIAL LOAD ================= */
 
 loadAllTasks();
+
 </script>
 
 </body>

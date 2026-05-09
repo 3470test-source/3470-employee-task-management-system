@@ -133,37 +133,160 @@ app.put("/employees/:id", (req, res) => {
 /* ================== Task ================== */
 
 // ➤ Add Task
+// app.post("/add-task", (req, res) => {
+
+//   const {
+//     deptId, employeeId, priority, title,
+//     description, endDate, file
+//   } = req.body;
+
+//   const sql = `
+//     INSERT INTO tasks
+//     (dept_id, employee_id, priority, title, description, end_date, file)
+//     VALUES (?, ?, ?, ?, ?, ?, ?)
+//   `;
+
+//   db.query(
+//     sql,
+//     [
+//       deptId, employeeId, priority, title,
+//       description, endDate, file
+//     ],
+//     (err, result) => {
+
+//       if (err) return res.json(err);
+
+//       res.json({
+//         message: "Task Added Successfully"
+//       });
+
+//     }
+//   );
+
+// });
+
+
+
+
+
+
+
+
+
+
+
 app.post("/add-task", (req, res) => {
 
   const {
-    deptId, employeeId, priority, title,
-    description, endDate, file
+    deptId,
+    employeeId,
+    priority,
+    title,
+    description,
+    endDate,
+    file
   } = req.body;
+
+  // ================= INSERT TASK =================
 
   const sql = `
     INSERT INTO tasks
-    (dept_id, employee_id, priority, title, description, end_date, file)
+    (
+      dept_id,
+      employee_id,
+      priority,
+      title,
+      description,
+      end_date,
+      file
+    )
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.query(
     sql,
     [
-      deptId, employeeId, priority, title,
-      description, endDate, file
+      deptId,
+      employeeId,
+      priority,
+      title,
+      description,
+      endDate,
+      file
     ],
     (err, result) => {
 
-      if (err) return res.json(err);
+      if (err) {
 
-      res.json({
-        message: "Task Added Successfully"
-      });
+        console.log(err);
+
+        return res.status(500).json(err);
+
+      }
+
+      // ================= INSERT NOTIFICATION =================
+
+      const message =
+        `New Task Assigned: ${title}`;
+
+      const notificationSql = `
+        INSERT INTO notifications
+        (
+          employee_id,
+          message
+        )
+        VALUES (?, ?)
+      `;
+
+      db.query(
+        notificationSql,
+        [
+          employeeId,
+          message
+        ],
+        (err2, result2) => {
+
+          if(err2){
+
+            console.log(err2);
+
+            return res.status(500).json(err2);
+
+          }
+
+          res.json({
+            message:
+              "Task Added Successfully"
+          });
+
+        }
+      );
 
     }
   );
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ➤ Get Tasks
@@ -344,8 +467,292 @@ app.post("/employee-login", (req, res) => {
 
 
 
+// ================= GET EMPLOYEE TASKS =================
 
-// Start server
+app.get("/employee-tasks/:employeeId", (req, res) => {
+
+  const employeeId = req.params.employeeId;
+
+  const sql = `
+    SELECT
+      tasks.*,
+      departments.name AS department_name,
+      employees.name AS employee_name
+    FROM tasks
+    LEFT JOIN departments
+      ON tasks.dept_id = departments.id
+    LEFT JOIN employees
+      ON tasks.employee_id = employees.id
+    WHERE tasks.employee_id = ?
+  `;
+
+  db.query(sql, [employeeId], (err, result) => {
+
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Error fetching tasks"
+      });
+    }
+
+    res.json(result);
+
+  });
+
+});
+
+
+
+app.get("/task/:id", (req,res)=>{
+
+  const sql =
+  "SELECT * FROM tasks WHERE id=?";
+
+  db.query(sql,[req.params.id],(err,result)=>{
+
+    if(err){
+      return res.status(500).json(err);
+    }
+
+    res.json(result[0]);
+
+  });
+
+});
+
+
+
+app.put("/update-task/:id", (req, res) => {
+
+  const taskId = req.params.id;
+
+  const {
+    remark,
+    progress,
+    status
+  } = req.body;
+
+  // UPDATE MAIN TASK TABLE
+
+  const updateSql = `
+    UPDATE tasks
+    SET
+      remark = ?,
+      progress = ?,
+      status = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    updateSql,
+    [
+      remark,
+      progress,
+      status,
+      taskId
+    ],
+    (err, result) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      // INSERT HISTORY
+
+      const historySql = `
+        INSERT INTO task_history
+        (
+          task_id,
+          remark,
+          progress,
+          status
+        )
+        VALUES (?, ?, ?, ?)
+      `;
+
+      db.query(
+        historySql,
+        [
+          taskId,
+          remark,
+          progress,
+          status
+        ],
+        (err2, result2) => {
+
+          if (err2) {
+            return res.status(500).json(err2);
+          }
+
+          res.json({
+            message: "Task Updated Successfully"
+          });
+
+        }
+      );
+
+    }
+  );
+
+});
+
+
+
+app.get("/task-history/:taskId", (req, res) => {
+
+  const sql = `
+    SELECT *
+    FROM task_history
+    WHERE task_id = ?
+    ORDER BY id ASC
+  `;
+
+  db.query(
+    sql,
+    [req.params.taskId],
+    (err, result) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json(result);
+
+    }
+  );
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get("/employee-notifications/:employeeId", (req, res) => {
+
+  const sql = `
+    SELECT *
+    FROM notifications
+    WHERE employee_id = ?
+    ORDER BY id DESC
+    LIMIT 5
+  `;
+
+  db.query(
+    sql,
+    [req.params.employeeId],
+    (err, result) => {
+
+      if(err){
+
+        console.log(err);
+
+        return res.status(500).json(err);
+
+      }
+
+      res.json(result);
+
+    }
+  );
+
+});
+
+
+
+
+
+app.get("/notification-count/:employeeId", (req, res) => {
+
+  const sql = `
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE employee_id = ?
+    AND is_read = 0
+  `;
+
+  db.query(
+    sql,
+    [req.params.employeeId],
+    (err, result) => {
+
+      if(err){
+
+        console.log(err);
+
+        return res.status(500).json(err);
+
+      }
+
+      res.json(result[0]);
+
+    }
+  );
+
+});
+
+
+
+
+
+
+app.put("/mark-notifications-read/:employeeId", (req, res) => {
+
+  const sql = `
+    UPDATE notifications
+    SET is_read = 1
+    WHERE employee_id = ?
+  `;
+
+  db.query(
+    sql,
+    [req.params.employeeId],
+    (err, result) => {
+
+      if(err){
+
+        console.log(err);
+
+        return res.status(500).json(err);
+
+      }
+
+      res.json({
+        message: "Notifications marked as read"
+      });
+
+    }
+  );
+
+});
+
+
+
+
+
+
+/*--------------------------
+          Start server
+  --------------------------*/
+
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });

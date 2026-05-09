@@ -28,6 +28,92 @@
       display: block;
     }
 
+
+
+
+
+.emp-da-icon-notification{
+
+  position:relative;
+  cursor:pointer;
+  font-size:22px;
+  margin-right:20px;
+
+}
+
+.notification-count{
+
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:red;
+  color:white;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+
+.notification-box{
+
+  position:absolute;
+  top:75px;
+  right:120px;
+  width:320px;
+  max-height:400px;
+  overflow-y:auto;
+  background:#fff;
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+  display:none;
+  z-index:9999;
+
+}
+
+.notification-box h3{
+
+  margin-bottom:10px;
+  border-bottom:1px solid #ddd;
+  padding-bottom:10px;
+
+}
+
+.notification-item{
+
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+
+}
+
+.notification-item p{
+
+  font-size:14px;
+  margin-bottom:5px;
+  color:#222;
+  font-weight:500;
+
+}
+
+.notification-item small{
+
+  color:gray;
+  font-size:12px;
+
+}
+
+
+
+
+
+
+
+
+
     </style>
 
 </head>
@@ -58,9 +144,47 @@
   <div class="right-header-emp">
 
   <!-- Notification Icon -->
-  <div class="emp-da-icon-notification">
+  <!-- <div class="emp-da-icon-notification">
     <i class="fa fa-bell"></i>
-  </div>
+  </div> -->
+
+
+
+
+  <!-- Notification Icon -->
+
+<div class="emp-da-icon-notification"
+     onclick="toggleNotifications(event)">
+
+  <i class="fa fa-bell"></i>
+
+  <span id="notificationCount"
+        class="notification-count">
+    0
+  </span>
+
+</div>
+
+<!-- Notification Popup -->
+
+<div id="notificationBox"
+     class="notification-box">
+
+  <h3>Notifications</h3>
+
+  <div id="notificationList"></div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
   <!-- Profile Section -->
   <div class="admin-profile-dropdown">
@@ -130,7 +254,7 @@
         <i class="fa fa-plus-circle"></i>
         <h3>New Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="newTaskCount">0</p>
     </div>
   </a>  
 
@@ -142,7 +266,7 @@
         <i class="fa fa-spinner"></i>
         <h3>In Progress</h3>
       </div>
-      <p>0</p>
+      <p id="inprogressCount">0</p>
     </div>
   </a>
 
@@ -154,7 +278,7 @@
         <i class="fa fa-check-circle"></i>
         <h3>Completed</h3>
       </div>
-      <p>0</p>
+      <p id="completedCount">0</p>
     </div>
   </a>
 
@@ -166,7 +290,7 @@
         <i class="fa fa-list"></i>
         <h3>All Tasks</h3>
       </div>
-      <p>0</p>
+      <p id="allTaskCount">0</p>
     </div>
   </a>
 
@@ -229,6 +353,252 @@ document.getElementById("empId")
 
 </script>
 
+
+
+<!-- Total New Task Count show - JS / Employee side -->
+<script>
+// LOAD DASHBOARD COUNTS
+
+async function loadDashboardCounts(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employee-tasks/${employee.id}`
+    );
+
+  const tasks = await res.json();
+
+  /*-- NEW TASK COUNT --*/
+    const newTasks =
+      tasks.filter(task =>
+        task.status === "New"
+      );
+
+  /*-- INPROGRESS TASK COUNT --*/
+    const inprogressTasks =
+      tasks.filter(task =>
+        task.status === "Inprogress"
+      );
+
+  /*-- COMPLETED TASK COUNT --*/
+    const completedTasks =
+      tasks.filter(task =>
+        task.status === "Completed"
+      );
+
+  /*--- SHOW COUNT ---*/
+
+  document.getElementById("newTaskCount")
+    .innerText = newTasks.length;
+
+  document.getElementById("inprogressCount")
+    .innerText = inprogressTasks.length;
+
+  document.getElementById("completedCount")
+    .innerText = completedTasks.length;
+
+  document.getElementById("allTaskCount")
+    .innerText = tasks.length;
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+loadDashboardCounts();
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+// ================= LOAD NOTIFICATION COUNT =================
+
+async function loadNotificationCount(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/notification-count/${employee.id}`
+    );
+
+    const data = await res.json();
+
+    document.getElementById("notificationCount")
+    .innerText = data.total;
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+// ================= TOGGLE NOTIFICATIONS =================
+
+async function toggleNotifications(event){
+
+  event.stopPropagation();
+
+  const box =
+    document.getElementById("notificationBox");
+
+  // TOGGLE
+
+  if(box.style.display === "block"){
+
+    box.style.display = "none";
+
+    return;
+
+  }
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employee-notifications/${employee.id}`
+    );
+
+    const notifications =
+      await res.json();
+
+    const list =
+      document.getElementById("notificationList");
+
+    list.innerHTML = "";
+
+    // NO DATA
+
+    if(notifications.length === 0){
+
+      list.innerHTML =
+        `<p>No Notifications Found</p>`;
+
+    }
+
+    else{
+
+      notifications.forEach(notification => {
+
+        list.innerHTML += `
+
+          <div class="notification-item">
+
+            <p>
+              ${notification.message}
+            </p>
+
+            <small>
+              ${
+                new Date(notification.created_at)
+                .toLocaleString()
+              }
+            </small>
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+    // SHOW POPUP
+
+    box.style.display = "block";
+
+    // MARK AS READ
+
+    await fetch(
+      `http://localhost:3000/mark-notifications-read/${employee.id}`,
+      {
+        method:"PUT"
+      }
+    );
+
+    // RELOAD COUNT
+
+    loadNotificationCount();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+// ================= CLOSE POPUP =================
+
+document.addEventListener("click", function(e){
+
+  const box =
+    document.getElementById("notificationBox");
+
+  const bell =
+    document.querySelector(".emp-da-icon-notification");
+
+  if(
+    !box.contains(e.target)
+    &&
+    !bell.contains(e.target)
+  ){
+
+    box.style.display = "none";
+
+  }
+
+});
+
+// ================= INITIAL LOAD =================
+
+loadNotificationCount();
+
+</script>
 
 </body>
 </html>

@@ -140,6 +140,89 @@
 </div>
 
 
+<!-- ================= VIEW TASK MODAL ================= -->
+
+<div id="taskModal" class="task-modal">
+
+  <div class="task-modal-content">
+
+    <span class="close-btn"
+      onclick="closeTaskModal()">
+      &times;
+    </span>
+
+    <h2>View Task Details</h2>
+
+    <table class="view-task-table">
+
+      <tr>
+        <th>Task Title</th>
+        <td id="viewTitle"></td>
+      </tr>
+
+      <tr>
+        <th>Description</th>
+        <td id="viewDescription"></td>
+      </tr>
+
+      <tr>
+        <th>Priority</th>
+        <td id="viewPriority"></td>
+      </tr>
+
+      <tr>
+        <th>Assign Date</th>
+        <td id="viewAssignDate"></td>
+      </tr>
+
+      <tr>
+        <th>End Date</th>
+        <td id="viewEndDate"></td>
+      </tr>
+
+      <tr>
+        <th>Status</th>
+        <td id="viewStatus"></td>
+      </tr>
+
+    </table>
+
+<!-- ================= TASK HISTORY ================= -->
+
+  <h3 class="task-history-title"> Task History</h3>
+
+    <table class="task-history-table">
+
+      <thead>
+
+        <tr>
+          <th>S.No</th>
+          <th>Remark</th>
+          <th>Status</th>
+          <th>Progress</th>
+          <th>Date & Time</th>
+        </tr>
+
+      </thead>
+
+    <tbody id="historyBody">
+
+        <tr>
+          <td>1</td>
+          <td id="historyRemark"></td>
+          <td id="historyStatus"></td>
+          <td id="historyProgress"></td>
+        </tr>
+
+    </tbody>
+
+  </table>
+
+  </div>
+
+</div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -196,96 +279,221 @@ document.getElementById("empId")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Employee side - Completed Task - JS -->
 <script>
-const tasks = [
-{
- title:"Change in the XYZ Software",
- department:"Technical",
- assignedTo:"John Doe (1452666)",
- assignDate:"2024-09-20 07:17:21",
- endDate:"2024-09-25",
- status:"Completed"
-}
-];
 
-function loadCompletedTasks(){
+// ================= LOAD COMPLETED TASKS =================
 
-    const tbody =
-        document.getElementById("completedBody");
+async function loadCompletedTasks() {
+
+  try {
+
+    const res = await fetch(
+      `http://localhost:3000/employee-tasks/${employee.id}`
+    );
+
+    const tasks = await res.json();
+
+    const tbody = document.getElementById("completedBody");
 
     tbody.innerHTML = "";
 
-    const completedTasks =
-        tasks.filter(task =>
-            task.status === "Completed"
-        );
+// ================= FILTER COMPLETED =================
 
-    if(completedTasks.length === 0){
+    const completedTasks = tasks.filter(task =>
 
-        tbody.innerHTML = `
+      task.status === "Completed"
+
+    );
+
+// ================= NO RECORD =================
+
+    if (completedTasks.length === 0) {
+
+      tbody.innerHTML = `
+      <tr>
+        <td colspan="8"
+          class="completedTask-no-record">
+          No Record Found
+        </td>
+      </tr>
+      `;
+      return;
+    }
+
+// ================= SHOW TASKS =================
+
+    completedTasks.forEach((task, index) => {
+
+      tbody.innerHTML += `
+
+      <tr>
+        <td>${index + 1}</td>
+        <td>${task.title}</td>
+        <td>${task.department_name}</td>
+        <td>${task.employee_name}</td>
+        <td>
+          ${
+            new Date(task.created_at)
+            .toLocaleDateString()
+          }
+        </td>
+        <td>
+          ${
+            new Date(task.end_date)
+            .toLocaleDateString()
+          }
+        </td>
+        <td>
+          <span class="emp-completedTask-badge">
+            ${task.status}
+          </span>
+        </td>
+        <td>
+          <button onclick="viewTask(${task.id})">
+            View
+          </button>
+        </td>
+      </tr>
+
+      `;
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    alert("Error loading completed tasks");
+
+  }
+
+}
+
+
+// ================= VIEW TASK =================
+
+async function viewTask(taskId){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/task/${taskId}`
+    );
+
+    const task = await res.json();
+
+// ================= SHOW TASK DATA =================
+
+    document.getElementById("viewTitle")
+    .innerText = task.title;
+
+    document.getElementById("viewDescription")
+    .innerText = task.description;
+
+    document.getElementById("viewPriority")
+    .innerText = task.priority;
+
+    document.getElementById("viewAssignDate")
+    .innerText =
+        new Date(task.created_at)
+        .toLocaleDateString();
+
+    document.getElementById("viewEndDate")
+    .innerText = 
+        new Date(task.end_date)
+        .toLocaleDateString()
+
+    document.getElementById("viewStatus")
+    .innerText = task.status;
+
+// ================= LOAD TASK HISTORY =================
+
+    const historyRes = await fetch(
+      `http://localhost:3000/task-history/${taskId}`
+    );
+
+    const history = await historyRes.json();
+
+    const historyBody = document.getElementById("historyBody");
+
+    historyBody.innerHTML = "";
+
+// ================= NO HISTORY =================
+
+    if(history.length === 0){
+
+      historyBody.innerHTML = `
+      <tr>
+        <td colspan="4">
+          No History Found
+        </td>
+      </tr>
+      `;
+
+    }
+
+// ================= SHOW HISTORY =================
+
+    else{
+
+      history.forEach((item,index)=>{
+
+        historyBody.innerHTML += `
         <tr>
-          <td colspan="8" class="completedTask-no-record">
-             No Record found
+          <td>${index + 1}</td>
+          <td>
+            ${item.remark || "-"}
+          </td>
+          <td>
+            ${item.status}
+          </td>
+          <td>
+            ${item.progress || 0}%
+          </td>
+          <td>
+            ${new Date(item.created_at)
+            .toLocaleString()}
           </td>
         </tr>
         `;
 
-        return;
+      });
+
     }
 
-    completedTasks.forEach((task,index)=>{
+// ================= OPEN MODAL =================
 
-        tbody.innerHTML += `
-        <tr>
-            <td>${index+1}</td>
-            <td>${task.title}</td>
-            <td>${task.department}</td>
-            <td>${task.assignedTo}</td>
-            <td>${task.assignDate}</td>
-            <td>${task.endDate}</td>
+    document.getElementById("taskModal")
+    .style.display = "block";
 
-            <td>
-                <span class="emp-completedTask-badge">
-                    ${task.status}
-                </span>
-            </td>
+  }
 
-            <td>
-                <button onclick="viewTask(${index})">
-                    View
-                </button>
-            </td>
-        </tr>
-        `;
-    });
+  catch(error){
+
+    console.log(error);
+
+    alert("Error loading task");
+
+  }
+
 }
 
-function viewTask(index){
+// ================= CLOSE MODAL =================
 
-    const task = tasks[index];
+function closeTaskModal(){
 
-    alert(
-`Task Title: ${task.title}
-Assigned To: ${task.assignedTo}
-Status: ${task.status}`
-    );
+  document.getElementById("taskModal")
+  .style.display = "none";
+
 }
+
+// ================= LOAD =================
 
 loadCompletedTasks();
+
 </script>
 
 </body>
