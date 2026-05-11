@@ -56,8 +56,15 @@
   <div class="right-header-emp">
 
   <!-- Notification Icon -->
-  <div class="emp-da-icon-notification">
+  <div class="emp-da-icon-notification" onclick="toggleNotifications(event)">
     <i class="fa fa-bell"></i>
+      <span id="notificationCount" class="notification-count">0</span>
+  </div>
+
+  <!-- Notification Popup -->
+  <div id="notificationBox" class="notification-box">
+    <h3><i class="fa fa-bell"></i>Notifications</h3>
+      <div id="notificationList"></div>
   </div>
 
   <!-- Profile Section -->
@@ -493,6 +500,157 @@ function closeTaskModal(){
 // ================= LOAD =================
 
 loadCompletedTasks();
+
+</script>
+
+
+
+<!-- Notification - JS -->
+<script>
+
+// ================= LOAD NOTIFICATION COUNT =================
+
+async function loadNotificationCount(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/notification-count/${employee.id}`
+    );
+
+    const data = await res.json();
+
+    document.getElementById("notificationCount")
+    .innerText = data.total;
+
+  }
+
+  catch(error){
+    console.log(error);
+  }
+
+}
+
+// ================= TOGGLE NOTIFICATIONS =================
+
+async function toggleNotifications(event){
+
+  event.stopPropagation();
+
+  const box = document.getElementById("notificationBox");
+
+// TOGGLE
+
+  if(box.style.display === "block"){
+
+    box.style.display = "none";
+
+    return;
+
+  }
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employee-notifications/${employee.id}`
+    );
+
+    const notifications = await res.json();
+
+    const list = document.getElementById("notificationList");
+
+    list.innerHTML = "";
+
+    // NO DATA
+
+    if(notifications.length === 0){
+
+      list.innerHTML =`
+          <div class="no-notification">
+            No Notifications Found
+          </div>
+          `
+    }
+
+    else{
+
+      notifications.forEach(notification => {
+
+        list.innerHTML += `
+          <div class="notification-item">
+            <p class="notification-message">
+              <span class="notification-tag"> NEW TASK ASSIGNED </span>
+              
+              <span class="notification-title">
+                ${notification.message.replace("New Task Assigned: ", "")}
+              </span>
+            </p>
+
+            <small>
+              ${
+                new Date(notification.created_at)
+                .toLocaleString()
+              }
+            </small>
+
+          </div>
+        `;
+      });
+
+    }
+
+    // SHOW POPUP
+
+    box.style.display = "block";
+
+    // MARK AS READ
+
+    await fetch(
+      `http://localhost:3000/mark-notifications-read/${employee.id}`,
+      {
+        method:"PUT"
+      }
+    );
+
+    // RELOAD COUNT
+
+    loadNotificationCount();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+// ================= CLOSE POPUP =================
+
+document.addEventListener("click", function(e){
+
+  const box =
+    document.getElementById("notificationBox");
+
+  const bell =
+    document.querySelector(".emp-da-icon-notification");
+
+  if(
+    !box.contains(e.target)
+    &&
+    !bell.contains(e.target)
+  ){
+
+    box.style.display = "none";
+
+  }
+
+});
+
+// ================= INITIAL LOAD =================
+
+loadNotificationCount();
 
 </script>
 

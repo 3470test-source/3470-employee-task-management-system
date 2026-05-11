@@ -133,86 +133,25 @@ app.put("/employees/:id", (req, res) => {
 /* ================== Task ================== */
 
 // ➤ Add Task
-// app.post("/add-task", (req, res) => {
-
-//   const {
-//     deptId, employeeId, priority, title,
-//     description, endDate, file
-//   } = req.body;
-
-//   const sql = `
-//     INSERT INTO tasks
-//     (dept_id, employee_id, priority, title, description, end_date, file)
-//     VALUES (?, ?, ?, ?, ?, ?, ?)
-//   `;
-
-//   db.query(
-//     sql,
-//     [
-//       deptId, employeeId, priority, title,
-//       description, endDate, file
-//     ],
-//     (err, result) => {
-
-//       if (err) return res.json(err);
-
-//       res.json({
-//         message: "Task Added Successfully"
-//       });
-
-//     }
-//   );
-
-// });
-
-
-
-
-
-
-
-
-
-
-
 app.post("/add-task", (req, res) => {
 
   const {
-    deptId,
-    employeeId,
-    priority,
-    title,
-    description,
-    endDate,
-    file
+    deptId, employeeId, priority, title,
+    description, endDate, file
   } = req.body;
 
-  // ================= INSERT TASK =================
+// ================= INSERT TASK =================
 
   const sql = `
     INSERT INTO tasks
-    (
-      dept_id,
-      employee_id,
-      priority,
-      title,
-      description,
-      end_date,
-      file
-    )
+    (dept_id, employee_id, priority, title, description, end_date, file)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.query(
     sql,
     [
-      deptId,
-      employeeId,
-      priority,
-      title,
-      description,
-      endDate,
-      file
+      deptId, employeeId, priority, title, description, endDate, file
     ],
     (err, result) => {
 
@@ -224,25 +163,20 @@ app.post("/add-task", (req, res) => {
 
       }
 
-      // ================= INSERT NOTIFICATION =================
+// ================= INSERT NOTIFICATION =================
 
-      const message =
-        `New Task Assigned: ${title}`;
+    const message = `New Task Assigned: ${title}`;
 
       const notificationSql = `
         INSERT INTO notifications
-        (
-          employee_id,
-          message
-        )
+        (employee_id, message)
         VALUES (?, ?)
       `;
 
       db.query(
         notificationSql,
         [
-          employeeId,
-          message
+          employeeId, message
         ],
         (err2, result2) => {
 
@@ -266,26 +200,6 @@ app.post("/add-task", (req, res) => {
   );
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -317,6 +231,7 @@ app.get("/tasks", (req, res) => {
 });
 
 
+
 // ➤ Delete Task
 app.delete("/tasks/:id", (req, res) => {
 
@@ -335,6 +250,7 @@ app.delete("/tasks/:id", (req, res) => {
   );
 
 });
+
 
 
 // ➤ Update Task Status
@@ -357,6 +273,7 @@ app.put("/tasks/status/:id", (req, res) => {
   );
 
 });
+
 
 
 // ➤ Edit Task
@@ -409,13 +326,6 @@ app.get("/tasks", (req, res) => {
 
 
 
-
-
-
-
-
-
-
 // ================= Employsee side ----- EMPLOYEE LOGIN =================
 
 app.post("/employee-login", (req, res) => {
@@ -438,6 +348,7 @@ app.post("/employee-login", (req, res) => {
 
         }
 
+
 // ================= LOGIN SUCCESS =================
 
         if (result.length > 0) {
@@ -449,6 +360,7 @@ app.post("/employee-login", (req, res) => {
             });
 
         }
+
 
 // ================= LOGIN FAILED =================
 
@@ -464,7 +376,6 @@ app.post("/employee-login", (req, res) => {
     });
 
 });
-
 
 
 // ================= GET EMPLOYEE TASKS =================
@@ -503,6 +414,7 @@ app.get("/employee-tasks/:employeeId", (req, res) => {
 
 
 
+// ➤ Edit Task
 app.get("/task/:id", (req,res)=>{
 
   const sql =
@@ -522,17 +434,16 @@ app.get("/task/:id", (req,res)=>{
 
 
 
+// ➤ update Task
 app.put("/update-task/:id", (req, res) => {
 
   const taskId = req.params.id;
 
   const {
-    remark,
-    progress,
-    status
+    remark, progress, status
   } = req.body;
 
-  // UPDATE MAIN TASK TABLE
+// UPDATE MAIN TASK TABLE
 
   const updateSql = `
     UPDATE tasks
@@ -546,10 +457,7 @@ app.put("/update-task/:id", (req, res) => {
   db.query(
     updateSql,
     [
-      remark,
-      progress,
-      status,
-      taskId
+      remark, progress, status, taskId
     ],
     (err, result) => {
 
@@ -557,26 +465,18 @@ app.put("/update-task/:id", (req, res) => {
         return res.status(500).json(err);
       }
 
-      // INSERT HISTORY
+// INSERT HISTORY
 
       const historySql = `
         INSERT INTO task_history
-        (
-          task_id,
-          remark,
-          progress,
-          status
-        )
+        (task_id, remark, progress,status)
         VALUES (?, ?, ?, ?)
       `;
 
       db.query(
         historySql,
         [
-          taskId,
-          remark,
-          progress,
-          status
+          taskId, remark, progress, status
         ],
         (err2, result2) => {
 
@@ -598,6 +498,7 @@ app.put("/update-task/:id", (req, res) => {
 
 
 
+// ➤ Task history 
 app.get("/task-history/:taskId", (req, res) => {
 
   const sql = `
@@ -625,27 +526,7 @@ app.get("/task-history/:taskId", (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ➤ Employee Side notifications bill icon
 app.get("/employee-notifications/:employeeId", (req, res) => {
 
   const sql = `
@@ -678,8 +559,7 @@ app.get("/employee-notifications/:employeeId", (req, res) => {
 
 
 
-
-
+// ➤ Employee Side notifications bill icon - Count
 app.get("/notification-count/:employeeId", (req, res) => {
 
   const sql = `
@@ -711,9 +591,7 @@ app.get("/notification-count/:employeeId", (req, res) => {
 
 
 
-
-
-
+// ➤ Employee Side notifications bill icon - Mark Read
 app.put("/mark-notifications-read/:employeeId", (req, res) => {
 
   const sql = `
@@ -743,10 +621,6 @@ app.put("/mark-notifications-read/:employeeId", (req, res) => {
   );
 
 });
-
-
-
-
 
 
 /*--------------------------

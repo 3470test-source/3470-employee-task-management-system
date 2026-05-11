@@ -1195,7 +1195,9 @@ footer {
 /*--- Employee dash MAIN LAYOUT ---*/
 .employee-side-bar-container {
   display: flex;
-  height: 100vh;
+  /* height: 100vh; */
+  min-height: calc(100vh - 60px);
+  
 }
 
 /*--- SIDEBAR ---*/
@@ -2487,9 +2489,10 @@ footer {
 }
 
 .emp-wise-report-container h2 {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-size: 28px;
   font-weight: 600;
+  color: #1e293b;
 }
 
 .emp-wise-report-table {
@@ -2500,14 +2503,18 @@ footer {
 }
 
 .emp-wise-report-table th, td {
-  padding: 12px;
+  padding: 14px;
   border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+  font-size: 15px;
 }
 
 .emp-wise-report-table th {
   background: #2d6cdf;
   color: white;
+  padding: 14px;
+  text-align: center;
+  font-size: 15px;
 }
 
 .emp-wise-total-row {
@@ -2515,6 +2522,12 @@ footer {
   color:#fff;
   font-weight:bold;
 }
+
+.emp-wise-report-table tbody tr:hover {
+  background: #caf3dd;
+  transition: 0.3s;
+}
+
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -2619,6 +2632,39 @@ footer {
   padding:5px 10px;
   border-radius:4px;
   font-size:12px;
+}
+
+/* ======================
+   STATUS BADGES
+====================== */
+
+.badge {
+  display: inline-block;
+  min-width: 35px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/*--- Assigned / Progress ---*/
+.badge-progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/*--- Completed ---*/
+.badge-completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+
+/*--- Pending ---*/
+.badge-pending {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -2986,3 +3032,158 @@ footer {
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ================================
+    Employee Side - Notification
+   ================================ */
+   
+/* ================= NOTIFICATION COUNT ================= */
+
+.notification-count {
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:red;
+  color:white;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ================= NOTIFICATION POPUP ================= */
+
+.notification-box {
+  position: absolute;
+  top: 75px;
+  right: 100px;
+  width: 350px;
+  max-height: 450px;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  animation: notificationFade 0.25s ease;
+}
+
+/* ================= HEADER ================= */
+
+.notification-box h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222222;
+  border-bottom: 1px solid #eee;
+  background: #eaf0f7;
+  border-radius: 14px 14px 0 0;
+  position: sticky;
+  top: 0;
+}
+
+/* ================= NOTIFICATION ITEM ================= */
+
+.notification-item {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1f1f1;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.notification-item:hover {
+  background: #f5f9ff;
+}
+
+/* ================= MESSAGE ================= */
+
+.notification-item p {
+  font-size: 14px;
+  color: #222;
+  font-weight: 500;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+/* ================= MESSAGE LAYOUT ================= */
+
+.notification-message {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* ================= TAG ================= */
+
+.notification-tag {
+  width:fit-content;
+  background:#e8f1ff;
+  color:#0d6efd;
+  font-size:11px;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:20px;
+  letter-spacing:0.5px;
+}
+
+/* ================= TASK TITLE ================= */
+
+.notification-title {
+  font-size:14px;
+  font-weight:600;
+  color:#222;
+  line-height:1.5;
+}
+
+/* ================= DATE ================= */
+
+.notification-item small {
+  color: #888;
+  font-size: 13px;
+}
+
+/* ================= NO NOTIFICATION ================= */
+
+.no-notification {
+  padding: 25px;
+  text-align: center;
+  color: rgb(236, 12, 12);
+  font-size: 16px;
+  font-weight: 600px;
+}
+
+/* ================= SCROLLBAR ================= */
+
+.notification-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notification-box::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes notificationFade {
+  from{
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}   
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------ */

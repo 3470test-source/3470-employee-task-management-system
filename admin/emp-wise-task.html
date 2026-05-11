@@ -25,7 +25,7 @@
     body {
       background: #dddfe7;
     }
-
+    
     </style>
 
 </head>
@@ -55,8 +55,8 @@
   <!-- RIGHT -->
   <div class="right-header-emp">
 
-<!-- Profile Section -->
-<div class="admin-profile-dropdown">
+  <!-- Profile Section -->
+  <div class="admin-profile-dropdown">
 
   <!-- Click Button -->
   <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
@@ -247,26 +247,27 @@ document.addEventListener("click", function(event) {
 
 <!-- Employee All task - JS -->
 <script>
+
 async function loadReport() {
 
     try {
 
-        // ================= GET ALL TASKS =================
+// ================= GET ALL TASKS =================
 
         const res = await fetch("http://localhost:3000/tasks");
 
         const tasks = await res.json();
 
-        // ================= REPORT OBJECT =================
+// ================= REPORT OBJECT =================
 
         const report = {};
 
-        // ================= BUILD REPORT =================
+// ================= BUILD REPORT =================
 
         tasks.forEach(task => {
 
-            // Employee name
-           const emp = task.employee;
+          // Employee name
+          const emp = task.employee || "Unknown";
 
             // Create employee object if not exists
             if (!report[emp]) {
@@ -293,8 +294,8 @@ async function loadReport() {
             }
 
             else if (
-                task.status === "In Progress" ||
-                task.status === "In Progress / Process"
+                task.status === "Inprogress" ||
+                task.status === "Inprogress / Process"
             ) {
 
                 report[emp].progress++;
@@ -309,13 +310,13 @@ async function loadReport() {
 
         });
 
-        // ================= TABLE BODY =================
+// ================= TABLE BODY =================
 
         const tbody = document.getElementById("reportBody");
 
         tbody.innerHTML = "";
 
-        // ================= TOTAL VARIABLES =================
+// ================= TOTAL VARIABLES =================
 
         let i = 1;
 
@@ -324,7 +325,7 @@ async function loadReport() {
         let totalProgress = 0;
         let totalPending = 0;
 
-        // ================= SHOW REPORT =================
+// ================= SHOW REPORT =================
 
         for (let emp in report) {
 
@@ -332,16 +333,36 @@ async function loadReport() {
 
             tbody.innerHTML += `
 
-            <tr>
-                <td>${i++}</td>
-                <td>${emp}</td>
-                <td>${r.assigned}</td>
-                <td>${r.completed}</td>
-                <td>${r.progress}</td>
-                <td>${r.pending}</td>
-            </tr>
+               <tr>
+                  <td>${i++}</td>
+                  <td>${emp}</td>
 
-            `;
+                  <td>
+                    <span class="badge badge-progress">
+                      ${r.assigned}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="badge badge-completed">
+                      ${r.completed}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="badge badge-progress">
+                      ${r.progress}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="badge badge-pending">
+                      ${r.pending}
+                    </span>
+                  </td>
+                </tr>
+
+              `;
 
             // Totals
             totalAssigned += r.assigned;
@@ -351,7 +372,7 @@ async function loadReport() {
 
         }
 
-        // ================= FOOTER TOTALS =================
+// ================= FOOTER TOTALS =================
 
         document.getElementById("totalAssigned").innerText =
             totalAssigned;

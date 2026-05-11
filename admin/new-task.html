@@ -194,6 +194,68 @@
 </div>
 
 
+<!-- ================= VIEW TASK MODAL ================= -->
+
+<div id="taskModal" class="task-modal">
+
+  <div class="task-modal-content">
+
+    <span class="close-btn"
+      onclick="closeTaskModal()">
+      &times;
+    </span>
+
+    <h2>Task Details</h2>
+
+    <table class="view-task-table">
+
+      <tr>
+        <th>Task Title</th>
+        <td id="viewTitle"></td>
+      </tr>
+
+      <tr>
+        <th>Description</th>
+        <td id="viewDescription"></td>
+      </tr>
+
+      <tr>
+        <th>Department</th>
+        <td id="viewDepartment"></td>
+      </tr>
+
+      <tr>
+        <th>Employee</th>
+        <td id="viewEmployee"></td>
+      </tr>
+
+      <tr>
+        <th>Priority</th>
+        <td id="viewPriority"></td>
+      </tr>
+
+      <tr>
+        <th>Assign Date</th>
+        <td id="viewAssignDate"></td>
+      </tr>
+
+      <tr>
+        <th>End Date</th>
+        <td id="viewEndDate"></td>
+      </tr>
+
+      <tr>
+        <th>Status</th>
+        <td id="viewStatus"></td>
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -238,17 +300,15 @@ document.addEventListener("click", function(event) {
 
 <!-- New Task - JS -->
 <script>
+  
 /*--- Load New Tasks ---*/
 async function loadTasks() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
-  const tasks =
-    await res.json();
+  const tasks = await res.json();
 
-  const tbody =
-    document.getElementById("taskBody");
+  const tbody = document.getElementById("taskBody");
 
   tbody.innerHTML = "";
 
@@ -307,31 +367,73 @@ async function loadTasks() {
 
 
 /*--- View Task ---*/
+
 async function viewTask(id) {
 
-  const res = await fetch("http://localhost:3000/tasks");
+  try {
 
-  const tasks = await res.json();
+    const res = await fetch("http://localhost:3000/tasks");
 
-  const task = tasks.find(t => t.id == id);
+    const tasks = await res.json();
 
-  alert(
+    const task =
+      tasks.find(t => t.id == id);
 
-    `📌 Task Title: ${task.title}
-    👨 Employee: ${task.employee}
-    🏢 Department: ${task.department}
-    ⚡ Priority: ${task.priority}
-    📅 End Date:
-          ${new Date(task.end_date)
-          .toLocaleDateString("en-CA")}
-    📄 Description:
-          ${task.description}`
-  );
+    // SET DATA
+
+    document.getElementById("viewTitle")
+    .innerText = task.title;
+
+    document.getElementById("viewDescription")
+    .innerText = task.description;
+
+    document.getElementById("viewDepartment")
+    .innerText = task.department;
+
+    document.getElementById("viewEmployee")
+    .innerText = task.employee;
+
+    document.getElementById("viewPriority")
+    .innerText = task.priority;
+
+    document.getElementById("viewAssignDate")
+    .innerText =
+      new Date(task.created_at)
+      .toLocaleDateString();
+
+    document.getElementById("viewEndDate")
+    .innerText =
+      new Date(task.end_date)
+      .toLocaleDateString();
+
+    document.getElementById("viewStatus")
+    .innerText = task.status;
+
+    // OPEN MODAL
+
+    document.getElementById("taskModal")
+    .style.display = "block";
+
+  }
+
+  catch(error){
+    console.log(error);
+  }
+
+}
+
+/* ================= CLOSE MODALS ================= */
+
+function closeTaskModal(){
+
+  document.getElementById("taskModal")
+  .style.display = "none";
 
 }
 
 /*-- Load Page --*/
 loadTasks();
+
 </script>
 
 </body>

@@ -301,13 +301,13 @@ document.querySelector("form")
 
     e.preventDefault();
 
-    // ================= GET DATES =================
+// ================= GET DATES =================
 
     const fromDate = document.getElementById("fromDate").value;
 
     const toDate = document.getElementById("toDate").value;
 
-    // ================= VALIDATION =================
+// ================= VALIDATION =================
 
     if (fromDate > toDate) {
         alert("From Date should be less than To Date");
@@ -316,24 +316,22 @@ document.querySelector("form")
 
     try {
 
-    // ================= FETCH TASKS =================
+// ================= FETCH TASKS =================
 
     const res = await fetch("http://localhost:3000/tasks");
 
     const tasks = await res.json();
 
-    // ================= FILTER TASKS =================
+// ================= FILTER TASKS =================
 
     const filteredTasks =  tasks.filter(task => {
 
-        if (!task.assignDate) return false;
+        if (!task.created_at) return false;
 
-        const assignDate =
-            new Date(task.assignDate)
+          const assignDate =
+            new Date(task.created_at)
             .toISOString()
             .split("T")[0];
-
-            // task.assignDate.split("T")[0];
 
         return (
             assignDate >= fromDate &&
@@ -342,23 +340,23 @@ document.querySelector("form")
 
     });
 
-    // ================= SHOW REPORT SECTION =================
+// ================= SHOW REPORT SECTION =================
 
     document.getElementById("reportSection")
       .style.display = "block";
 
-    // ================= REPORT TITLE =================
+// ================= REPORT TITLE =================
 
     document.getElementById("reportTitle")
       .innerText = `REPORT FROM ${fromDate} TO ${toDate}`;
 
-    // ================= TABLE BODY =================
+// ================= TABLE BODY =================
 
     const tbody = document.getElementById("reportTableBody");
 
       tbody.innerHTML = "";
 
-    // ================= NO DATA =================
+// ================= NO DATA =================
 
         if (filteredTasks.length === 0) {
 
@@ -374,7 +372,7 @@ document.querySelector("form")
 
         }
 
-    // ================= SHOW DATA =================
+// ================= SHOW DATA =================
 
         filteredTasks.forEach((task, index) => {
 
@@ -384,14 +382,19 @@ document.querySelector("form")
                 <td>${index + 1}</td>
                 <td>${task.title}</td>
                 <td>${task.department}</td>
-                <td>${task.employeeName}</td>
+                <td>${task.employee}</td>
                 <td>
                     ${
-                      new Date(task.assignDate)
+                      new Date(task.created_at)
                       .toLocaleDateString()
                     }
                 </td>
-                <td>${task.endDate}</td>
+                <td>
+                    ${
+                      new Date(task.end_date)
+                      .toLocaleDateString()
+                    }
+                </td>
                 <td>${task.status}</td>
             </tr>
             `;
@@ -403,9 +406,7 @@ document.querySelector("form")
         console.log(error);
 
         alert("Error loading report");
-
     }
-
 });
 
 </script>

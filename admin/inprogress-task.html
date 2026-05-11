@@ -55,8 +55,8 @@
   <!-- RIGHT -->
   <div class="right-header-emp">
 
-<!-- Profile Section -->
-<div class="admin-profile-dropdown">
+  <!-- Profile Section -->
+  <div class="admin-profile-dropdown">
 
   <!-- Click Button -->
   <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
@@ -193,6 +193,84 @@
 </div>
 
 
+<!-- ================= VIEW TASK MODAL ================= -->
+
+<div id="taskModal" class="task-modal">
+
+  <div class="task-modal-content">
+
+    <span class="close-btn"
+      onclick="closeTaskModal()">
+      &times;
+    </span>
+
+    <h2>Task Details</h2>
+
+    <table class="view-task-table">
+
+      <tr>
+        <th>Task Title</th>
+        <td id="viewTitle"></td>
+      </tr>
+
+      <tr>
+        <th>Description</th>
+        <td id="viewDescription"></td>
+      </tr>
+
+      <tr>
+        <th>Department</th>
+        <td id="viewDepartment"></td>
+      </tr>
+
+      <tr>
+        <th>Employee</th>
+        <td id="viewEmployee"></td>
+      </tr>
+
+      <tr>
+        <th>Priority</th>
+        <td id="viewPriority"></td>
+      </tr>
+
+      <tr>
+        <th>Assign Date</th>
+        <td id="viewAssignDate"></td>
+      </tr>
+
+      <tr>
+        <th>End Date</th>
+        <td id="viewEndDate"></td>
+      </tr>
+
+      <tr>
+        <th>Status</th>
+        <td id="viewStatus"></td>
+      </tr>
+
+    </table>
+
+<!-- ================= TASK HISTORY ================= -->
+
+<h3 class="task-history-title"> Task History</h3>
+
+  <table class="task-history-table">
+
+    <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Remark</th>
+          <th>Status</th>
+          <th>Progress</th>
+          <th>Date & Time</th>
+          </tr>
+    </thead>
+
+  <tbody id="historyBody"></tbody>
+
+</table>
+
+
 
 <!-- drop down filed JS -->
 <script>
@@ -237,37 +315,34 @@ document.addEventListener("click", function(event) {
 
 <!-- In-Progress Task -- JS -->
 <script>
+
 /*--- Load In Progress Tasks ---*/
 async function loadTasks() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
-  const tasks =
-    await res.json();
+  const tasks = await res.json();
 
-  const tbody =
-    document.getElementById("inprogressTask");
+  const tbody = document.getElementById("inprogressTask");
 
   tbody.innerHTML = "";
 
-  /*--- Filter only In Progress tasks ---*/
+/*--- Filter only In Progress tasks ---*/
   const progressTasks =
     tasks.filter(task =>
-      task.status === "In Progress"
+      task.status === "Inprogress"
     );
 
-  /*--- No Records ---*/
+/*--- No Records ---*/
   if (progressTasks.length === 0) {
 
     tbody.innerHTML = `
       <tr>
         <td colspan="8">
-          ❌ No in progress tasks found
+          ❌ No Inprogress Tasks Found
         </td>
       </tr>
     `;
-
     return;
   }
 
@@ -308,32 +383,115 @@ async function loadTasks() {
 
 
 /*--- View Task ---*/
-async function viewTask(id) {
+async function viewTask(id){
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  try{
 
-  const tasks =
-    await res.json();
+    const res = await fetch("http://localhost:3000/tasks");
 
-  const task =
-    tasks.find(t => t.id == id);
+    const tasks = await res.json();
 
-  alert(
-    `📌 Task Title: ${task.title}
-    👨 Employee: ${task.employee}
-    🏢 Department: ${task.department}
-    ⚡ Priority: ${task.priority}
-    📅 End Date:
-          ${new Date(task.end_date)
-          .toLocaleDateString("en-CA")}
-    📄 Description:
-          ${task.description}`
-    );
+    const task =
+      tasks.find(t => t.id == id);
+
+    document.getElementById("viewTitle")
+      .innerText = task.title;
+
+    document.getElementById("viewDescription")
+      .innerText = task.description;
+
+    document.getElementById("viewEmployee")
+      .innerText = task.employee;
+
+    document.getElementById("viewDepartment")
+      .innerText = task.department;
+
+    document.getElementById("viewPriority")
+    .innerText = task.priority;
+
+    document.getElementById("viewAssignDate")
+    .innerText =
+      new Date(task.created_at)
+      .toLocaleDateString();
+
+    document.getElementById("viewEndDate")
+    .innerText =
+      new Date(task.end_date)
+      .toLocaleDateString();  
+
+    document.getElementById("viewStatus")
+      .innerText = task.status;
+
+
+    // LOAD HISTORY
+    const historyRes =
+      await fetch(
+        `http://localhost:3000/task-history/${id}`
+      );
+
+    const history = await historyRes.json();
+
+    const tbody = document.getElementById("historyBody");
+
+    tbody.innerHTML = "";
+
+    if(history.length === 0){
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5">
+            No History Found
+          </td>
+        </tr>
+      `;
+
+    } else {
+
+      history.forEach((item, index) => {
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.remark}</td>
+          <td>${item.status}</td>
+          <td>${item.progress}%</td>
+          <td>
+            ${
+              new Date(item.created_at)
+              .toLocaleString()
+            }
+          </td>
+        </tr>
+      `;
+    });
+
 }
+
+    document.getElementById("taskModal")
+      .style.display = "block";
+
+  }
+
+  catch(error){
+    console.log(error);
+  }
+
+}
+
+
+/* ================= CLOSE MODALS ================= */
+
+function closeTaskModal(){
+
+  document.getElementById("taskModal")
+    .style.display = "none";
+
+}
+
 
 /*-- Load Page --*/
 loadTasks();
+
 </script>
 
 </body>
