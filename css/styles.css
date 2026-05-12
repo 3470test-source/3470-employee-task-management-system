@@ -2308,7 +2308,7 @@ footer {
 .newtask-table th, td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align:center;
 }
 
 .newtask-table th {
@@ -2375,7 +2375,7 @@ footer {
 .inprogresstask-table th, td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align:center;
 }
 
 .inprogresstask-table th {
@@ -2411,7 +2411,7 @@ footer {
 /* --------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* -------------------------------
-       Completed Task - Admin Side 
+      Completed Task - Admin Side 
    ------------------------------- */
 
 .completed-task-container {
@@ -2439,7 +2439,7 @@ footer {
 .completedtask-table th, td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align:center;
 }
 
 .completedtask-table th {
@@ -2458,7 +2458,6 @@ footer {
   background: #28a745;
   color: white;
 }
-
 
 .completedtask-table button {
   background:#0d6efd;
@@ -2659,7 +2658,6 @@ footer {
   background: #dcfce7;
   color: #15803d;
 }
-
 
 /*--- Pending ---*/
 .badge-pending {
