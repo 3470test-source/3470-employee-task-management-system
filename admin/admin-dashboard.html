@@ -296,11 +296,9 @@ document.addEventListener("click", function(event) {
 <script>
 async function loadDepartmentCount() {
 
-  const res =
-    await fetch("http://localhost:3000/departments");
+  const res = await fetch("http://localhost:3000/departments");
 
-  const departments =
-    await res.json();
+  const departments = await res.json();
 
   document.getElementById("departmentCount")
     .textContent = departments.length;
@@ -316,11 +314,9 @@ loadDepartmentCount();
 <script>
 async function loadEmployeeCount() {
 
-  const res =
-    await fetch("http://localhost:3000/employees");
+  const res = await fetch("http://localhost:3000/employees");
 
-  const employees =
-    await res.json();
+  const employees = await res.json();
 
   document.getElementById("employeeCount")
     .textContent = employees.length;
@@ -336,15 +332,12 @@ loadEmployeeCount();
 <script>
 async function loadNewTaskCount() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
-  const tasks =
-    await res.json();
+  const tasks = await res.json();
 
   // Filter only NEW tasks
-  const newTasks =
-    tasks.filter(task => task.status === "New");
+  const newTasks = tasks.filter(task => task.status === "New");
 
   // Show count
   document.getElementById("newTaskCount")
@@ -361,15 +354,12 @@ loadNewTaskCount();
 <script>
 async function loadInprogressTaskCount() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
-  const tasks =
-    await res.json();
+  const tasks = await res.json();
 
   // Filter In Progress tasks
-  const inprogressTasks =
-    tasks.filter(task => task.status === "In Progress");
+  const inprogressTasks = tasks.filter(task => task.status === "Inprogress");
 
   // Show count
   document.getElementById("inprogressTaskCount")
@@ -386,17 +376,12 @@ loadInprogressTaskCount();
 <script>
 async function loadCompletedTaskCount() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
-  const tasks =
-    await res.json();
+  const tasks = await res.json();
 
   // Filter Completed Tasks
-  const completedTasks =
-    tasks.filter(task =>
-      task.status === "Completed"
-    );
+  const completedTasks = tasks.filter(task => task.status === "Completed");
 
   // Show Count
   document.getElementById("completedTaskCount")
@@ -415,11 +400,9 @@ async function loadAllTaskCount() {
 
     try {
 
-        const res =
-            await fetch("http://localhost:3000/tasks");
+        const res = await fetch("http://localhost:3000/tasks");
 
-        const tasks =
-            await res.json();
+        const tasks = await res.json();
 
         // Total task count
         document.getElementById("allTaskCount").innerText =

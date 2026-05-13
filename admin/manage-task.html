@@ -25,7 +25,38 @@
     body {
       background: #dddfe7;
     }
-    
+
+/* ================= STATUS BADGES ================= */
+
+    .status-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      display: inline-block;
+      min-width: 110px;
+      text-align: center;
+    }
+
+/*--- NEW TASK ---*/
+
+    .status-new {
+      background: #f39c12;
+    }
+
+/*--- IN PROGRESS TASK ---*/
+
+    .status-progress {
+      background: #3498db;
+    }
+
+/*--- COMPLETED TASK ---*/
+
+    .status-completed {
+      background: #27ae60;
+    }
+
     </style>
 
 </head>
@@ -183,9 +214,9 @@
 
     <select id="filterStatus">
       <option value="">All Status</option>
-      <option>New</option>
-      <option>In Progress</option>
-      <option>Completed</option>
+      <option value="New">New</option>
+      <option value="Inprogress">Inprogress</option>
+      <option value="Completed">Completed</option>
     </select>
   </div>
 
@@ -286,19 +317,64 @@ async function loadDepartmentFilter() {
 loadDepartmentFilter();
 
 
+// ================= LOAD TASKS =================
+
 async function loadTasks() {
 
-  const res =
-    await fetch("http://localhost:3000/tasks");
+  const res = await fetch("http://localhost:3000/tasks");
 
   const tasks = await res.json();
 
-  const tbody =
-    document.getElementById("taskTableBody");
+  const tbody = document.getElementById("taskTableBody");
 
   tbody.innerHTML = "";
 
-  tasks.forEach((task, index) => {
+
+// ================= GET FILTER VALUES =================
+
+  const deptFilter =
+    document.getElementById("filterDept").value;
+
+  const statusFilter =
+    document.getElementById("filterStatus").value;
+
+
+// ================= FILTER TASKS =================
+
+  const filteredTasks = tasks.filter(task => {
+
+    const matchDept =
+      deptFilter === "" ||
+      task.department === deptFilter;
+
+    const matchStatus =
+      statusFilter === "" ||
+      task.status === statusFilter;
+
+    return matchDept && matchStatus;
+
+  });
+
+
+  // ================= NO TASK FOUND =================
+
+  if (filteredTasks.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7">
+          No Tasks Found
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+// ================= SHOW FILTERED TASKS =============
+
+  filteredTasks.forEach((task, index) => {
 
     tbody.innerHTML += `
 
@@ -308,7 +384,17 @@ async function loadTasks() {
         <td>${task.employee}</td>
         <td>${task.priority}</td>
         <td>${new Date(task.end_date).toLocaleDateString("en-CA")}</td>
-        <td>${task.status}</td>
+        <td>
+          <span class="status-badge
+            ${task.status === 'New'
+            ? 'status-new'
+            : task.status === 'Inprogress'
+            ? 'status-progress'
+            : 'status-completed'}
+          ">
+            ${task.status}
+          </span>
+        </td>
 
         <td>
            <button class="manage-task-action-btn manage-tsk-edit-btn" onclick="editTask(${task.id})">Edit</button>
@@ -324,6 +410,15 @@ async function loadTasks() {
 }
 
 loadTasks();
+
+
+// ================= FILTER EVENTS =================
+
+document.getElementById("filterDept")
+  .addEventListener("change", loadTasks);
+
+document.getElementById("filterStatus")
+  .addEventListener("change", loadTasks);
 
 
 /*--- Delete Task ---*/
@@ -351,10 +446,10 @@ async function updateStatus(id, currentStatus) {
   let newStatus = "New";
 
   if (currentStatus === "New") {
-    newStatus = "In Progress";
+    newStatus = "Inprogress";
   }
 
-  else if (currentStatus === "In Progress") {
+  else if (currentStatus === "Inprogress") {
     newStatus = "Completed";
   }
 

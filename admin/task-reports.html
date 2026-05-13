@@ -56,6 +56,36 @@
       color: #1d2d50;
     }
 
+  /* ======================
+        STATUS BADGES
+  ====================== */
+
+    .status-badge {
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      display: inline-block;
+      min-width: 100px;
+      text-align: center;
+    }
+
+  /*--- NEW TASK ---*/
+    .status-new {
+      background: #dc2626;
+    }
+
+  /*--- INPROGRESS TASK ---*/
+    .status-progress {
+      background: #2563eb;
+    }
+
+  /*--- COMPLETED TASK ---*/
+    .status-completed {
+      background: #16a34a;
+    }
+
     </style>
 
 </head>
@@ -395,7 +425,24 @@ document.querySelector("form")
                       .toLocaleDateString()
                     }
                 </td>
-                <td>${task.status}</td>
+                <td>
+                    <span class="status-badge
+                      ${
+                        task.status === "New"
+                        ? "status-new"
+
+                        : task.status === "Inprogress"
+                        ? "status-progress"
+
+                        : task.status === "Completed"
+                        ? "status-completed"
+                        : ""
+                      }
+                    ">
+
+                    ${task.status}
+                  </span>
+                </td>
             </tr>
             `;
         });

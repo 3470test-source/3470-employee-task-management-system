@@ -21,7 +21,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     </style>
 
 </head>
@@ -35,11 +35,29 @@
     <img src="/image/Logo3470-health3-removebg-preview (1).png">
   </div>
 
+  <!-- MOBILE MENU ICON -->
+  <div class="etms-mobile-menu-icon" onclick="openMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
   <!-- MENU -->
   <nav class="etms-header-menu-nav-links" id="navLinks">
+
+  <!-- CLOSE BUTTON -->
+  <span class="etms-close-menu" onclick="closeMenu()">
+    <i class="fa-solid fa-xmark"></i>
+  </span>
+
     <a href="/employee/index.html">HOME</a>
     <a href="/employee/about.html">ABOUT</a>
     <a href="/employee/contact.html">CONTACT</a>
+
+  <!-- MOBILE BUTTONS -->
+  <div class="mobile-menu-buttons">
+    <a href="/admin/admin-login.html" class="no-line">Admin</a>
+    <a href="/employee/employee-login.html" class="no-line">Employee</a>
+  </div>
+
   </nav>
 
   <!-- RIGHT SIDE -->
@@ -155,6 +173,19 @@
 <footer>
  <p>3470 Healthcare | © 2026 Employee Task Management System. All rights reserved.</p>
 </footer>
+
+
+
+<!-- Menu icon for Mobile size  -->
+<script>
+function openMenu() {
+  document.getElementById("navLinks").classList.add("active");
+}
+
+function closeMenu() {
+  document.getElementById("navLinks").classList.remove("active");
+}
+</script>
 
 </body>
 </html>
