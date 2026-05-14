@@ -250,6 +250,138 @@
   color: #2d89ef;
 }
 
+
+
+                              /* ==================================================
+                                      RESPONSIVE SIZE DESIGN -Admin login Page 
+                                 ================================================== */
+
+
+/* ===============================
+        TABLET 768px - 1024px
+================================== */    
+
+@media (max-width: 1024px) {
+
+  .admin-login-container {
+    width: 95%;
+    max-width: 700px;
+  }
+
+  .admin-left-login,
+  .admin-right-login {
+    padding: 28px;
+  }
+
+  .admin-left-login img {
+    width: 130px;
+  }
+
+  .admin-left-login h1,
+  .admin-right-login h2 {
+    font-size: 22px;
+  }
+
+  .admin-left-login p,
+  .admin-right-login p {
+    font-size: 14px;
+  }
+
+  .admin-form-login input,
+  .admin-form-login button {
+    font-size: 15px;
+  }
+}
+
+
+
+/* ===========================
+      MOBILE 320px - 767px
+============================== */
+
+@media (max-width: 767px) {
+
+  .admin-login-container {
+    flex-direction: column;
+    width: 92%;
+    margin: 30px auto;
+    border-radius: 10px;
+  }
+
+  .admin-left-login,
+  .admin-right-login {
+    width: 100%;
+    padding: 22px;
+  }
+
+  .admin-left-login img {
+    width: 100px;
+    margin-bottom: 15px;
+  }
+
+  .admin-left-login h1,
+  .admin-right-login h2 {
+    font-size: 20px;
+  }
+
+  .admin-left-login p,
+  .admin-right-login p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .admin-form-login input {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  .admin-form-login button {
+    padding: 11px;
+    font-size: 16px;
+  }
+
+  .admin-lg-toggle-password {
+    right: 10px;
+  }
+}
+
+
+/* =====================================
+        SMALL MOBILE 320px - 360px
+======================================== */
+
+@media (max-width: 360px) {
+
+  .admin-login-container {
+    width: 95%;
+  }
+
+  .admin-left-login,
+  .admin-right-login {
+    padding: 18px;
+  }
+
+  .admin-left-login img {
+    width: 85px;
+  }
+
+  .admin-left-login h1,
+  .admin-right-login h2 {
+    font-size: 18px;
+  }
+
+  .admin-left-login p,
+  .admin-right-login p {
+    font-size: 13px;
+  }
+
+  .admin-form-login input,
+  .admin-form-login button {
+    font-size: 13px;
+  }
+}
+
+
 /* ----------------------------------------------------------------------------------------------------------------------------- */
 
 /* -------------------------------------------
@@ -401,6 +533,150 @@
 .emp-lg-password-box i:hover {
   color: #2d89ef;
 }
+
+
+
+                              /* ====================================================
+                                      RESPONSIVE SIZE DESIGN - Employee login Page 
+                                 ==================================================== */
+
+
+/* ==============================
+      TABLET 768px - 1024px
+================================= */                                 
+
+@media (max-width: 1024px) {
+
+  .employee-task-login-form {
+    width: 95%;
+    min-height: auto;
+    border-radius: 20px;
+  }
+
+  .employee-task-left-login,
+  .employee-task-right-login {
+    padding: 30px;
+  }
+
+  .employee-task-left-login img {
+    width: 130px;
+  }
+
+  .employee-task-left-login h1,
+  .employee-task-right-login h2 {
+    font-size: 22px;
+  }
+
+  .employee-task-left-login p,
+  .emp-loginForm input,
+  .emp-loginForm button,
+  .emp-lg-register-btn {
+    font-size: 15px;
+  }
+}
+
+
+/* ==============================
+        MOBILE 320px - 767px
+================================= */
+
+@media (max-width: 767px) {
+
+  .employee-task-login-form {
+    flex-direction: column;
+    width: 92%;
+    margin: 30px auto;
+    border-radius: 20px;
+    height: auto;
+    min-height: auto;
+    /* overflow: visible;  */
+  }
+
+  .employee-task-left-login,
+  .employee-task-right-login {
+    width: 100%;
+    padding: 22px;
+  }
+
+  .employee-task-left-login img {
+    width: 100px;
+    margin-bottom: 15px;
+  }
+
+  .employee-task-left-login h1,
+  .employee-task-right-login h2 {
+    font-size: 20px;
+  }
+
+  .employee-task-left-login p {
+    font-size: 14px;
+  }
+
+  .emp-loginForm input,
+  .emp-lg-password-box input {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  .emp-loginForm button[type="submit"],
+  .emp-lg-register-btn {
+    padding: 11px;
+    font-size: 15px;
+  }
+
+  .emp-link-btn {
+    font-size: 13px;
+  }
+
+  .emp-lg-password-box i {
+    font-size: 11px;
+  }
+
+  /* IMPORTANT REGISTER BUTTON FIX */
+  .emp-lg-register-btn {
+    display: block;
+    margin-top: 15px;
+  }
+}
+
+
+/* =====================================
+        SMALL MOBILE 320px - 360px
+======================================== */
+
+@media (max-width: 360px) {
+
+  .employee-task-login-form {
+    width: 95%;
+    border-radius: 20px;
+  }
+
+  .employee-task-left-login,
+  .employee-task-right-login {
+    padding: 18px;
+  }
+
+  .employee-task-left-login img {
+    width: 85px;
+  }
+
+  .employee-task-left-login h1,
+  .employee-task-right-login h2 {
+    font-size: 18px;
+  }
+
+  .employee-task-left-login p,
+  .emp-loginForm input,
+  .emp-loginForm button[type="submit"],
+  .emp-lg-register-btn {
+    font-size: 13px;
+  }
+
+  .emp-link-btn {
+    font-size: 12px;
+  }
+}    
+
 
 /* --------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -2378,7 +2654,7 @@ footer {
 .emp-dash-main-content {
   flex: 1;
   padding: 50px;
-  background: #f1f5f9;
+  background: #c5daee;
 }
 
 .emp-dash-main-content h2 {
@@ -4267,3 +4543,229 @@ footer {
 }   
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------ */
+
+/* =================================== 
+      Employee side - My Profile
+=================================== */
+
+/*--- PROFILE CARD ---*/
+.employee-profile-container {
+  flex:1;
+  padding:30px;
+}
+
+.employee-profile-card {
+  max-width:900px;
+  margin:auto;
+  background:#fff;
+  border-radius:15px;
+  padding:30px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/*--- HEADER ---*/
+.profile-top {
+  display:flex;
+  align-items:center;
+  gap:25px;
+  margin-bottom:30px;
+}
+
+/*--- IMAGE ---*/
+
+.profile-image img {
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid #2d6cdf;
+}
+
+/*--- NAME ---*/
+.profile-info h2 {
+  font-size:28px;
+  margin-bottom:8px;
+  color:#1d2d50;
+}
+
+.profile-info p {
+  color:#666;
+  margin-bottom:5px;
+}
+
+.my-profile-str {
+  color: #2d6cdf;
+}
+
+/*--- DETAILS ---*/
+.profile-details {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.profile-box {
+  background:#e9effa;
+  padding:15px;
+  border-radius:10px;
+}
+
+.profile-box h4 {
+  color:#2d6cdf;
+  margin-bottom:8px;
+}
+
+.profile-box p {
+  color:#333;
+}
+
+
+/* ======== Profile  EDIT BUTTON ======== */
+
+.profile-action {
+  margin-top:-10px;
+  margin-bottom: 20px;
+}
+
+.edit-profile-btn {
+  background:#2d6cdf;
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.edit-profile-btn:hover {
+  background:#1e56b5;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ======================== 
+      EDIT PROFILE FORM
+=========================== */
+
+.edit-profile-form {
+  margin-top:35px;
+  background:#f8fbff;
+  padding:20px;
+  border-radius:16px;
+  display:none;
+  border:1px solid #d8e6f5;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.edit-profile-form h3 {
+  margin-bottom:25px;
+  color:#2d6cdf;
+  font-size:26px;
+  font-weight:700;
+}
+
+.edit-profile-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:22px;
+}
+
+.edit-profile-form label {
+  display:block;
+  margin-bottom:8px;
+  font-size:15px;
+  font-weight:600;
+  color:#333;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #cfd8e3;
+  border-radius:6px;
+  outline:none;
+  font-size:14px;
+  background:#fff;
+  transition:0.3s;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+  border-color:#2d6cdf;
+  box-shadow:0 0 0 3px rgba(45,108,223,0.15);
+}
+
+.edit-profile-form textarea {
+  resize:none;
+  height:100px;
+}
+
+.edit-profile-form input[type="file"]{
+  padding:10px;
+  background:#fff;
+}
+
+/* ================= READONLY FIELD ================= */
+
+.edit-profile-form input[readonly]{
+  background:#eef3f8;
+  color:#666;
+  cursor:not-allowed;
+}
+
+/* ================= FULL WIDTH ================= */
+
+.full-width{
+  grid-column:1 / -1;
+}
+
+/* ================= BUTTON AREA ================= */
+
+.form-btn-group{
+  margin-top:28px;
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+/* ================= UPDATE BUTTON ================= */
+
+.update-profile-btn {
+  background:#2d6cdf;
+  color:#fff;
+  border:none;
+   padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.update-profile-btn:hover {
+  background:#1e56b5;
+  transform:translateY(-2px);
+}
+
+/* ================= CANCEL BUTTON ================= */
+
+.cancel-profile-btn {
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.cancel-profile-btn:hover {
+  background:#b52a37;
+  transform:translateY(-2px);
+}
+
+
+/* --------------------------------------------------------------------------------------------------------------------------------------- */

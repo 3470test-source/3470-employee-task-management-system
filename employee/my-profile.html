@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3470 Healthcare & Employee Task Management-System - Employee - My Profile</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/Logo3470-health3-removebg-preview.png" type="image/x-icon">
+
+    <!-- Css styles -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #c5daee;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<!-- Employee dashbaord HEADER -->
+<header class="employee-dashboard-header">
+
+  <!-- LEFT: logo + menu -->
+  <div class="left-header-emp">
+
+    <div class="logo-header-emp">
+      <img src="/image/Logo3470-health3-removebg-preview (1).png" alt="ETMS Logo">
+    </div>
+
+    <div class="left-header-emp-menu-btn">
+      <i class="fa fa-bars"></i>
+    </div>
+
+  </div>
+
+  <!-- CENTER TITLE -->
+  <div class="header-emp-dash-center">
+    EMPLOYEE TASK MANAGEMENT SYSTEM
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-header-emp">
+
+  <!-- Notification Icon -->
+  <div class="emp-da-icon-notification" onclick="toggleNotifications(event)">
+    <i class="fa fa-bell"></i>
+      <span id="notificationCount" class="notification-count">0</span>
+  </div>
+
+  <!-- Notification Popup -->
+  <div id="notificationBox" class="notification-box">
+    <h3><i class="fa fa-bell"></i>Notifications</h3>
+      <div id="notificationList"></div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="admin-profile-dropdown">
+
+  <!-- Click Button -->
+  <div class="admin-profile-btn right-header-emp-profile" onclick="toggleDropdown()">
+    <div class="right-header-avatar-icon">
+      <i class="fa fa-user"></i>
+    </div>
+    <div>
+      <h4 id="empName"></h4>
+      <small id="empId"></small>
+    </div>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="emp-dropdown-menu" id="dropdownMenu">
+    <a href="/employee/my-profile.html"><i class="fa fa-user"></i> My Profile</a>
+    <a href="/employee/change-password.html"><i class="fa-solid fa-key"></i> Change Password</a>
+    <a href="/employee/employee-login.html"><i class="fa fa-sign-out"></i> Logout</a>
+  </div>
+</div>
+
+</div>
+
+</header>
+
+<!-- Dashboard Side Bar -->
+<div class="employee-side-bar-container">
+
+  <!-- SIDEBAR -->
+  <aside class="employee-dsh-sidebar">
+
+    <a href="/employee/employee-dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+    <!-- TASK DROPDOWN -->
+    <div class="employee-sidebar-task-dropdown">
+
+      <div class="emp-side-bar-drop-btn">
+        <i class="fa fa-briefcase"></i> Task
+        <i class="fa fa-angle-down"></i>
+      </div>
+
+      <div class="emp-side-bar-drop-content">
+        <a href="/employee/emp-newTask.html"><i class="fa fa-plus-circle"></i> New Task</a>
+        <a href="/employee/emp-inprogressTask.html"><i class="fa fa-spinner"></i> Inprogress Task</a>
+        <a href="/employee/emp-completedTask.html"><i class="fa fa-check-circle"></i> Completed Task</a>
+        <a href="/employee/emp-allTask.html"><i class="fa fa-list"></i> All Task</a>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+
+<!-- Employee Side - My Profile -->
+<div class="employee-profile-container">
+  <div class="employee-profile-card">
+
+    <!-- TOP -->
+    <div class="profile-top">
+      <div class="profile-image">
+        <img id="profilePhoto" src="/image/default-user.png">
+      </div>
+
+      <div class="profile-info">
+        <h2 id="profileName"></h2>
+
+        <p>
+          <strong class="my-profile-str">Employee ID:</strong>
+          <span id="profileEmpId"></span>
+        </p>
+
+        <p>
+          <strong class="my-profile-str">Designation:</strong>
+          <span id="profileDesignation"></span>
+        </p>
+
+      </div>
+    </div>
+
+
+<!-- EDIT BUTTON -->
+<div class="profile-action">
+    <button class="edit-profile-btn" onclick="openEditForm()">
+       <i class="fa fa-edit"></i> Edit Profile
+    </button>
+</div>
+
+
+<!-- Profile - DETAILS -->
+<div class="profile-details">
+
+    <div class="profile-box">
+        <h4>Email</h4>
+        <p id="profileEmail"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Phone</h4>
+        <p id="profilePhone"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Department</h4>
+        <p id="profileDepartment"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Date of Birth</h4>
+        <p id="profileDob"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Date of Joining</h4>
+        <p id="profileDoj"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Address</h4>
+        <p id="profileAddress"></p>
+    </div>
+
+    <div class="profile-box">
+        <h4>Description</h4>
+        <p id="profileDescription"></p>
+    </div>
+
+    </div>
+
+
+<!-- ================= EDIT FORM ================= -->
+
+    <div class="edit-profile-form" id="editProfileForm">
+
+      <h3>Edit Profile</h3>
+
+        <form id="updateProfileForm">
+
+            <div class="edit-profile-grid">
+
+                <div>
+                    <label>Employee ID</label>   
+                    <input type="text" id="editEmpId" readonly>
+                </div>
+
+                <div>
+                    <label>Designation</label>
+                    <input type="text" id="editDesignation" readonly>
+                </div>
+
+                <div>
+                    <label>Department</label>   
+                    <input type="text" id="editDepartment" readonly>
+                </div>
+
+                <div>
+                    <label>Full Name</label>
+                    <input type="text"id="editName">
+                </div>
+
+                <div>
+                    <label>Email Address</label>
+                    <input type="email" id="editEmail">
+                </div>
+
+                <div>
+                    <label>Phone Number</label> 
+                    <input type="text" id="editPhone">
+                </div>
+
+                <div>
+                    <label>Date of Birth</label>
+                    <input type="date" id="editDob">
+                </div>
+
+                <div>
+                    <label>Date of Joining</label>
+                    <input type="date" id="editDoj">
+                </div>
+
+                <div>
+                    <label>Profile Photo</label>
+                    <input type="file" id="editPhoto">
+                </div>
+
+                <div class="full-width">
+                    <label>Address</label>
+                    <textarea id="editAddress"></textarea>
+                </div>
+
+                <div class="full-width">
+                    <label>Description</label>
+                    <textarea id="editDescription"></textarea>
+                </div>
+
+            </div>
+
+        <div class="form-btn-group">
+
+            <button type="submit" class="update-profile-btn"> Update Profile</button>
+
+            <button type="button" class="cancel-profile-btn" onclick="closeEditForm()"> Cancel</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+
+
+<!-- drop down filed JS -->
+<script>
+  const dropBtn = document.querySelector(".emp-side-bar-drop-btn");
+  const dropdown = document.querySelector(".employee-sidebar-task-dropdown");
+
+  dropBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("active");
+  });
+</script>
+
+
+
+<!-- profile dropdown field JS -->
+<script>
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+// optional: close when click outside
+document.addEventListener("click", function(event) {
+  let dropdown = document.querySelector(".admin-profile-dropdown");
+  if (!dropdown.contains(event.target)) {
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+});
+</script>
+
+
+
+<!-- Employee dashboard Emp Name & Emp ID -->
+<script>
+const employee = JSON.parse(localStorage.getItem("employee"));
+
+// ================= CHECK LOGIN =================
+
+if (!employee) {
+
+    window.location.href =
+    "/employee/employee-login.html";
+}
+
+// ================= SHOW NAME =================
+
+document.getElementById("empName")
+.innerText = employee.name;
+
+// ================= SHOW EMPLOYEE ID =================
+
+document.getElementById("empId")
+.innerText = employee.emp_id;
+
+</script>
+
+
+
+<!-- Notification - JS -->
+<script>
+
+// ================= LOAD NOTIFICATION COUNT =================
+
+async function loadNotificationCount(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/notification-count/${employee.id}`
+    );
+
+    const data = await res.json();
+
+    document.getElementById("notificationCount")
+    .innerText = data.total;
+
+  }
+
+  catch(error){
+    console.log(error);
+  }
+
+}
+
+// ================= TOGGLE NOTIFICATIONS =================
+
+async function toggleNotifications(event){
+
+  event.stopPropagation();
+
+  const box = document.getElementById("notificationBox");
+
+// TOGGLE
+
+  if(box.style.display === "block"){
+
+    box.style.display = "none";
+
+    return;
+
+  }
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employee-notifications/${employee.id}`
+    );
+
+    const notifications = await res.json();
+
+    const list = document.getElementById("notificationList");
+
+    list.innerHTML = "";
+
+    // NO DATA
+
+    if(notifications.length === 0){
+
+      list.innerHTML =`
+          <div class="no-notification">
+            No Notifications Found
+          </div>
+          `
+    }
+
+    else{
+
+      notifications.forEach(notification => {
+
+        list.innerHTML += `
+          <div class="notification-item">
+            <p class="notification-message">
+              <span class="notification-tag"> NEW TASK ASSIGNED </span>
+              
+              <span class="notification-title">
+                ${notification.message.replace("New Task Assigned: ", "")}
+              </span>
+            </p>
+
+            <small>
+              ${
+                new Date(notification.created_at)
+                .toLocaleString()
+              }
+            </small>
+
+          </div>
+        `;
+      });
+
+    }
+
+    // SHOW POPUP
+
+    box.style.display = "block";
+
+    // MARK AS READ
+
+    await fetch(
+      `http://localhost:3000/mark-notifications-read/${employee.id}`,
+      {
+        method:"PUT"
+      }
+    );
+
+    // RELOAD COUNT
+
+    loadNotificationCount();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+// ================= CLOSE POPUP =================
+
+document.addEventListener("click", function(e){
+
+  const box =
+    document.getElementById("notificationBox");
+
+  const bell =
+    document.querySelector(".emp-da-icon-notification");
+
+  if(
+    !box.contains(e.target)
+    &&
+    !bell.contains(e.target)
+  ){
+
+    box.style.display = "none";
+
+  }
+
+});
+
+// ================= INITIAL LOAD =================
+
+loadNotificationCount();
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+// ================= GET EMPLOYEE =================
+
+// LOGIN CHECK
+
+if(!employee){
+
+  window.location.href = "/employee/employee-login.html";
+}
+
+// ================= LOAD PROFILE =================
+
+async function loadProfile(){
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employees/${employee.id}`
+    );
+
+    const emp = await res.json();
+
+    // PROFILE PHOTO
+
+    if(emp.photo){
+
+      document.getElementById("profilePhoto")
+      .src = `http://localhost:3000/uploads/${emp.photo}`;
+
+    }
+
+    // PROFILE DATA
+
+    document.getElementById("profileName")
+    .innerText = emp.name;
+
+    document.getElementById("profileEmpId")
+    .innerText = emp.emp_id;
+
+    document.getElementById("profileDesignation")
+    .innerText = emp.designation;
+
+    document.getElementById("profileEmail")
+    .innerText = emp.email;
+
+    document.getElementById("profilePhone")
+    .innerText = emp.phone;
+
+    document.getElementById("profileDepartment")
+    .innerText = emp.department || "-";
+
+    document.getElementById("profileDob")
+    .innerText =
+      new Date(emp.dob).toLocaleDateString();
+
+    document.getElementById("profileDoj")
+    .innerText =
+      new Date(emp.doj).toLocaleDateString();
+
+    document.getElementById("profileAddress")
+    .innerText = emp.address;
+
+    document.getElementById("profileDescription")
+    .innerText = emp.description;
+
+
+
+    // ================= EDIT FORM VALUES =================
+
+    document.getElementById("editEmpId")
+    .value = emp.emp_id || "";
+
+    document.getElementById("editDepartment")
+    .value = emp.department || "";
+
+    document.getElementById("editDesignation")
+    .value = emp.designation || "";
+
+    document.getElementById("editName")
+    .value = emp.name || "";
+
+    document.getElementById("editEmail")
+    .value = emp.email || "";
+
+    document.getElementById("editPhone")
+    .value = emp.phone || "";
+
+    document.getElementById("editDob")
+    .value = emp.dob
+      ? emp.dob.split("T")[0]
+      : "";
+
+    document.getElementById("editDoj")
+    .value = emp.doj
+      ? emp.doj.split("T")[0]
+      : "";
+
+    document.getElementById("editAddress")
+    .value = emp.address || "";
+
+    document.getElementById("editDescription")
+    .value = emp.description || "";
+
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert("Failed to load profile");
+
+  }
+
+}
+
+loadProfile();
+
+
+
+
+
+
+
+
+
+
+// ================= OPEN EDIT FORM =================
+
+function openEditForm(){
+
+  const form =
+  document.getElementById("editProfileForm");
+
+  if(form.style.display === "block"){
+
+    form.style.display = "none";
+
+  }
+
+  else{
+
+    form.style.display = "block";
+
+  }
+
+}
+
+
+// ================= CLOSE EDIT FORM =================
+
+function closeEditForm(){
+
+  document.getElementById("editProfileForm")
+  .style.display = "none";
+
+}
+
+
+
+// ================= UPDATE PROFILE =================
+
+document.getElementById("updateProfileForm")
+.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  // FORM DATA
+
+  const formData = new FormData();
+
+  formData.append(
+    "name",
+    document.getElementById("editName").value
+  );
+
+  formData.append(
+    "email",
+    document.getElementById("editEmail").value
+  );
+
+  formData.append(
+    "phone",
+    document.getElementById("editPhone").value
+  );
+
+  formData.append(
+    "dob",
+    document.getElementById("editDob").value
+  );
+
+  formData.append(
+    "doj",
+    document.getElementById("editDoj").value
+  );
+
+  formData.append(
+    "address",
+    document.getElementById("editAddress").value
+  );
+
+  formData.append(
+    "description",
+    document.getElementById("editDescription").value
+  );
+
+  // PHOTO
+
+  const photo =
+    document.getElementById("editPhoto").files[0];
+
+  if(photo){
+
+    formData.append("photo", photo);
+
+  }
+
+  try{
+
+    const res = await fetch(
+      `http://localhost:3000/employees/${employee.id}`,
+      {
+        method:"PUT",
+        body:formData
+      }
+    );
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    // RELOAD PROFILE
+
+    loadProfile();
+
+    // CLOSE FORM
+
+    closeEditForm();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert("Profile update failed");
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -623,6 +623,137 @@ app.put("/mark-notifications-read/:employeeId", (req, res) => {
 });
 
 
+
+
+// ================= Employee side - CHANGE PASSWORD =================
+
+app.put("/employee/change-password", (req, res) => {
+
+  const {
+    emp_id, currentPassword, newPassword
+  } = req.body;
+
+  console.log(emp_id);
+  console.log(currentPassword);
+
+// CHECK CURRENT PASSWORD
+
+  const sql = `
+    SELECT * FROM employees
+    WHERE emp_id = ?
+    AND password = ?
+  `;
+
+  db.query(
+    sql,
+    [emp_id, currentPassword],
+    (err, result) => {
+
+      if (err) {
+
+        console.log(err);
+
+        return res.status(500).json({
+          message: "Database Error"
+        });
+
+      }
+
+    // WRONG PASSWORD
+
+      if (result.length === 0) {
+
+        return res.status(400).json({
+          message: "Current password incorrect"
+        });
+
+      }
+
+    // UPDATE PASSWORD
+
+      const updateSql = `
+        UPDATE employees
+        SET password = ?
+        WHERE emp_id = ?
+      `;
+
+      db.query(
+        updateSql,
+        [newPassword, emp_id],
+        (err2) => {
+
+          if (err2) {
+
+            console.log(err2);
+
+            return res.status(500).json({
+              message: "Update Failed"
+            });
+
+          }
+
+          res.json({
+            success: true,
+            message:
+              "Password updated successfully"
+          });
+
+        }
+      );
+
+    }
+  );
+
+});
+
+
+
+
+
+
+
+
+
+
+
+app.get("/employees/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  const sql = `
+    SELECT
+      employees.*,
+      departments.name AS department
+    FROM employees
+    LEFT JOIN departments
+    ON employees.dept_id = departments.id
+    WHERE employees.id = ?
+  `;
+
+  db.query(sql, [id], (err, result) => {
+
+    if(err){
+
+      return res.status(500).json(err);
+
+    }
+
+    if(result.length === 0){
+
+      return res.status(404).json({
+        message:"Employee not found"
+      });
+
+    }
+
+    res.json(result[0]);
+
+  });
+
+});
+
+
+
 /*--------------------------
           Start server
   --------------------------*/
