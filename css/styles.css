@@ -690,8 +690,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 25px 50px;
-  background: #037c40;
-  color: white;
+  background: white;
+  color: #037c40;
+  height: 100px;
+  border-bottom: 2px solid #037c40;
 }
 
 /*---- LOGO ----*/
@@ -701,7 +703,7 @@
 }
 
 .home-etms-logo img {
-  width: 100px;
+  width: 130px;
   margin-right: 10px;
 }
 
@@ -715,8 +717,8 @@
 .etms-header-menu-nav-links a {
   position: relative;
   text-decoration: none;
-  color: white;
-  font-size: 23px;
+  color: #037c40;
+  font-size: 24px;
   padding-bottom: 5px;
   transition: 0.3s;
 }
@@ -751,9 +753,9 @@
   text-decoration: none;
   padding: 8px 15px;
   border-radius: 6px;
-  background: white;
-  color: #2a7fe0;
+  background: #037c40;
   font-size: 18px;
+  color: #ffe082;
 }
 
 .etms-header-menu-nav-actions a:hover {
@@ -768,7 +770,7 @@
 .etms-mobile-menu-icon {
   display: none;
   font-size: 30px;
-  color: white;
+  color: #037c40;
   cursor: pointer;
 }
 
@@ -834,7 +836,7 @@
 
   /*-- LOGO --*/
   .home-etms-logo img {
-    width: 65px;
+    width: 100px;
   }
 
   /*-- SHOW HAMBURGER --*/
@@ -928,7 +930,7 @@
 @media (max-width: 360px) {
 
   .home-etms-logo img {
-    width: 55px;
+    width: 100px;
   }
 
   .etms-mobile-menu-icon {
@@ -957,7 +959,7 @@
 .etms-home-hero {
   text-align: center;
   padding: 70px 20px;
-  background: #f4f6f9;
+  background: #e4ecf8;
 }
 
 .etms-home-hero h1 {
@@ -1473,7 +1475,7 @@ footer {
 .about-hero-etms {
   text-align: center;
   padding: 60px 20px;
-  background: #f4f6f9;
+  background: #e4ecf8;
 }
 
 .about-hero-etms h1 {
@@ -2031,6 +2033,7 @@ footer {
 /*--- Contact ETMS ---*/
 .contact-etms-section {
   padding: 50px 20px;
+  background: #e4ecf8;
 }
 
 /*---- Reusable Title ----*/
@@ -2447,9 +2450,10 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #037c40;
-  color: white;
   padding: 20px 50px;
+  background: white;
+  color: #037c40;
+  height: 100px;
 }
 
 /*--- LEFT ---*/
@@ -2460,7 +2464,7 @@ footer {
 }
 
 .logo-header-emp img {
-  width: 100px; 
+  width: 130px; 
 }
 
 .left-header-emp-menu-btn {
@@ -2545,10 +2549,62 @@ footer {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #dff707;
+  /* color: #dff707; */
   margin-top: 3px;
+  color: #007bff;
 }
 
+
+
+/* =========================
+   MOBILE SIDEBAR
+========================= */
+
+.sidebar-close-btn{
+  display:none;
+}
+
+@media(max-width:768px){
+
+  /*-- MENU ICON SHOW --*/
+  .left-header-emp-menu-btn{
+    display:block;
+    font-size:28px;
+    cursor:pointer;
+  }
+
+  /*-- SIDEBAR --*/
+  .employee-dsh-sidebar{
+    position:fixed;
+    top:0;
+    left:-260px;
+    width:250px;
+    height:100vh;
+    background:#037c40;
+    z-index:9999;
+    transition:0.4s ease;
+    padding-top:20px;
+  }
+
+  /*-- OPEN SIDEBAR --*/
+  .employee-dsh-sidebar.active{
+    left:0;
+  }
+
+  /*-- CLOSE BUTTON --*/
+  .sidebar-close-btn{
+    display:flex;
+    justify-content:flex-end;
+    padding:10px 20px;
+    color:#fff;
+    font-size:28px;
+    cursor:pointer;
+  }
+
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /*--- Employee dash MAIN LAYOUT ---*/
 .employee-side-bar-container {
@@ -2643,14 +2699,17 @@ footer {
   display: flex;
 }
 
-
 /*--- Rotate arrow ---*/
 .employee-sidebar-task-dropdown.active .fa-angle-down {
   transform: rotate(180deg);
 }
 
 
-/*--- Main Content area ---*/
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------- */
+
+                          /*--- Employee Dashboard -- Main Content area ---*/
+
 .emp-dash-main-content {
   flex: 1;
   padding: 50px;
@@ -2717,6 +2776,103 @@ footer {
 .emp-card.all {
   border-left: 5px solid #6366f1;
 }
+
+
+                               
+                              /* ====================================================
+                                      RESPONSIVE SIZE DESIGN - Employee Dashboard  
+                                 ==================================================== */
+
+
+/* =============================
+      TABLET 768px / 1024px
+================================ */
+
+@media (max-width: 1024px) {
+
+  .emp-dash-main-content {
+    padding: 35px 25px;
+  }
+
+  .employee-dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .emp-card h3 {
+    font-size: 18px;
+  }
+
+  .emp-card p {
+    font-size: 28px;
+  }
+
+}
+
+
+/* ==============================
+        MOBILE 320px - 767px
+================================= */
+
+@media (max-width: 767px) {
+
+  .emp-dash-main-content {
+    padding: 20px 15px;
+  }
+
+  .emp-dash-main-content h2 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .employee-dashboard-cards {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .emp-card {
+    padding: 20px 15px;
+  }
+
+  .emp-card i {
+    font-size: 24px;
+  }
+
+  .emp-card h3 {
+    font-size: 17px;
+  }
+
+  .emp-card p {
+    font-size: 26px;
+  }
+
+}
+
+
+/* ==========================
+      SMALL MOBILE 320px
+============================= */
+
+@media (max-width: 480px) {
+
+  .emp-dash-main-content {
+    padding: 15px 12px;
+  }
+
+  .emp-card {
+    border-radius: 10px;
+  }
+
+  .emp-card h3 {
+    font-size: 16px;
+  }
+
+  .emp-card p {
+    font-size: 24px;
+  }
+
+}
+
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -2839,7 +2995,7 @@ footer {
 .admin-dash-main-content {
   flex: 1;
   padding: 50px;
-  background: #f1f5f9;
+  background: #c5daee;
 }
 
 .admin-dash-main-content h2 {
@@ -2936,6 +3092,7 @@ footer {
   border-radius: 8px;
   overflow: hidden;
   z-index: 999;
+  border : 1px solid rgb(9, 117, 36)
 }
 
 /*--- Show class ---*/
@@ -2972,6 +3129,7 @@ footer {
   border-radius: 8px;
   overflow: hidden;
   z-index: 999;
+  border : 1px solid rgb(9, 117, 36)
 }
 
 /*--- Show class ---*/
@@ -4416,7 +4574,7 @@ footer {
 
 .notification-box {
   position: absolute;
-  top: 75px;
+  top: 80px;
   right: 100px;
   width: 350px;
   max-height: 450px;
@@ -4427,6 +4585,7 @@ footer {
   display: none;
   z-index: 9999;
   animation: notificationFade 0.25s ease;
+  border : 1px solid rgb(9, 117, 36)
 }
 
 /* ================= HEADER ================= */

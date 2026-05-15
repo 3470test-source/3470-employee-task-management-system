@@ -23,7 +23,7 @@
     }
 
     body {
-      background: #dddfe7;
+      background: #c5daee;       
     }
 
     </style>
@@ -38,10 +38,10 @@
   <div class="left-header-emp">
 
     <div class="logo-header-emp">
-      <img src="/image/Logo3470-health3-removebg-preview (1).png" alt="ETMS Logo">
+      <img src="/image/Logo3470-health3-removebg-preview.png" alt="ETMS Logo">
     </div>
 
-    <div class="left-header-emp-menu-btn">
+    <div class="left-header-emp-menu-btn" onclick="openSidebar()">
       <i class="fa fa-bars"></i>
     </div>
 
@@ -97,7 +97,11 @@
 <div class="employee-side-bar-container">
 
   <!-- SIDEBAR -->
-  <aside class="employee-dsh-sidebar">
+  <aside class="employee-dsh-sidebar" id="employeeSidebar">
+
+    <div class="sidebar-close-btn" onclick="closeSidebar()">
+      <i class="fa fa-times"></i>
+    </div>
 
     <a href="/employee/employee-dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a>
 
@@ -684,6 +688,28 @@ document.addEventListener("click", function(e){
 
 loadNotificationCount();
 
+</script>
+
+
+
+<!-- Employee Side - Menu Icon Open / Close  -->
+
+<script>
+/*--- OPEN SIDEBAR ---*/
+
+function openSidebar(){
+  document
+    .getElementById("employeeSidebar")
+    .classList.add("active");
+}
+
+/*--- CLOSE SIDEBAR ---*/
+
+function closeSidebar(){
+  document
+    .getElementById("employeeSidebar")
+    .classList.remove("active");
+}
 </script>
 
 </body>
