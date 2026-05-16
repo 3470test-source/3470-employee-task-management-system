@@ -4,10 +4,43 @@ const app = express();
 const cors = require("cors");
 const db = require("./db");
 
+const multer = require("multer");
+const path = require("path");
+
 app.use(cors());
 app.use(express.json());
 
+app.use("/uploads", express.static("uploads"));
+
 let departments = []; // temporary DB
+
+
+// ================= MULTER STORAGE =================
+
+const storage = multer.diskStorage({
+
+  destination: function (req, file, cb) {
+
+    cb(null, "uploads/");
+
+  },
+
+  filename: function (req, file, cb) {
+
+    cb(
+      null,
+      Date.now() + path.extname(file.originalname)
+    );
+
+  }
+
+});
+
+const upload = multer({
+  storage: storage
+});
+
+
 
 
 /* ================== Admin Side -----  DEPARTMENT ================== */
@@ -116,18 +149,74 @@ app.delete("/employees/:id", (req, res) => {
 
 
 // ➤ Edit Employee
-app.put("/employees/:id", (req, res) => {
-  const { name, email } = req.body;
 
-  db.query(
-    "UPDATE employees SET name=?, email=? WHERE id=?",
-    [name, email, req.params.id],
-    (err) => {
-      if (err) return res.json(err);
-      res.json({ message: "Updated" });
+// ================= UPDATE EMPLOYEE PROFILE =================
+
+app.put("/employees/:id", upload.single("photo"), (req, res) => {
+
+    const id = req.params.id;
+
+    const {
+      name, email, phone, dob, doj, address, description
+    } = req.body;
+
+    // FILE NAME
+
+    let photo = null;
+
+    if (req.file) {
+      photo = req.file.filename;
     }
-  );
+
+// ================= SQL =================
+
+    let sql = `
+      UPDATE employees
+      SET
+        name = ?, email = ?, phone = ?, dob = ?, doj = ?, address = ?, description = ?
+    `;
+
+    let values = [
+      name, email, phone, dob, doj, address, description
+    ];
+
+    // PHOTO UPDATE
+
+    if (photo) {
+
+      sql += `, photo = ?`;
+
+      values.push(photo);
+
+    }
+
+    sql += ` WHERE id = ?`;
+
+    values.push(id);
+
+    // ================= QUERY =================
+
+    db.query(sql, values, (err, result) => {
+
+      if (err) {
+
+        console.log(err);
+
+        return res.status(500).json({
+          message: "Update failed"
+        });
+
+      }
+
+      res.json({
+        message:
+          "Profile updated successfully"
+      });
+
+    });
+
 });
+
 
 
 /* ================== Task ================== */
@@ -708,14 +797,6 @@ app.put("/employee/change-password", (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 app.get("/employees/:id", (req, res) => {
 
   const id = req.params.id;
@@ -751,7 +832,6 @@ app.get("/employees/:id", (req, res) => {
   });
 
 });
-
 
 
 /*--------------------------

@@ -488,36 +488,7 @@ loadNotificationCount();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Employee Side -- My Profile -->
 
 <script>
 
@@ -542,7 +513,7 @@ async function loadProfile(){
 
     const emp = await res.json();
 
-    // PROFILE PHOTO
+  // PROFILE PHOTO
 
     if(emp.photo){
 
@@ -551,7 +522,7 @@ async function loadProfile(){
 
     }
 
-    // PROFILE DATA
+  // PROFILE DATA
 
     document.getElementById("profileName")
     .innerText = emp.name;
@@ -587,7 +558,7 @@ async function loadProfile(){
 
 
 
-    // ================= EDIT FORM VALUES =================
+// ================= EDIT FORM VALUES =================
 
     document.getElementById("editEmpId")
     .value = emp.emp_id || "";
@@ -623,7 +594,6 @@ async function loadProfile(){
     document.getElementById("editDescription")
     .value = emp.description || "";
 
-
   }
 
   catch(error){
@@ -637,14 +607,6 @@ async function loadProfile(){
 }
 
 loadProfile();
-
-
-
-
-
-
-
-
 
 
 // ================= OPEN EDIT FORM =================
@@ -772,6 +734,7 @@ document.getElementById("updateProfileForm")
 });
 
 </script>
+
 
 </body>
 </html>
