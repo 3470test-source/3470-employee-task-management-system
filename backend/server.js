@@ -713,7 +713,6 @@ app.put("/mark-notifications-read/:employeeId", (req, res) => {
 
 
 
-
 // ================= Employee side - CHANGE PASSWORD =================
 
 app.put("/employee/change-password", (req, res) => {
